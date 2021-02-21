@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerificationOTP">
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/logo_taski"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/taski"
+            android:fontFamily="@font/din"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/primario"
+            android:layout_toRightOf="@+id/logo"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/phone_board_enviado"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="INGRESA EL CÓDIGO"
+            android:layout_gravity="center"
+            android:fontFamily="@font/din"
+            android:textSize="28sp"
+            android:textColor="@color/primario"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="Enviamos un código de verificación a:"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/din"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/txtNumero"
+            android:layout_width="wrap_content"
+            android:text="numero celular"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/din"
+            android:textSize="15sp"/>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+
+            <com.chaos.view.PinView
+                android:id="@+id/pinView"
+                app:itemCount="6"
+                app:itemWidth="50dp"
+                app:itemHeight="50dp"
+                app:lineWidth="1dp"
+                android:fontFamily="@font/din"
+                app:lineColor="@color/black"
+                style="@style/PinWidget.PinView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:inputType="number"
+                app:itemRadius="5dp"
+                android:cursorVisible="true"
+                app:cursorColor="@color/primario"
+                app:hideLineWhenFilled="true"
+                android:itemBackground="#65EAEAEA"/>
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/verificar"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:text="VERIFICAR"
+                android:onClick="verificarScreen"
+                style="@style/Widget.MaterialComponents.Button"
+                app:cornerRadius="10dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:indeterminate="true"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@color/primario"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

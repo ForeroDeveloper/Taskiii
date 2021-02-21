@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EFF1FE"
+    android:layout_height="match_parent"
+    tools:context=".gastos.DiaFragmentGastos">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+       <RelativeLayout
+           android:id="@+id/cabecera_estadisticas"
+           android:elevation="2dp"
+           android:layout_marginBottom="10dp"
+           android:layout_width="match_parent"
+           android:background="@drawable/cabecera_balance"
+           android:layout_height="wrap_content">
+
+           <RelativeLayout
+               android:id="@+id/fechas"
+               android:elevation="2dp"
+               android:layout_width="match_parent"
+               android:layout_height="70dp"
+               android:background="@drawable/cabecera_fecha">
+
+               <TextView
+                   android:id="@+id/fecha"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="FECHA"
+                   android:layout_centerVertical="true"
+                   android:layout_marginStart="30dp"
+                   android:fontFamily="@font/baloo"
+                   android:textColor="@color/negro"
+                   android:textSize="22sp"/>
+
+               <androidx.cardview.widget.CardView
+                   android:layout_width="match_parent"
+                   android:layout_height="40dp"
+                   android:layout_marginEnd="30dp"
+                   app:cardBackgroundColor="#F5F5F6"
+                   android:layout_centerVertical="true"
+                   app:cardCornerRadius="30dp"
+                   android:layout_marginStart="20dp"
+                   android:layout_toEndOf="@+id/fecha">
+
+                   <RelativeLayout
+                       android:background="#F5F5F6"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent">
+
+                       <ImageView
+                           android:id="@+id/ic_restar_fehca"
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:padding="10dp"
+                           android:layout_alignParentStart="true"
+                           android:layout_marginStart="10dp"
+                           android:layout_centerVertical="true"
+                           android:src="@drawable/ic_flehca_izq"/>
+
+                       <TextView
+                           android:id="@+id/txtFechaSelect"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_centerVertical="true"
+                           android:layout_toEndOf="@+id/ic_restar_fehca"
+                           android:fontFamily="@font/din"
+                           android:gravity="center"
+                           android:text="Hoy, 16 de Feb" />
+
+                       <ImageView
+                           android:id="@+id/ic_sumar_fecha"
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:padding="10dp"
+                           android:layout_toEndOf="@+id/txtFechaSelect"
+                           android:layout_centerVertical="true"
+                           android:rotation="180"
+                           android:src="@drawable/ic_flehca_izq"/>
+
+
+                       <ImageView
+                           android:id="@+id/ic_seleccionar_fecha"
+                           android:layout_width="45dp"
+                           android:layout_height="38dp"
+                           android:padding="8dp"
+                           android:layout_centerVertical="true"
+                           android:layout_alignParentEnd="true"
+                           android:layout_marginEnd="20dp"
+                           android:src="@drawable/ic_calendario" />
+
+                   </RelativeLayout>
+
+
+
+               </androidx.cardview.widget.CardView>
+
+           </RelativeLayout>
+
+           <androidx.cardview.widget.CardView
+               android:id="@+id/balanceGeneral"
+               android:layout_below="@+id/fechas"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               app:cardCornerRadius="30dp">
+
+               <RelativeLayout
+                   android:layout_marginTop="10dp"
+                   android:layout_marginBottom="10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent">
+
+
+                   <com.shunan.circularprogressbar.CircularProgressBar
+                       android:id="@+id/indicador"
+                       android:layout_centerInParent="true"
+                       android:layout_width="match_parent"
+                       android:layout_height="165dp"
+                       app:showDot="false"
+                       app:progressBackgroundColor="#FD5E8D"
+                       app:progressWidth="7dp"
+                       app:progressBackgroundWidth="7dp"
+                       app:progressColor="@color/azul"/>
+
+
+                   <TextView
+                       android:layout_marginTop="38dp"
+                       android:id="@+id/txt1"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/brandon_grotesque_light"
+                       android:textColor="@color/negro"
+                       android:text="Total Gastos"
+                       android:textSize="12sp"
+                       android:layout_centerHorizontal="true"/>
+
+                   <TextView
+                       android:id="@+id/totalDeGastos"
+                       android:layout_below="@+id/txt1"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/din"
+                       android:textColor="@color/azul"
+                       android:text="$ 6.980"
+                       android:textSize="25sp"
+                       android:layout_centerHorizontal="true"/>
+
+                   <TextView
+                       android:layout_marginTop="5dp"
+                       android:layout_below="@+id/totalDeGastos"
+                       android:id="@+id/txt3"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/brandon_grotesque_light"
+                       android:textColor="@color/negro"
+                       android:text="Total Deuda"
+                       android:textSize="12sp"
+                       android:layout_centerHorizontal="true"/>
+
+                   <TextView
+                       android:id="@+id/totalDeuda"
+                       android:layout_below="@+id/txt3"
+                       android:layout_marginTop="5dp"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/din"
+                       android:textColor="@color/rosado"
+                       android:text="$ 6.980"
+                       android:textSize="12sp"
+                       android:layout_centerHorizontal="true"/>
+
+
+
+               </RelativeLayout>
+
+
+           </androidx.cardview.widget.CardView>
+
+           <LinearLayout
+               android:layout_marginTop="10dp"
+               android:layout_below="@+id/balanceGeneral"
+               android:layout_width="match_parent"
+               android:gravity="center_horizontal"
+               android:layout_height="40dp"
+               android:orientation="horizontal">
+
+               <ImageView
+                   android:layout_gravity="center"
+                   android:layout_width="8dp"
+                   android:layout_height="8dp"
+                   android:src="@drawable/ic_circulo"
+                   app:tint="@color/azul" />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Pagado"
+                   android:layout_gravity="center"
+                   android:layout_marginStart="5dp"
+                   android:fontFamily="@font/brandon_grotesque_light"/>
+               <ImageView
+                   android:layout_marginStart="20dp"
+                   android:layout_gravity="center"
+                   android:layout_width="8dp"
+                   android:layout_height="8dp"
+                   android:src="@drawable/ic_circulo"
+                   app:tint="@color/rosado" />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Deuda"
+                   android:layout_gravity="center"
+                   android:layout_marginStart="5dp"
+                   android:fontFamily="@font/brandon_grotesque_light"/>
+
+           </LinearLayout>
+
+
+       </RelativeLayout>
+
+       <androidx.cardview.widget.CardView
+           android:id="@+id/sinContenido"
+           android:visibility="gone"
+           android:layout_width="match_parent"
+           android:layout_marginTop="10dp"
+           android:layout_marginStart="50dp"
+           android:layout_marginEnd="50dp"
+           android:layout_height="wrap_content"
+           app:cardCornerRadius="20dp">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
+
+               <ImageView
+                   android:layout_marginTop="15dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="110dp"
+                   android:padding="0dp"
+                   android:src="@drawable/taski_contenido"/>
+
+
+               <TextView
+                   android:id="@+id/titulo"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_horizontal"
+                   android:text="Aún no tienes gastos"
+                   android:layout_marginStart="20dp"
+                   android:layout_marginTop="5dp"
+                   android:layout_marginEnd="20dp"
+                   android:gravity="center"
+                   android:fontFamily="@font/brandon_grotesque_black"
+                   android:textColor="@color/primario"
+                   android:textSize="16sp"/>
+
+               <TextView
+                   android:id="@+id/descrip"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_horizontal"
+                   android:text="¡llevar la contabilidad de tu negocio\nnunca fue tan fácil!"
+                   android:layout_marginStart="20dp"
+                   android:layout_marginEnd="20dp"
+                   android:gravity="center"
+                   android:fontFamily="@font/brandon_grotesque_light"
+                   android:textColor="@color/negro"
+                   android:textSize="13sp"/>
+
+               <com.google.android.material.button.MaterialButton
+                   android:layout_width="match_parent"
+                   android:layout_height="45dp"
+                   android:layout_marginTop="10dp"
+                   android:text="Nuevo gasto"
+                   android:fontFamily="@font/din"
+                   app:icon="@drawable/ic_gastos"
+                   app:iconGravity="textStart"
+                   app:iconPadding="20dp"
+                   app:iconSize="14sp"
+                   android:layout_marginBottom="15dp"
+                   app:backgroundTint="@color/rosado"
+                   android:layout_marginStart="20dp"
+                   android:layout_marginEnd="20dp"
+                   app:cornerRadius="30dp"/>
+
+
+           </LinearLayout>
+
+       </androidx.cardview.widget.CardView>
+
+       <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_gravity="center"
+               android:layout_marginBottom="40dp"
+               android:orientation="vertical">
+
+               <RelativeLayout
+                   android:id="@+id/titulos"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <TextView
+                       android:id="@+id/Transactions"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Transacciones"
+                       android:layout_marginTop="15dp"
+                       android:layout_marginStart="30dp"
+                       android:fontFamily="@font/hammer_bold"
+                       android:textColor="@color/negro"
+                       android:textSize="22sp"/>
+
+                   <TextView
+                       android:id="@+id/todas"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Todas"
+                       android:layout_toStartOf="@+id/icon_flecha_dos"
+                       android:layout_marginTop="21dp"
+                       android:layout_marginEnd="5dp"
+                       android:fontFamily="@font/hammer"
+                       android:textColor="@color/negro"
+                       android:textSize="14sp"/>
+
+                   <ImageView
+                       android:id="@+id/icon_flecha_dos"
+                       android:layout_width="14dp"
+                       android:layout_height="14dp"
+                       android:src="@drawable/ic_flehca_izq"
+                       android:layout_alignParentEnd="true"
+                       android:layout_marginEnd="30dp"
+                       android:rotation="180"
+                       android:layout_marginTop="21dp"
+                       app:tint="@color/negro" />
+
+               </RelativeLayout>
+
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:layout_below="@+id/titulos"
+                   android:layout_marginStart="20dp"
+                   android:layout_marginEnd="20dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="20dp"
+                   android:layout_marginBottom="75dp"
+                   android:id="@+id/lista_de_facturas_dia"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+
+           </RelativeLayout>
+
+   </LinearLayout>
+
+
+    </ScrollView>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/faq_sumar_fecha"
+        android:layout_width="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        app:fab_colorPressed="@color/primario"
+        app:fab_icon="@drawable/ic_arrow_rigth"
+        app:fab_colorNormal="@color/rosado"
+        android:layout_marginEnd="20dp"
+        app:fab_size="mini"
+        android:layout_marginBottom="60dp"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/faq_restar_fecha"
+            android:layout_width="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            app:fab_colorPressed="@color/primario"
+            app:fab_icon="@drawable/ic_arrow_left"
+            app:fab_colorNormal="@color/rosado"
+            android:layout_marginStart="20dp"
+            app:fab_size="mini"
+            android:layout_marginBottom="60dp"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

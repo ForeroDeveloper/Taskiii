@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/balance"
+        android:title="Balance"
+        android:icon="@drawable/ic_logo_balance"/>
+
+    <item android:id="@+id/gastos"
+        android:title="Gastos"
+        android:icon="@drawable/ic_logo_gastos"/>
+
+    <item android:id="@+id/separador"
+        android:title=""/>
+
+    <item android:id="@+id/estadisticas"
+        android:title="Estadísticas"
+        android:icon="@drawable/ic_logo_estadisticas"/>
+
+    <item android:id="@+id/profile"
+        android:title="Perfil"
+        android:icon="@drawable/ic_logo_perfil"/>
+
+</menu>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserMenuPrincipal">
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/superior"
+        android:layout_width="match_parent"
+        android:elevation="5dp"
+        android:background="@color/white"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:id="@+id/logoNegocio"
+            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/logo_taski"/>
+        <TextView
+            android:id="@+id/nameNegocio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/taski"
+            android:fontFamily="@font/din"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/primario"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/ic_pregunta"
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_ayuda"/>
+
+    </RelativeLayout>
+    
+    <FrameLayout
+        android:layout_below="@+id/superior"
+        android:id="@+id/fragment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </FrameLayout>
+
+
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/inferior"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:fabCradleMargin="20dp"
+            android:background="@color/white"
+            app:fabCradleRoundedCornerRadius="20dp"
+            app:fabCradleVerticalOffset="10dp"
+            android:layout_gravity="bottom">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/navview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:backgroundTint="@android:color/transparent"
+                android:layout_marginEnd="16dp"
+                app:menu="@menu/menu_inferioir"/>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="visible"
+            android:id="@+id/faq"
+            app:fabCustomSize="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/primario"
+            app:tint="@color/white"
+            android:src="@drawable/ic_add"
+            app:layout_anchor="@id/bottomAppBar"/>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/faq_gastos"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_colorPressed="@color/primario_claro"
+        app:fab_icon="@drawable/ic_gasto"
+        app:fab_colorNormal="@color/rojo"
+        app:fab_size="normal"
+        android:layout_alignBottom="@+id/inferior"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/faq_ventas"
+        android:visibility="gone"
+        app:fabSize="normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_colorPressed="@color/primario_claro"
+        app:fab_icon="@drawable/ic_factura"
+        app:fab_colorNormal="@color/verde"
+        android:layout_alignBottom="@+id/faq_gastos"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="55dp"/>
+
+
+</RelativeLayout>

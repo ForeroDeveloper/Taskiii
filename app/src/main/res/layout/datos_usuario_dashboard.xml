@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DatosUsuarioDashboard">
+
+    <RelativeLayout
+        android:id="@+id/registrarInformacion"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:elevation="5dp"
+            android:background="@color/white"
+            android:id="@+id/superior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/logo"
+                android:layout_width="25dp"
+                android:layout_centerVertical="true"
+                android:layout_height="25dp"
+                android:src="@drawable/logo_taski"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perfil"
+                android:fontFamily="@font/din"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/primario"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:id="@+id/pregunta"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_ayuda"/>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_below="@+id/superior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/fotoperfil"
+                    android:layout_margin="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:src="@drawable/logo_taski"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#6424FF"/>
+
+                    <View
+                        android:id="@+id/separador"
+                        android:layout_width="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="20dp"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/camera"
+                        android:layout_width="36dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toRightOf="@+id/separador"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_camera"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/white"/>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_below="@+id/fotoperfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Datos del Negocio / Empresa"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/din"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtNombreNegocio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/primario"
+                        app:errorEnabled="true"
+                        app:startIconDrawable="@drawable/ic_negocio"
+                        android:hint="Nombre">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtNombreNegocio"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtNumeroNit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/primario"
+                        app:helperTextEnabled="true"
+                        app:helperText="Opcional"
+                        android:hint="Nit">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtNumeroNit"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Datos del Propietario"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/din"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtNombrePropietario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/primario"
+                        android:hint="Nombre y apellido">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtNombrePropietario"
+                            android:layout_width="match_parent"
+                            android:inputType="textPersonName"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtTipoDoc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        app:boxCornerRadiusBottomStart="5dp"
+                        app:boxCornerRadiusTopStart="5dp"
+                        app:boxCornerRadiusBottomEnd="5dp"
+                        app:boxCornerRadiusTopEnd="5dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        app:boxStrokeColor="@color/primario"
+                        android:hint="Tipo de documento">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autoCompleteText"
+                            android:layout_width="match_parent"
+                            android:inputType="none"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtNumeroDoc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/primario"
+                        android:hint="Numero de documento">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtNumeroDoc"
+                            android:layout_width="match_parent"
+                            android:inputType="number"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/primario"
+                        app:startIconDrawable="@drawable/ic_mail"
+                        android:hint="Correo Electrónico">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtCorreo"
+                            android:layout_width="match_parent"
+                            android:inputType="textPersonName"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/enviarBtn"
+                    android:onClick="GuardarDatos"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="75dp"
+                    android:text="GUARDAR"
+                    style="@style/Widget.MaterialComponents.Button"
+                    app:cornerRadius="10dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:onClick="loHareLuego"
+                    android:layout_marginBottom="20dp"
+                    android:text="LO HARÉ LUEGO"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:cornerRadius="10dp"/>
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/cargandoDatos"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/logo2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo_taski"/>
+        <TextView
+            android:id="@+id/loading"
+            android:layout_below="@+id/logo2"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/din"
+            android:text="Cargando datos..."/>
+
+        <ProgressBar
+            android:layout_below="@+id/loading"
+            android:layout_centerInParent="true"
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/primario"/>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

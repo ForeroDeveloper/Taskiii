@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserDashboard">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/logo_taski"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/taski"
+                android:fontFamily="@font/din"
+                android:textSize="15sp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/primario"
+                android:layout_toRightOf="@+id/logo"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_gravity="center"
+            android:src="@drawable/taski_onboard_v3"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gestionar tu negocio\nAhora es muy fácil !"
+            android:fontFamily="@font/din"
+            android:textSize="28sp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¡Adiós papeles! , con Taski, ahorras todas tus notas en cuadernos, y no solo eso, hacemos tus calculos contables automatizadamente!"
+            android:fontFamily="@font/din"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:onClick="LoginClick"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="LOGIN"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:cornerRadius="10dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:onClick="SignUpClick"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="SIGN UP"
+            style="@style/Widget.MaterialComponents.Button"
+            app:cornerRadius="10dp"/>
+    </LinearLayout>
+
+</RelativeLayout>
