@@ -282,6 +282,17 @@ public class DiaFragment extends Fragment {
         listaDeFacturas.setAdapter(adaptadorListaFacturas);
 
         adaptadorListaFacturas.startListening();
+
+        adaptadorListaFacturas.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (itemCount==0){
+                    sinContenido.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
         adaptadorListaFacturas.notifyDataSetChanged();
 
     }

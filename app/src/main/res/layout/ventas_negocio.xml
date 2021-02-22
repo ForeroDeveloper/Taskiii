@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F7F7F8"
     tools:context=".VentasNegocio">
 
     <RelativeLayout
         android:id="@+id/superior"
         android:layout_width="match_parent"
-        android:elevation="5dp"
         android:background="@color/white"
         android:layout_height="55dp">
 
@@ -44,118 +44,330 @@
 
     </RelativeLayout>
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_below="@+id/superior"
+        android:elevation="3dp"
+        android:id="@+id/crear"
+        android:background="@drawable/cabecera_guardar_factura_venta"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/crear"
-            android:layout_width="match_parent"
+        <TextView
+            android:fontFamily="@font/nunito_black"
+            android:layout_width="wrap_content"
+            android:textColor="@color/negro"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="5dp"
+            android:text="Producto"/>
+
+        <RelativeLayout
+            android:id="@+id/separadorDeProducto"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nombreProducto"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/btnInventario"
+                android:hint="Ej: Vestido"
+                app:boxBackgroundColor="#F8FAF8"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp"
                 app:boxStrokeColor="@color/primario"
-                app:startIconDrawable="@drawable/ic_etiqueta"
-                android:hint="producto">
+                app:boxStrokeWidth="0dp"
+                app:helperText="Ej: Vestido"
+                app:helperTextEnabled="true"
+                app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNumero"
                     android:layout_width="match_parent"
-                    android:inputType="textCapWords"
-                    android:fontFamily="@font/din"
                     android:layout_height="wrap_content"
-                    />
+                    android:fontFamily="@font/din"
+                    android:inputType="textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/precio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/primario"
-                app:startIconDrawable="@drawable/ic_precio"
-                android:hint="Precio unitario (obligatorio)">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtprecio"
-                    android:layout_width="match_parent"
-                    android:inputType="number"
+                <com.google.android.material.button.MaterialButton
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/btnInventario"
+                    android:layout_width="120dp"
+                    app:cornerRadius="30dp"
+                    app:backgroundTint="@color/primario_oscuro_secundario"
                     android:fontFamily="@font/din"
-                    android:layout_height="wrap_content"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="60dp"
+                    android:text="INVentario"
+                    android:textSize="14dp"/>
+
+
+        </RelativeLayout>
 
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cantidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/primario"
-                app:startIconDrawable="@drawable/ic_cantidad"
-                android:hint="Cantidad (obligatorio)">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtcantidad"
-                    android:layout_width="match_parent"
-                    android:inputType="number"
-                    android:fontFamily="@font/din"
-                    android:layout_height="wrap_content"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/precioFinal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/primario"
-                app:helperTextEnabled="false"
-                app:startIconDrawable="@drawable/ic_precio_final"
-                android:hint="Precio Final (opcional)">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtprecioFinal"
-                    android:layout_width="match_parent"
-                    android:fontFamily="@font/din"
-                    android:inputType="numberDecimal"
-                    android:layout_height="wrap_content"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGuardar"
-                android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_height="60dp"
-                android:text="añadir producto"
-                android:layout_gravity="center"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/separadorDePuniYCantidad"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <LinearLayout
-                android:visibility="gone"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/nunito_black"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/negro"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Precio Unitario"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/precio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="@color/primario"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxBackgroundColor="#F8FAF8"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:helperTextEnabled="true"
+                    app:prefixText="$ "
+                    app:helperText="Ej: $ 1.500"
+                    android:hint="$ 1.500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtprecio"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:fontFamily="@font/din"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/nunito_black"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/negro"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cantidad"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="@color/primario"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxBackgroundColor="#F8FAF8"
+                    app:boxStrokeWidth="0dp"
+                    app:helperTextEnabled="true"
+                    app:helperText="Ej: 150"
+                    app:hintEnabled="false"
+                    android:hint="500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtcantidad"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:gravity="center"
+                        android:fontFamily="@font/din"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito_black"
+            android:layout_width="wrap_content"
+            android:textColor="@color/negro"
+            android:layout_height="wrap_content"
+            android:text="Precio Final"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/precioFinal"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/primario"
+            app:helperTextEnabled="false"
+            app:boxCornerRadiusBottomStart="30dp"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxCornerRadiusBottomEnd="30dp"
+            app:boxCornerRadiusTopEnd="30dp"
+            app:boxBackgroundColor="#F8FAF8"
+            app:prefixText="$ "
+            app:helperText="Automatico"
+            app:hintEnabled="false"
+            app:boxStrokeWidth="0dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtprecioFinal"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/din"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/add"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/btnGuardarFactura"
+                android:background="@drawable/finalizar_venta_design"
+                android:layout_width="140dp"
+                android:text="Finalizar Venta"
+                android:gravity="center"
+                android:fontFamily="@font/din"
+                android:layout_marginTop="8dp"
+                android:textSize="14dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/primario"
+                android:layout_height="45dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btnGuardar"
+                android:layout_width="140dp"
+                app:cornerRadius="30dp"
+                android:fontFamily="@font/din"
+                android:layout_marginEnd="20dp"
+                android:layout_height="60dp"
+                android:text="agreagar"
+                android:textSize="14dp"/>
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_below="@+id/crear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/crear_venta_ilustra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/taski_crear_venta"/>
+
+                <TextView
+                    android:id="@+id/crear_venta_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="¡Crea tu venta aquí!"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/din"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:visibility="invisible"
                 android:id="@+id/cabecera_factura"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/cabecera_factura"
                 android:layout_height="40dp">
 
@@ -180,9 +392,8 @@
                     <TextView
                         android:id="@+id/txtCantidad"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:layout_margin="5dp"
-                        android:gravity="center_horizontal"
-                        android:layout_marginEnd="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
@@ -192,8 +403,9 @@
                     <TextView
                         android:id="@+id/txtTotal"
                         android:layout_weight="1"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginEnd="10dp"
                         android:gravity="end"
+                        android:paddingEnd="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
@@ -206,37 +418,9 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:visibility="visible"
-                android:id="@+id/crear_venta_ilustra"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/taski_crear_venta"/>
-                <TextView
-                    android:id="@+id/crear_venta_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_height="wrap_content"
-                    android:text="¡Crea tu factura aquí!"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/din"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@+id/cabecera_factura"
                 android:id="@+id/lista_de_productos_venta"
                 android:background="@drawable/recycler"
                 android:layout_width="match_parent"
@@ -244,52 +428,33 @@
                 android:layout_marginEnd="10dp"
                 android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:id="@+id/btnAcciones"
-                android:visibility="gone"
-                android:layout_width="130dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="60dp"
-                android:layout_height="wrap_content"
-                android:weightSum="1"
-                android:layout_gravity="end"
-                android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="5dp"
                     android:id="@+id/btnLimpiar"
-                    android:layout_weight="1"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/rosado"
-                    android:layout_width="170dp"
+                    android:layout_width="150dp"
                     android:layout_height="45dp"
                     android:text="Limpiar"
                     android:textSize="12sp"
+                    android:layout_marginBottom="20dp"
                     app:icon="@drawable/ic_borrar"
                     app:iconPadding="2dp"
-                    app:iconGravity="start"
-                    android:layout_gravity="center"/>
+                    app:iconGravity="start"/>
+
+            </RelativeLayout>
 
 
-            </LinearLayout>
+
 
         </LinearLayout>
 
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:visibility="gone"
-        android:id="@+id/btnGuardarFactura"
-        android:backgroundTint="@color/rosado"
-        android:background="@drawable/cabecera_guardar_factura"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:fontFamily="@font/din"
-        android:text="Crear Factura"
-        android:textSize="14sp"
-        app:iconPadding="20dp"
-        app:iconGravity="textStart"
-        app:icon="@drawable/ic_fac"/>
 
 </RelativeLayout>

@@ -16,7 +16,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/estado"
-            android:elevation="5dp"
+            android:elevation="8dp"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_marginStart="20dp"
@@ -87,8 +87,10 @@
 
         <LinearLayout
             android:id="@+id/linear"
-            android:paddingBottom="10dp"
-            android:layout_margin="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="10dp"
             android:layout_below="@+id/txt"
             android:weightSum="2"
             android:layout_width="match_parent"
@@ -123,9 +125,11 @@
 
                     <TextView
                         android:id="@+id/txtFechaSelect"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
                         android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_toEndOf="@+id/ic_seleccionar_fecha"
                         android:fontFamily="@font/din"
                         android:gravity="center"
@@ -169,12 +173,15 @@
             android:layout_below="@id/linear"
             app:startIconDrawable="@drawable/ic_persona"
             android:id="@+id/edtCliente"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:boxStrokeColor="@color/primario"
             android:hint="Cliente">
 
@@ -193,14 +200,18 @@
             android:layout_below="@id/edtCliente"
             app:startIconDrawable="@drawable/ic_etiqueta"
             android:id="@+id/edtConceptoVenta"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="@color/primario"
             app:helperTextEnabled="true"
             app:helperText="Opcional"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
             android:hint="Concepto de venta">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -217,14 +228,18 @@
             android:layout_below="@id/edtConceptoVenta"
             app:startIconDrawable="@drawable/ic_notas"
             android:id="@+id/edt_notas_internas"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="@color/primario"
             app:helperTextEnabled="true"
             app:helperText="Opcional"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
             android:hint="Notas internas">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -244,7 +259,7 @@
             android:text="Total: "
             android:fontFamily="@font/din"
             android:layout_below="@+id/edt_notas_internas"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="45dp"
             android:textColor="@color/negro"
             android:layout_marginTop="16dp"
             android:textSize="18sp"/>

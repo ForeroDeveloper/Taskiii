@@ -52,9 +52,9 @@ public class VentasNegocio extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     AdaptadorListaProductos adaptadorListaProductos;
-    LinearLayout cabeceraFacturas,btnAcciones,imgIlustra;
-    MaterialButton btnLimpiar,btnGuardarFactura,btnGuardarProducto;
-    TextView txtCrearVenta;
+    LinearLayout cabeceraFacturas,imgIlustra;
+    MaterialButton btnLimpiar,btnGuardarProducto,btnAcciones;
+    TextView txtCrearVenta,btnGuardarFactura;
     private int dia,mes,ano;
     long maxid = 0;
     int precioFinal;
@@ -62,6 +62,7 @@ public class VentasNegocio extends AppCompatActivity {
     int totales;
     boolean estadoDePago = true;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
+    int activarFinalizarVenta = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,11 @@ public class VentasNegocio extends AppCompatActivity {
         txtprecioFinalPorUsuario = findViewById(R.id.txtprecioFinal);
         btnLimpiar=(MaterialButton) findViewById(R.id.btnLimpiar);
         cabeceraFacturas =(LinearLayout) findViewById(R.id.cabecera_factura);
-        btnAcciones =(LinearLayout) findViewById(R.id.btnAcciones);
         imgIlustra =(LinearLayout) findViewById(R.id.crear_venta_ilustra);
+
+        btnLimpiar.setVisibility(View.GONE);
+
+        activarBotonFinalizar(0);
 
 
         //Inicializar Base de Datos
@@ -225,9 +229,12 @@ public class VentasNegocio extends AppCompatActivity {
                         modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
                         txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
                     }
+
+                    activarBotonFinalizar(1);
+
                     databaseReference.child(key).child(id).setValue(modeloVenta);
                     cabeceraFacturas.setVisibility(View.VISIBLE);
-                    btnAcciones.setVisibility(View.VISIBLE);
+                    btnLimpiar.setVisibility(View.VISIBLE);
                     imgIlustra.setVisibility(View.GONE);
                     btnGuardarFactura.setVisibility(View.VISIBLE);
 
@@ -370,9 +377,9 @@ public class VentasNegocio extends AppCompatActivity {
                 sum=0;
                 txtCrearVenta.setText("$ 0");
                 cabeceraFacturas.setVisibility(View.INVISIBLE);
-                btnAcciones.setVisibility(View.INVISIBLE);
+                btnLimpiar.setVisibility(View.INVISIBLE);
                 imgIlustra.setVisibility(View.VISIBLE);
-                btnGuardarFactura.setVisibility(View.INVISIBLE);
+                activarBotonFinalizar(0);
             }
         });
 
@@ -388,54 +395,12 @@ public class VentasNegocio extends AppCompatActivity {
 
     }
 
-    private void obtenerSumaTotal() {
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-        .child("facturas").child("items");
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int sum = 0;
-                Object price;
-                int pValue;
-                snapshot.getChildren();
-                if (snapshot.exists()){
-                    Toast.makeText(VentasNegocio.this, "si existe", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(VentasNegocio.this, "no existe", Toast.LENGTH_SHORT).show();
-                }
-
-                /*if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                        if (map.isEmpty()){
-                            Toast.makeText(VentasNegocio.this, "error", Toast.LENGTH_SHORT).show();
-                        }else {
-                            price = map.get("precioFinalPorElUsuario");
-                            pValue = Integer.parseInt(String.valueOf(price));
-                            if (pValue == 0) {
-                                price = map.get("valorTotalCalculadoAutomatico");
-                                pValue = Integer.parseInt(String.valueOf(price));
-                                sum += pValue;
-                                txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
-                                txtCrearVenta.setTextColor(getResources().getColor(R.color.verde_neon));
-                            } else {
-                                sum += pValue;
-                                txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
-                                txtCrearVenta.setTextColor(getResources().getColor(R.color.verde_neon));
-                            }
-
-                        }
-                    }
-                }*/
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    private void activarBotonFinalizar(int i) {
+        if (activarFinalizarVenta==i){
+            btnGuardarFactura.setVisibility(View.INVISIBLE);
+        }else {
+            btnGuardarFactura.setVisibility(View.VISIBLE);
+        }
     }
 
     private String getFechaNormal(Long fechaMilisegundos) {
@@ -454,6 +419,7 @@ public class VentasNegocio extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        activarBotonFinalizar(0);
         adaptadorListaProductos.startListening();
         adaptadorListaProductos.notifyDataSetChanged();
 

@@ -25,5 +25,6 @@
     <color name="primario_oscuro_secundario">#4218A9</color>
     <color name="morado_tipo_2">#5a38fd</color>
     <color name="verdeCirculo">#13C281</color>
+    <color name="blanco_gris">#F8FAF8</color>
 
 </resources>
