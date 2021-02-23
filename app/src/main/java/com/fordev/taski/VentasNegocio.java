@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProductos;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
+import com.fordev.taski.modelos.ModeloIdFactura;
 import com.fordev.taski.modelos.ModeloVenta;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -61,11 +62,10 @@ public class VentasNegocio extends AppCompatActivity {
     int precioFinal;
     int sum = 0;
     int totales;
-    public String key;
     boolean estadoDePago = true;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
     int activarFinalizarVenta = 0;
-
+    String key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,9 +92,6 @@ public class VentasNegocio extends AppCompatActivity {
 
         activarBotonFinalizar(0);
 
-        Bundle bundle =getIntent().getExtras();
-        String key = bundle.getString("key");
-
 
 
         //Inicializar Base de Datos
@@ -102,9 +99,9 @@ public class VentasNegocio extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         String fecha = getFechaNormal(getFechaMilisegundos());
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("facturas").child("fechas").child("listaDeFacturas").child(key);
+                .child("facturas").child("fechas").child("listaDeFacturas");
         //key
-       // key = databaseReference.push().getKey();
+        key = databaseReference.push().getKey();
         //Obtener Cuantos productos agrego al recycler
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -429,7 +426,6 @@ public class VentasNegocio extends AppCompatActivity {
         activarBotonFinalizar(0);
         adaptadorListaProductos.startListening();
         adaptadorListaProductos.notifyDataSetChanged();
-
     }
 
 
@@ -447,7 +443,18 @@ public class VentasNegocio extends AppCompatActivity {
 
     public void inventarioActivity(View view) {
         Intent intent = new Intent(VentasNegocio.this, Inventario.class);
-        intent.putExtra("key", key);
+        ModeloIdFactura modeloIdFactura = new ModeloIdFactura();
+        modeloIdFactura.setIdFacturaActual(key);
+        databaseReference.child("FacturaActual").child(key).setValue(modeloIdFactura);
         startActivity(intent);
+        cabeceraFacturas.setVisibility(View.VISIBLE);
+        btnLimpiar.setVisibility(View.VISIBLE);
+        imgIlustra.setVisibility(View.GONE);
+        btnGuardarFactura.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

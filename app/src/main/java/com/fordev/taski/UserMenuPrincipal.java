@@ -99,9 +99,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (posicion==0){
-                    String key = databaseReference.push().getKey();
                     Intent intent = new Intent(getApplicationContext(), VentasNegocio.class);
-                    intent.putExtra("key", key);
                     startActivity(intent);
                 }else if (posicion==1){
                     startActivity(new Intent(getApplicationContext(), GastosNegocio.class));

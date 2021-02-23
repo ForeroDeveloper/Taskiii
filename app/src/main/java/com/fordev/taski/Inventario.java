@@ -59,9 +59,6 @@ public class Inventario extends VentasNegocio {
         txtTotalStock = findViewById(R.id.txtTotalStock);
         prueba = findViewById(R.id.search);
 
-        //recibo intents
-        Bundle bundle = getIntent().getExtras();
-        key = bundle.getString("key");
 
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);

@@ -25,13 +25,13 @@
                 android:id="@+id/icon_estado_de_pago"
                 android:backgroundTint="#ECF5EE"
                 android:background="@drawable/background_color_circle_selector"
-                android:layout_width="40dp"
-                android:layout_height="40dp">
+                android:layout_width="55dp"
+                android:layout_height="55dp">
 
                 <ImageView
                     android:layout_centerInParent="true"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_product"/>
 
@@ -53,6 +53,19 @@
 
             <TextView
                 android:layout_below="@+id/nombreProducto"
+                android:layout_toEndOf="@+id/icon_estado_de_pago"
+                android:id="@+id/precio_item"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="Precio Item:"
+                android:textColor="@color/negro"
+                android:fontFamily="@font/brandon_grotesque_light"/>
+
+            <TextView
+                android:layout_below="@+id/precio_item"
                 android:layout_toEndOf="@+id/icon_estado_de_pago"
                 android:id="@+id/txtStock"
                 android:layout_width="110dp"
@@ -90,10 +103,7 @@
                         android:layout_toEndOf="@+id/card1"
                         android:layout_centerInParent="true"/>
 
-
                 </RelativeLayout>
-
-
 
             </androidx.cardview.widget.CardView>
 
