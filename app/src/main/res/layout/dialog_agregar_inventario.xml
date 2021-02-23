@@ -8,23 +8,39 @@
 
 
     <LinearLayout
+        android:layout_margin="20dp"
         android:layout_below="@+id/superior"
         android:elevation="3dp"
         android:id="@+id/crear"
         android:backgroundTint="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:fontFamily="@font/nunito_black"
-            android:layout_width="wrap_content"
-            android:textColor="#08B36D"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Nombre de Producto"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:fontFamily="@font/nunito_black"
+                android:layout_width="wrap_content"
+                android:textColor="#00B2EB"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Nombre de Producto"/>
+
+            <ImageView
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/logo_taski"/>
+
+        </RelativeLayout>
+
+
 
         <RelativeLayout
             android:id="@+id/separadorDeProducto"
@@ -42,7 +58,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/btnInventario"
                 android:hint="Ej: Vestido"
-                app:boxBackgroundColor="#EAF8F2"
+                app:boxBackgroundColor="#EBF9FD"
                 app:boxCornerRadiusBottomEnd="30dp"
                 app:boxCornerRadiusBottomStart="30dp"
                 app:boxCornerRadiusTopEnd="30dp"
@@ -104,7 +120,7 @@
                 <TextView
                     android:fontFamily="@font/nunito_black"
                     android:layout_width="wrap_content"
-                    android:textColor="#08B36D"
+                    android:textColor="#00B2EB"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:text="Precio Unitario"/>
@@ -119,7 +135,7 @@
                     app:boxCornerRadiusTopStart="30dp"
                     app:boxCornerRadiusBottomEnd="30dp"
                     app:boxCornerRadiusTopEnd="30dp"
-                    app:boxBackgroundColor="#EAF8F2"
+                    app:boxBackgroundColor="#EBF9FD"
                     app:boxStrokeWidth="0dp"
                     app:hintEnabled="false"
                     app:helperTextEnabled="true"
@@ -149,7 +165,7 @@
                 <TextView
                     android:fontFamily="@font/nunito_black"
                     android:layout_width="wrap_content"
-                    android:textColor="#08B36D"
+                    android:textColor="#00B2EB"
                     android:layout_marginBottom="5dp"
                     android:layout_height="wrap_content"
                     android:text="Stock Cantidad"/>
@@ -164,7 +180,7 @@
                     app:boxCornerRadiusTopStart="30dp"
                     app:boxCornerRadiusBottomEnd="30dp"
                     app:boxCornerRadiusTopEnd="30dp"
-                    app:boxBackgroundColor="#EAF8F2"
+                    app:boxBackgroundColor="#EBF9FD"
                     app:boxStrokeWidth="0dp"
                     app:helperTextEnabled="true"
                     app:helperText="Ej: 150"
@@ -197,7 +213,6 @@
             <TextView
                 android:visibility="visible"
                 android:id="@+id/btn_cancelar"
-                android:background="@drawable/finalizar_venta_design"
                 android:layout_width="140dp"
                 android:text="Cancelar"
                 android:gravity="center"
@@ -205,7 +220,7 @@
                 android:layout_marginTop="8dp"
                 android:textSize="14dp"
                 android:layout_marginStart="20dp"
-                android:textColor="#08B36D"
+                android:textColor="#00B2EB"
                 android:layout_height="45dp"/>
 
             <com.google.android.material.button.MaterialButton
@@ -213,7 +228,7 @@
                 android:id="@+id/btn_guardar_producto_inventario"
                 android:layout_width="140dp"
                 app:cornerRadius="30dp"
-                android:backgroundTint="#08B36D"
+                android:backgroundTint="#00B2EB"
                 android:fontFamily="@font/din"
                 android:layout_marginEnd="20dp"
                 android:layout_height="60dp"

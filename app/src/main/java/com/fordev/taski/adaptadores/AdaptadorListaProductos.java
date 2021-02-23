@@ -38,8 +38,6 @@ public class AdaptadorListaProductos extends FirebaseRecyclerAdapter<ModeloVenta
         }
 
 
-
-
     }
 
 

@@ -61,6 +61,7 @@ public class VentasNegocio extends AppCompatActivity {
     int precioFinal;
     int sum = 0;
     int totales;
+    public String key;
     boolean estadoDePago = true;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
     int activarFinalizarVenta = 0;
@@ -91,15 +92,19 @@ public class VentasNegocio extends AppCompatActivity {
 
         activarBotonFinalizar(0);
 
+        Bundle bundle =getIntent().getExtras();
+        String key = bundle.getString("key");
+
+
 
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         String fecha = getFechaNormal(getFechaMilisegundos());
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("facturas").child("fechas").child("listaDeFacturas");
+                .child("facturas").child("fechas").child("listaDeFacturas").child(key);
         //key
-        String key = databaseReference.push().getKey();
+       // key = databaseReference.push().getKey();
         //Obtener Cuantos productos agrego al recycler
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -394,6 +399,7 @@ public class VentasNegocio extends AppCompatActivity {
         adaptadorListaProductos=new AdaptadorListaProductos(options);
         listaDeProductos.setAdapter(adaptadorListaProductos);
 
+
     }
 
     private void activarBotonFinalizar(int i) {
@@ -426,6 +432,8 @@ public class VentasNegocio extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -438,6 +446,8 @@ public class VentasNegocio extends AppCompatActivity {
     }
 
     public void inventarioActivity(View view) {
-        startActivity(new Intent(VentasNegocio.this, Inventario.class));
+        Intent intent = new Intent(VentasNegocio.this, Inventario.class);
+        intent.putExtra("key", key);
+        startActivity(intent);
     }
 }
