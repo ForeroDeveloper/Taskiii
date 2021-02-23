@@ -3,12 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:elevation="2dp"
-    android:layout_height="50dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/icon_estado_de_pago"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
         android:src="@drawable/ic_inbox"
         android:layout_centerVertical="true"
@@ -26,6 +28,7 @@
         android:fontFamily="@font/din"/>
 
     <LinearLayout
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/txtProducto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

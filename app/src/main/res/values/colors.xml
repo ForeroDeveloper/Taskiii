@@ -26,5 +26,6 @@
     <color name="morado_tipo_2">#5a38fd</color>
     <color name="verdeCirculo">#13C281</color>
     <color name="blanco_gris">#F8FAF8</color>
+    <color name="background_pantallas">#EFF1FE</color>
 
 </resources>

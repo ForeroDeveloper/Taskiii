@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7F8"
+    android:background="@color/background_pantallas"
     tools:context=".VentasNegocio">
 
     <RelativeLayout
@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            app:tint="@color/primario"
+            app:tint="@color/primario_oscuro_secundario"
             android:layout_marginStart="10dp"
             android:src="@drawable/ic_arrow_left"/>
         <TextView
@@ -30,7 +30,7 @@
             android:textSize="24sp"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="10dp"
-            android:textColor="@color/primario"
+            android:textColor="@color/primario_oscuro_secundario"
             android:layout_centerVertical="true"/>
 
         <ImageView
@@ -40,6 +40,7 @@
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
+            app:tint="@color/primario_oscuro_secundario"
             android:src="@drawable/ic_ayuda"/>
 
     </RelativeLayout>
@@ -56,7 +57,7 @@
         <TextView
             android:fontFamily="@font/nunito_black"
             android:layout_width="wrap_content"
-            android:textColor="@color/negro"
+            android:textColor="#08B36D"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_height="wrap_content"
@@ -79,12 +80,12 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/btnInventario"
                 android:hint="Ej: Vestido"
-                app:boxBackgroundColor="#F8FAF8"
+                app:boxBackgroundColor="#EAF8F2"
                 app:boxCornerRadiusBottomEnd="30dp"
                 app:boxCornerRadiusBottomStart="30dp"
                 app:boxCornerRadiusTopEnd="30dp"
                 app:boxCornerRadiusTopStart="30dp"
-                app:boxStrokeColor="@color/primario"
+                app:boxStrokeColor="#08B36D"
                 app:boxStrokeWidth="0dp"
                 app:helperText="Ej: Vestido"
                 app:helperTextEnabled="true"
@@ -101,11 +102,12 @@
 
 
                 <com.google.android.material.button.MaterialButton
+                    android:onClick="inventarioActivity"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/btnInventario"
                     android:layout_width="120dp"
                     app:cornerRadius="30dp"
-                    app:backgroundTint="@color/primario_oscuro_secundario"
+                    app:backgroundTint="#057748"
                     android:fontFamily="@font/din"
                     android:layout_height="60dp"
                     android:text="INVentario"
@@ -152,7 +154,7 @@
                 <TextView
                     android:fontFamily="@font/nunito_black"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/negro"
+                    android:textColor="#08B36D"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:text="Precio Unitario"/>
@@ -162,12 +164,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="@color/primario"
+                    app:boxStrokeColor="#08B36D"
                     app:boxCornerRadiusBottomStart="30dp"
                     app:boxCornerRadiusTopStart="30dp"
                     app:boxCornerRadiusBottomEnd="30dp"
                     app:boxCornerRadiusTopEnd="30dp"
-                    app:boxBackgroundColor="#F8FAF8"
+                    app:boxBackgroundColor="#EAF8F2"
                     app:boxStrokeWidth="0dp"
                     app:hintEnabled="false"
                     app:helperTextEnabled="true"
@@ -197,7 +199,7 @@
                 <TextView
                     android:fontFamily="@font/nunito_black"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/negro"
+                    android:textColor="#08B36D"
                     android:layout_marginBottom="5dp"
                     android:layout_height="wrap_content"
                     android:text="Cantidad"/>
@@ -207,12 +209,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="@color/primario"
+                    app:boxStrokeColor="#08B36D"
                     app:boxCornerRadiusBottomStart="30dp"
                     app:boxCornerRadiusTopStart="30dp"
                     app:boxCornerRadiusBottomEnd="30dp"
                     app:boxCornerRadiusTopEnd="30dp"
-                    app:boxBackgroundColor="#F8FAF8"
+                    app:boxBackgroundColor="#EAF8F2"
                     app:boxStrokeWidth="0dp"
                     app:helperTextEnabled="true"
                     app:helperText="Ej: 150"
@@ -238,7 +240,7 @@
             android:layout_marginStart="20dp"
             android:fontFamily="@font/nunito_black"
             android:layout_width="wrap_content"
-            android:textColor="@color/negro"
+            android:textColor="#08B36D"
             android:layout_height="wrap_content"
             android:text="Precio Final"/>
 
@@ -251,13 +253,13 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/primario"
+            app:boxStrokeColor="#08B36D"
             app:helperTextEnabled="false"
             app:boxCornerRadiusBottomStart="30dp"
             app:boxCornerRadiusTopStart="30dp"
             app:boxCornerRadiusBottomEnd="30dp"
             app:boxCornerRadiusTopEnd="30dp"
-            app:boxBackgroundColor="#F8FAF8"
+            app:boxBackgroundColor="#EAF8F2"
             app:prefixText="$ "
             app:helperText="Automatico"
             app:hintEnabled="false"
@@ -293,7 +295,7 @@
                 android:layout_marginTop="8dp"
                 android:textSize="14dp"
                 android:layout_marginStart="20dp"
-                android:textColor="@color/primario"
+                android:textColor="#08B36D"
                 android:layout_height="45dp"/>
 
             <com.google.android.material.button.MaterialButton
@@ -301,6 +303,7 @@
                 android:id="@+id/btnGuardar"
                 android:layout_width="140dp"
                 app:cornerRadius="30dp"
+                android:backgroundTint="#08B36D"
                 android:fontFamily="@font/din"
                 android:layout_marginEnd="20dp"
                 android:layout_height="60dp"

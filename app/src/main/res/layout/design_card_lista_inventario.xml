@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    android:background="@color/white"
+    android:layout_marginBottom="5dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:layout_centerVertical="true"
+                android:id="@+id/icon_estado_de_pago"
+                android:backgroundTint="#ECF5EE"
+                android:background="@drawable/background_color_circle_selector"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_product"/>
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:layout_toEndOf="@+id/icon_estado_de_pago"
+                android:id="@+id/nombreProducto"
+                android:layout_width="110dp"
+                android:layout_marginTop="6dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="Producto Nombre"
+                android:textColor="@color/negro"
+                android:fontFamily="@font/din"/>
+
+            <TextView
+                android:layout_below="@+id/nombreProducto"
+                android:layout_toEndOf="@+id/icon_estado_de_pago"
+                android:id="@+id/txtStock"
+                android:layout_width="110dp"
+                android:textSize="11dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="Stock: 182"
+                android:textColor="@color/negro"
+                android:fontFamily="@font/brandon_grotesque_light"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/nombreProducto"
+                app:cardBackgroundColor="#FFECDD"
+                android:layout_width="75dp"
+                android:elevation="0dp"
+                android:layout_height="22dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#EC4F3C"
+                        android:text="Bajo stock"
+                        android:textSize="11dp"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/din"
+                        android:layout_toEndOf="@+id/card1"
+                        android:layout_centerInParent="true"/>
+
+
+                </RelativeLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <ImageView
+                android:layout_alignParentEnd="true"
+                android:id="@+id/ic_agregar_producto"
+                android:layout_marginEnd="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_arrow_rigth"
+                app:tint="@color/gris_claro" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

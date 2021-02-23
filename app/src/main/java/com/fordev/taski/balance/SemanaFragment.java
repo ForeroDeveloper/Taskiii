@@ -122,10 +122,8 @@ public class SemanaFragment extends Fragment {
         txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
         fechados.add(Calendar.DATE,  1);
         fechatres.add(Calendar.DATE, 2);
-        Toast.makeText(getContext(), sdf.format(fechatres.getTime()) , Toast.LENGTH_SHORT).show();
         fechacuatro.add(Calendar.DATE, 3);
         fechacinco.add(Calendar.DATE, 4);
-        //fechaFin.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         ic_sumar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override

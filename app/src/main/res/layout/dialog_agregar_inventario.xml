@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/cabecera_guardar_factura_dos"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_below="@+id/superior"
+        android:elevation="3dp"
+        android:id="@+id/crear"
+        android:backgroundTint="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:fontFamily="@font/nunito_black"
+            android:layout_width="wrap_content"
+            android:textColor="#08B36D"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Nombre de Producto"/>
+
+        <RelativeLayout
+            android:id="@+id/separadorDeProducto"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nombreProducto"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/btnInventario"
+                android:hint="Ej: Vestido"
+                app:boxBackgroundColor="#EAF8F2"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeColor="#08B36D"
+                app:boxStrokeWidth="0dp"
+                app:helperText="Ej: Vestido"
+                app:helperTextEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtProducto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/din"
+                    android:inputType="textCapWords" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/separadorDePuniYCantidad"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/nunito_black"
+                    android:layout_width="wrap_content"
+                    android:textColor="#08B36D"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Precio Unitario"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/precio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="#08B36D"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxBackgroundColor="#EAF8F2"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:helperTextEnabled="true"
+                    app:prefixText="$ "
+                    app:helperText="Ej: $ 1.500"
+                    android:hint="$ 1.500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtprecio"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:fontFamily="@font/din"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/nunito_black"
+                    android:layout_width="wrap_content"
+                    android:textColor="#08B36D"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Stock Cantidad"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="#08B36D"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxBackgroundColor="#EAF8F2"
+                    app:boxStrokeWidth="0dp"
+                    app:helperTextEnabled="true"
+                    app:helperText="Ej: 150"
+                    app:hintEnabled="false"
+                    android:hint="500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtcantidad"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:gravity="center"
+                        android:fontFamily="@font/din"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/add"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/btn_cancelar"
+                android:background="@drawable/finalizar_venta_design"
+                android:layout_width="140dp"
+                android:text="Cancelar"
+                android:gravity="center"
+                android:fontFamily="@font/din"
+                android:layout_marginTop="8dp"
+                android:textSize="14dp"
+                android:layout_marginStart="20dp"
+                android:textColor="#08B36D"
+                android:layout_height="45dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btn_guardar_producto_inventario"
+                android:layout_width="140dp"
+                app:cornerRadius="30dp"
+                android:backgroundTint="#08B36D"
+                android:fontFamily="@font/din"
+                android:layout_marginEnd="20dp"
+                android:layout_height="60dp"
+                android:text="agreagar"
+                android:textSize="14dp"/>
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

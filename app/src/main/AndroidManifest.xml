@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Taski">
-        <activity android:name=".GastosNegocio"></activity>
+        <activity android:name=".Inventario"></activity>
+        <activity android:name=".GastosNegocio" />
         <activity android:name=".VentasNegocio" />
         <activity android:name=".UserMenuPrincipal" />
         <activity android:name=".DatosUsuarioDashboard" />
