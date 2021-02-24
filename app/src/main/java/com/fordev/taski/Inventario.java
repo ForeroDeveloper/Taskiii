@@ -39,7 +39,7 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.TimeZone;
 
-public class Inventario extends VentasNegocio {
+public class Inventario extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     RecyclerView listaDeProductos;
@@ -59,6 +59,10 @@ public class Inventario extends VentasNegocio {
         txtTotalStock = findViewById(R.id.txtTotalStock);
         prueba = findViewById(R.id.search);
 
+        //Obtener Intent EXTRA
+        Bundle bundle = getIntent().getExtras();
+        keyy = bundle.getString("key");
+
 
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
@@ -66,16 +70,6 @@ public class Inventario extends VentasNegocio {
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("Inventario").child("productos");
 
-
-
-        //Prueba
-        prueba.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                //startActivity(new Intent(Inventario.this, VentasNegocio.class));
-            }
-        });
 
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -167,6 +161,8 @@ public class Inventario extends VentasNegocio {
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Inventario").child("productos"), ModeloInventario.class)
                         .build();
 
+
+
         adaptadorListaInventario=new AdaptadorListaInventario(options);
         listaDeProductos.setAdapter(adaptadorListaInventario);
         adaptadorListaInventario.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -176,8 +172,6 @@ public class Inventario extends VentasNegocio {
                 totalProductos.setText(String.valueOf(adaptadorListaInventario.getItemCount()));
             }
         });
-
-
 
 
     }
@@ -209,8 +203,4 @@ public class Inventario extends VentasNegocio {
         adaptadorListaInventario.stopListening();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }

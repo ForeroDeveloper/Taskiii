@@ -24,9 +24,11 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProductos;
+import com.fordev.taski.adaptadores.AdaptadorListaProductosEnInventario;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.modelos.ModeloIdFactura;
 import com.fordev.taski.modelos.ModeloVenta;
+import com.fordev.taski.modelos.ModeloVentaInventario;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -51,21 +53,21 @@ public class VentasNegocio extends AppCompatActivity {
 
     TextInputLayout edtProducto,precioUnitario,cantidadProducto,precioFinalPorUsuario;
     TextInputEditText txtprecioUnitario,txtcantidadProducto,txtprecioFinalPorUsuario;
-    RecyclerView listaDeProductos;
+    RecyclerView listaDeProductos,lista_de_productos_venta_inventario;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     AdaptadorListaProductos adaptadorListaProductos;
+    AdaptadorListaProductosEnInventario adaptadorListaProductosEnInventario;
     LinearLayout cabeceraFacturas,imgIlustra;
-    MaterialButton btnLimpiar,btnGuardarProducto,btnAcciones;
+    MaterialButton btnLimpiar,btnGuardarProducto,btnInventario;
     TextView txtCrearVenta,btnGuardarFactura;
     private int dia,mes,ano;
     long maxid = 0;
     int precioFinal;
-    int sum = 0;
-    int totales;
+    int totalDeFactura = 0;
     boolean estadoDePago = true;
+    boolean bandera = false;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
-    int activarFinalizarVenta = 0;
     String key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,18 +83,18 @@ public class VentasNegocio extends AppCompatActivity {
         cantidadProducto = findViewById(R.id.cantidad);
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
         listaDeProductos = findViewById(R.id.lista_de_productos_venta);
+        lista_de_productos_venta_inventario = findViewById(R.id.lista_de_productos_venta_inventario);
         //Edit Text Material Text
         txtprecioUnitario = findViewById(R.id.txtprecio);
         txtcantidadProducto = findViewById(R.id.txtcantidad);
         txtprecioFinalPorUsuario = findViewById(R.id.txtprecioFinal);
         btnLimpiar=(MaterialButton) findViewById(R.id.btnLimpiar);
+        btnInventario=(MaterialButton) findViewById(R.id.btnInventario);
         cabeceraFacturas =(LinearLayout) findViewById(R.id.cabecera_factura);
         imgIlustra =(LinearLayout) findViewById(R.id.crear_venta_ilustra);
+        bandera = false;
 
         btnLimpiar.setVisibility(View.GONE);
-
-        activarBotonFinalizar(0);
-
 
 
         //Inicializar Base de Datos
@@ -101,8 +103,24 @@ public class VentasNegocio extends AppCompatActivity {
         String fecha = getFechaNormal(getFechaMilisegundos());
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("facturas").child("fechas").child("listaDeFacturas");
+
         //key
         key = databaseReference.push().getKey();
+        String key2 = databaseReference.push().getKey();
+
+        btnInventario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VentasNegocio.this, Inventario.class);
+                intent.putExtra("key", key);
+                FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("FacturaActualKey").setValue(key2);
+/*        ModeloIdFactura modeloIdFactura = new ModeloIdFactura();
+        modeloIdFactura.setIdFacturaActual(key);*/
+                startActivity(intent);
+            }
+        });
+
         //Obtener Cuantos productos agrego al recycler
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,6 +165,7 @@ public class VentasNegocio extends AppCompatActivity {
 
             }
         });
+
         //ListenerPrecioProducto
         txtcantidadProducto.addTextChangedListener(new TextWatcher() {
             @Override
@@ -224,17 +243,11 @@ public class VentasNegocio extends AppCompatActivity {
                     //set precio total de todos los productos
                     if (modeloVenta.getPrecioFinalPorElUsuario()==0){
                         modeloVenta.setPrecioTotaldeTodosLosProductos(valorTotalCalculadoAutomatico);
-                        sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
-                       // txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
                     }else{
                         modeloVenta.setPrecioTotaldeTodosLosProductos(precio_final_producto);
-                        sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
-                       // txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
+
                     }
 
-                    activarBotonFinalizar(1);
                     databaseReference.child(key).child(id).setValue(modeloVenta);
 
 
@@ -284,7 +297,7 @@ public class VentasNegocio extends AppCompatActivity {
                         "Tranferencia bancaria",
                         "Otro"
                 };
-                txtTotalFactura.setText(String.valueOf("$ " + nformat.format(sum)));
+                txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura)));
 
                 //CLick Listener and others
                 radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -341,7 +354,7 @@ public class VentasNegocio extends AppCompatActivity {
                         modeloFacturaCreada.setConceptoDeVenta(datos_concepto_venta);
                         modeloFacturaCreada.setNotasInternas(datos_notas_internas);
                         modeloFacturaCreada.setEstadoDePago(estadoDePago);
-                        modeloFacturaCreada.setTotalCalculado(sum);
+                        modeloFacturaCreada.setTotalCalculado(totalDeFactura);
                         modeloFacturaCreada.setMetodoDePago(datos_metodo_de_pago);
                         modeloFacturaCreada.setFechaRegistro(sdf.format(Cal.getTime()));
                         modeloFacturaCreada.setTimeStamp(getFechaMilisegundos() * -1);
@@ -353,6 +366,11 @@ public class VentasNegocio extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .child("facturas").child("facturasCreadas").child(String.valueOf(modeloFacturaCreada.getTimeStamp())).setValue(modeloFacturaCreada);
 
+                        //BORRAR DATOS FACTURA ACTUAL
+                        borrarDatosDeFacturaActual();
+                        adaptadorListaProductos.notifyDataSetChanged();
+                        finish();
+
                     }
                 });
 
@@ -363,8 +381,6 @@ public class VentasNegocio extends AppCompatActivity {
 
                 dialogPlus.show();
 
-
-
             }
         });
 
@@ -372,12 +388,10 @@ public class VentasNegocio extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturas").child(key).removeValue();
-                sum=0;
                 txtCrearVenta.setText("$ 0");
                 cabeceraFacturas.setVisibility(View.INVISIBLE);
                 btnLimpiar.setVisibility(View.INVISIBLE);
                 imgIlustra.setVisibility(View.VISIBLE);
-                activarBotonFinalizar(0);
             }
         });
 
@@ -391,16 +405,18 @@ public class VentasNegocio extends AppCompatActivity {
         adaptadorListaProductos=new AdaptadorListaProductos(options);
         listaDeProductos.setAdapter(adaptadorListaProductos);
 
+        //FIREBASE
+        lista_de_productos_venta_inventario.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        FirebaseRecyclerOptions<ModeloVentaInventario> options2 =
+                new FirebaseRecyclerOptions.Builder<ModeloVentaInventario>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturasIV").child(key2), ModeloVentaInventario.class)
+                        .build();
+        adaptadorListaProductosEnInventario=new AdaptadorListaProductosEnInventario(options2);
+        lista_de_productos_venta_inventario.setAdapter(adaptadorListaProductosEnInventario);
+
 
     }
 
-    private void activarBotonFinalizar(int i) {
-        if (activarFinalizarVenta==i){
-            btnGuardarFactura.setVisibility(View.INVISIBLE);
-        }else {
-            btnGuardarFactura.setVisibility(View.VISIBLE);
-        }
-    }
 
     private String getFechaNormal(Long fechaMilisegundos) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -419,14 +435,15 @@ public class VentasNegocio extends AppCompatActivity {
         databaseReference.child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int sum = 0;
+
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object suma = map.get("precioTotaldeTodosLosProductos");
                     int total = Integer.parseInt(String.valueOf(suma));
                     sum += total;
                     txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
+                    totalDeFactura = sum;
                 }
 
 
@@ -443,12 +460,14 @@ public class VentasNegocio extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        activarBotonFinalizar(0);
         hacerSumaTotalDeProductos();
         hacerSumaDeItems();
+        hacerSumaDeItems2();
         adaptadorListaProductos.startListening();
+        adaptadorListaProductosEnInventario.startListening();
         adaptadorListaProductos.notifyDataSetChanged();
     }
+
 
     private void hacerSumaDeItems() {
         adaptadorListaProductos.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -470,11 +489,32 @@ public class VentasNegocio extends AppCompatActivity {
         });
     }
 
+    private void hacerSumaDeItems2() {
+        adaptadorListaProductosEnInventario.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (adaptadorListaProductosEnInventario.getItemCount()==0){
+                    cabeceraFacturas.setVisibility(View.GONE);
+                    btnLimpiar.setVisibility(View.GONE);
+                    imgIlustra.setVisibility(View.VISIBLE);
+                    btnGuardarFactura.setVisibility(View.INVISIBLE);
+                }else {
+                    cabeceraFacturas.setVisibility(View.VISIBLE);
+                    btnLimpiar.setVisibility(View.VISIBLE);
+                    imgIlustra.setVisibility(View.GONE);
+                    btnGuardarFactura.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
 
     @Override
     protected void onStop() {
         super.onStop();
         adaptadorListaProductos.stopListening();
+        adaptadorListaProductosEnInventario.stopListening();
     }
 
     @Override
@@ -482,12 +522,9 @@ public class VentasNegocio extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void inventarioActivity(View view) {
-        Intent intent = new Intent(VentasNegocio.this, Inventario.class);
-        ModeloIdFactura modeloIdFactura = new ModeloIdFactura();
-        modeloIdFactura.setIdFacturaActual(key);
-        databaseReference.child("FacturaActual").child(key).setValue(modeloIdFactura);
-        startActivity(intent);
+    private void borrarDatosDeFacturaActual() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("FacturaActualKey").removeValue();
     }
+
 
 }

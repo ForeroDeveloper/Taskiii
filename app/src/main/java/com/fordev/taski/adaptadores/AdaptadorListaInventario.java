@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,12 +39,21 @@ import com.orhanobut.dialogplus.ViewHolder;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInventario, AdaptadorListaInventario.myViewHolder>
 {
     int cantidad_a_restar_stock;
+    boolean bandera = false;
+    //Obtener la factura actual para mandarla
+    FirebaseDatabase  firebaseDatabase,firebaseDatabase2;
+    DatabaseReference databaseReference,databaseReference2;
+    String idIngrsesar;
+
 
     public AdaptadorListaInventario(@NonNull FirebaseRecyclerOptions<ModeloInventario> options) {
         super(options);
@@ -62,6 +72,24 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
             holder.bajoStockView.setVisibility(View.INVISIBLE);
         }
 
+        firebaseDatabase2 = FirebaseDatabase.getInstance();
+        databaseReference2 = firebaseDatabase2.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("FacturaActualKey");
+
+        databaseReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Object key = snapshot.getValue();
+                idIngrsesar = String.valueOf(key);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         holder.ic_agregar_producto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +103,10 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                         .create();
 
                 View views = dialog.getHolderView();
+
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("facturas").child("fechas").child("listaDeFacturasIV").child(idIngrsesar);
 
                 TextInputLayout cantidad_stock = views.findViewById(R.id.cantidad);
                 TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
@@ -134,71 +166,49 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                 btn_guardar_cantidad.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!cantidad_stock.getEditText().getText().toString().isEmpty()){
-                            int stock = Integer.parseInt(cantidad_stock.getEditText().getText().toString());
-                            //Obtener la factura actual para mandarla
-                            FirebaseDatabase  fire = FirebaseDatabase.getInstance();
-                            DatabaseReference databaseReference, databaseReference2;
-                            databaseReference = fire.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .child("facturas").child("fechas").child("listaDeFacturas").child("FacturaActual");
 
-                            databaseReference2 = fire.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .child("facturas").child("fechas").child("listaDeFacturas");
-                            //id
-                            String id = databaseReference.push().getKey();
+                            if (!cantidad_stock.getEditText().getText().toString().isEmpty()){
 
+                                        String put = databaseReference.push().getKey();
 
-                            databaseReference.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    String keyFacAct;
-                                    for (DataSnapshot ds : snapshot.getChildren()) {
-                                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                                        Object keyDb = map.get("idFacturaActual");
-                                        String key = String.valueOf(keyDb);
                                         ModeloVenta modeloVenta = new ModeloVenta();
                                         int cantidad = Integer.parseInt(cantidad_stock_txt.getText().toString());
                                         int precio = model.getPrecioProducto();
                                         int total = precio * cantidad;
-                                        modeloVenta.setId(id);
+                                        modeloVenta.setId(put);
                                         modeloVenta.setNombreProdcuto(model.getNombreProdcuto());
                                         modeloVenta.setCantidadProducto(cantidad);
+                                        modeloVenta.setPrecioFinalPorElUsuario(total);
                                         modeloVenta.setValorTotalCalculadoAutomatico(total);
+                                        modeloVenta.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
+                                        modeloVenta.setTimeStamp(getFechaMilisegundos() * -1);
                                         modeloVenta.setPrecioTotaldeTodosLosProductos(total);
-                                        databaseReference2.child(key).child(id).setValue(modeloVenta);
+                                        databaseReference.child(put).setValue(modeloVenta);
+
+
+                                //update stock dependiento la posicion
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("cantidadProducto",cantidad_a_restar_stock);
+
+                                firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .child("Inventario").child("productos").child(getRef(position).getKey()).updateChildren(map)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
                                     }
+                                });
 
 
-                                }
+                            }else {
+                                cantidad_stock.setError("Ingrese un valor !");
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                            //update stock dependiento la posicion
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("cantidadProducto",cantidad_a_restar_stock);
-
-                            fire.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .child("Inventario").child("productos").child(getRef(position).getKey()).updateChildren(map)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-
-                                        }
-                                    });
-
-
-                        }else {
-                            cantidad_stock.setError("Ingrese un valor !");
-                        }
                     }
                 });
 
@@ -209,23 +219,18 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
     }
 
 
-
-
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.design_card_lista_inventario, parent, false);
         return new myViewHolder(view);
-
     }
-
 
     static class myViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtProducto, txtStockCantidad,txtPrecioItem;
         CardView bajoStockView;
         ImageView ic_agregar_producto;
-
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -242,6 +247,19 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
     @Override
     public int getItemCount() {
         return super.getItemCount();
+    }
+
+    private String getFechaNormal(Long fechaMilisegundos) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
+        String fecha = sdf.format(fechaMilisegundos);
+        return fecha;
+    }
+
+    private Long getFechaMilisegundos() {
+        Calendar calendar = Calendar.getInstance();
+        long tiempounix = calendar.getTimeInMillis();
+        return  tiempounix;
     }
 
 }
