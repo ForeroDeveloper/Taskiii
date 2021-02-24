@@ -65,6 +65,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
         holder.ic_agregar_producto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NumberFormat nformat = new DecimalFormat("##,###,###.##");
                 DialogPlus dialog = DialogPlus.newDialog(holder.ic_agregar_producto.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialog_agregar_a_factura))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
@@ -81,12 +82,21 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                 TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreProducto);
                 TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.precio_item);
                 TextView txtStockProductoSeleccionado = views.findViewById(R.id.txtStock);
+                CardView bajo_stock_visible = views.findViewById(R.id.bajo_stock_visible);
+
+                //Verificar si stock es bajo;
+                if (model.getCantidadProducto() <= 5){
+                    bajo_stock_visible.setVisibility(View.VISIBLE);
+                }else{
+                    bajo_stock_visible.setVisibility(View.INVISIBLE);
+                }
 
                 txtNombreProductoSeleccionado.setText(model.getNombreProdcuto());
                 txtPrecioProductoSeleccionado.setText("Precio item: " + "$ " + String.valueOf(model.getPrecioProducto()));
                 txtStockProductoSeleccionado.setText("Stock: " + String.valueOf(model.getCantidadProducto()));
 
                 cantidad_stock_txt.addTextChangedListener(new TextWatcher() {
+                    int resta = 0;
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -101,9 +111,16 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                             int cantidadStockInventario = model.getCantidadProducto();
                             //CANTIDAD INGRESADA POR EL USUARIO
                             int canitdadIngresad = Integer.parseInt(cantidad_stock_txt.getText().toString());
-                            int resta = cantidadStockInventario - canitdadIngresad;
+                            resta = cantidadStockInventario - canitdadIngresad;
                             txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(resta));
                             cantidad_a_restar_stock = resta;
+                        }
+
+                        //cambiar stock en bajo o disabled
+                        if (resta <= 5){
+                            bajo_stock_visible.setVisibility(View.VISIBLE);
+                        }else {
+                            bajo_stock_visible.setVisibility(View.INVISIBLE);
                         }
 
                     }
@@ -147,6 +164,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                                         modeloVenta.setNombreProdcuto(model.getNombreProdcuto());
                                         modeloVenta.setCantidadProducto(cantidad);
                                         modeloVenta.setValorTotalCalculadoAutomatico(total);
+                                        modeloVenta.setPrecioTotaldeTodosLosProductos(total);
                                         databaseReference2.child(key).child(id).setValue(modeloVenta);
                                     }
 

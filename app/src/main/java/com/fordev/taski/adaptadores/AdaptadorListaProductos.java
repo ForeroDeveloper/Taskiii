@@ -34,7 +34,7 @@ public class AdaptadorListaProductos extends FirebaseRecyclerAdapter<ModeloVenta
         if (model.getPrecioFinalPorElUsuario()!=0){
             holder.txtTotal.setText("$ " + String.valueOf(nformat.format(model.getPrecioFinalPorElUsuario())));
         }else{
-            holder.txtTotal.setText(String.valueOf(model.getValorTotalCalculadoAutomatico()));
+            holder.txtTotal.setText("$ " + String.valueOf(nformat.format(model.getValorTotalCalculadoAutomatico())));
         }
 
 

@@ -44,6 +44,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class VentasNegocio extends AppCompatActivity {
@@ -225,21 +226,16 @@ public class VentasNegocio extends AppCompatActivity {
                         modeloVenta.setPrecioTotaldeTodosLosProductos(valorTotalCalculadoAutomatico);
                         sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
                         modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
-                        txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
+                       // txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
                     }else{
                         modeloVenta.setPrecioTotaldeTodosLosProductos(precio_final_producto);
                         sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
                         modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
-                        txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
+                       // txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
                     }
 
                     activarBotonFinalizar(1);
-
                     databaseReference.child(key).child(id).setValue(modeloVenta);
-                    cabeceraFacturas.setVisibility(View.VISIBLE);
-                    btnLimpiar.setVisibility(View.VISIBLE);
-                    imgIlustra.setVisibility(View.GONE);
-                    btnGuardarFactura.setVisibility(View.VISIBLE);
 
 
                 }
@@ -372,7 +368,6 @@ public class VentasNegocio extends AppCompatActivity {
             }
         });
 
-
         btnLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -387,7 +382,7 @@ public class VentasNegocio extends AppCompatActivity {
         });
 
 
-
+        //FIREBASE
         listaDeProductos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         FirebaseRecyclerOptions<ModeloVenta> options =
                 new FirebaseRecyclerOptions.Builder<ModeloVenta>()
@@ -420,14 +415,60 @@ public class VentasNegocio extends AppCompatActivity {
         return  tiempounix;
     }
 
+    private void hacerSumaTotalDeProductos() {
+        databaseReference.child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int sum = 0;
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                    Object suma = map.get("precioTotaldeTodosLosProductos");
+                    int total = Integer.parseInt(String.valueOf(suma));
+                    sum += total;
+                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
         activarBotonFinalizar(0);
+        hacerSumaTotalDeProductos();
+        hacerSumaDeItems();
         adaptadorListaProductos.startListening();
         adaptadorListaProductos.notifyDataSetChanged();
     }
 
+    private void hacerSumaDeItems() {
+        adaptadorListaProductos.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (adaptadorListaProductos.getItemCount()==0){
+                    cabeceraFacturas.setVisibility(View.GONE);
+                    btnLimpiar.setVisibility(View.GONE);
+                    imgIlustra.setVisibility(View.VISIBLE);
+                    btnGuardarFactura.setVisibility(View.INVISIBLE);
+                }else {
+                    cabeceraFacturas.setVisibility(View.VISIBLE);
+                    btnLimpiar.setVisibility(View.VISIBLE);
+                    imgIlustra.setVisibility(View.GONE);
+                    btnGuardarFactura.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
 
 
     @Override
@@ -447,14 +488,6 @@ public class VentasNegocio extends AppCompatActivity {
         modeloIdFactura.setIdFacturaActual(key);
         databaseReference.child("FacturaActual").child(key).setValue(modeloIdFactura);
         startActivity(intent);
-        cabeceraFacturas.setVisibility(View.VISIBLE);
-        btnLimpiar.setVisibility(View.VISIBLE);
-        imgIlustra.setVisibility(View.GONE);
-        btnGuardarFactura.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

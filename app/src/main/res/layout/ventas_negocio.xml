@@ -58,7 +58,7 @@
             android:fontFamily="@font/nunito_black"
             android:layout_width="wrap_content"
             android:textColor="#08B36D"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="15dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -154,6 +154,7 @@
                 <TextView
                     android:fontFamily="@font/nunito_black"
                     android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:textColor="#08B36D"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -200,6 +201,7 @@
                     android:fontFamily="@font/nunito_black"
                     android:layout_width="wrap_content"
                     android:textColor="#08B36D"
+                    android:layout_marginStart="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_height="wrap_content"
                     android:text="Cantidad"/>
@@ -237,7 +239,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:fontFamily="@font/nunito_black"
             android:layout_width="wrap_content"
             android:textColor="#08B36D"
