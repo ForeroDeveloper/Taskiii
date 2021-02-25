@@ -55,7 +55,7 @@
                 android:layout_below="@+id/nombreProducto"
                 android:layout_toEndOf="@+id/icon_estado_de_pago"
                 android:id="@+id/precio_item"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -69,7 +69,7 @@
                 android:layout_toEndOf="@+id/icon_estado_de_pago"
                 android:id="@+id/txtStock"
                 android:layout_width="110dp"
-                android:textSize="11dp"
+                android:textSize="11sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
@@ -97,10 +97,9 @@
                         android:layout_height="wrap_content"
                         android:textColor="#EC4F3C"
                         android:text="Bajo stock"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_marginStart="5dp"
                         android:fontFamily="@font/din"
-                        android:layout_toEndOf="@+id/card1"
                         android:layout_centerInParent="true"/>
 
                 </RelativeLayout>
@@ -115,8 +114,17 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_arrow_rigth"
-                app:tint="@color/gris_claro" />
+                android:src="@drawable/ic_agregar"/>
+
+            <ImageView
+                android:id="@+id/ic_editar_item_inventario"
+                android:layout_toStartOf="@+id/ic_agregar_producto"
+                android:layout_marginEnd="30dp"
+                android:padding="1dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_editar_inventario"/>
 
         </RelativeLayout>
 

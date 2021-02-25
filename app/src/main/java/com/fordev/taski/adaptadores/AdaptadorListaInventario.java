@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+
+import es.dmoral.toasty.Toasty;
 
 public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInventario, AdaptadorListaInventario.myViewHolder>
 {
@@ -111,6 +114,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                 TextInputLayout cantidad_stock = views.findViewById(R.id.cantidad);
                 TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
                 MaterialButton btn_guardar_cantidad = views.findViewById(R.id.btn_guardar_producto_inventario);
+                TextView btn_dismiss = views.findViewById(R.id.btn_cancelar);
                 TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreProducto);
                 TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.precio_item);
                 TextView txtStockProductoSeleccionado = views.findViewById(R.id.txtStock);
@@ -183,7 +187,18 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                                         modeloVenta.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
                                         modeloVenta.setTimeStamp(getFechaMilisegundos() * -1);
                                         modeloVenta.setPrecioTotaldeTodosLosProductos(total);
-                                        databaseReference.child(put).setValue(modeloVenta);
+                                        databaseReference.child(put).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toasty.success(holder.ic_agregar_producto.getContext(),"Agregado a la factura correctamente!",Toast.LENGTH_LONG, true).show();
+                                                dialog.dismiss();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toasty.error(holder.ic_agregar_producto.getContext(),"Ocurrio un error al agregar, verificar tu conexion!",Toast.LENGTH_LONG, true).show();
+                                            }
+                                        });
 
 
                                 //update stock dependiento la posicion
@@ -200,7 +215,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                                         }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
+                                        Toast.makeText(holder.ic_agregar_producto.getContext(), "Error al actualizar inventario", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -212,7 +227,139 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                     }
                 });
 
+                btn_dismiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
                 dialog.show();
+            }
+        });
+
+        holder.ic_editar_item_inventario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NumberFormat nformat = new DecimalFormat("##,###,###.##");
+                DialogPlus dialogEdit = DialogPlus.newDialog(holder.ic_editar_item_inventario.getContext())
+                        .setContentHolder(new ViewHolder(R.layout.dialog_editar_inventario))
+                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .setExpanded(true, 1450)
+                        .setContentBackgroundResource(android.R.color.transparent)
+                        .create();
+                View views = dialogEdit.getHolderView();
+
+                TextInputLayout cantidad_stock = views.findViewById(R.id.cantidad);
+                TextInputLayout nombreAEditar = views.findViewById(R.id.nombreProductoEditar);
+                TextInputLayout precioAEditar = views.findViewById(R.id.precio);
+                TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
+                MaterialButton btn_guardar_edicion = views.findViewById(R.id.btn_guardar_edicion);
+                TextView btn_dismiss = views.findViewById(R.id.btn_cancelar);
+                TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreProducto);
+                TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.precio_item);
+                TextView txtStockProductoSeleccionado = views.findViewById(R.id.txtStock);
+                ImageView icon_de_incrementos = views.findViewById(R.id.icon_de_incrementos);
+
+                //Seteos por DEfecto de la base de Datos
+                nombreAEditar.getEditText().setText(model.getNombreProdcuto());
+                precioAEditar.getEditText().setText(String.valueOf(model.getPrecioProducto()));
+                cantidad_stock.getEditText().setText(String.valueOf(model.getCantidadProducto()));
+
+                icon_de_incrementos.setVisibility(View.INVISIBLE);
+
+                txtNombreProductoSeleccionado.setText(model.getNombreProdcuto());
+                txtPrecioProductoSeleccionado.setText("Precio item: " + "$ " + String.valueOf(model.getPrecioProducto()));
+                txtStockProductoSeleccionado.setText("Stock Disponible: " + String.valueOf(model.getCantidadProducto()));
+
+                cantidad_stock_txt.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (cantidad_stock.getEditText().getText().toString().isEmpty()){
+                            cantidad_stock.setHint("Ingrese un valor");
+                            txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(model.getCantidadProducto()));
+                            icon_de_incrementos.setVisibility(View.INVISIBLE);
+                        }else{
+                            int cantidadStockInventario = model.getCantidadProducto();
+                            //CANTIDAD INGRESADA POR EL USUARIO
+                            int canitdadIngresad = Integer.parseInt(cantidad_stock_txt.getText().toString());
+
+                            if (canitdadIngresad > cantidadStockInventario){
+                                txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(canitdadIngresad));
+                                icon_de_incrementos.setVisibility(View.VISIBLE);
+                                icon_de_incrementos.setImageDrawable(holder.ic_editar_item_inventario.getContext().getResources().getDrawable(R.drawable.ic_incremento));
+                            }else {
+                                txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(canitdadIngresad));
+                                icon_de_incrementos.setVisibility(View.VISIBLE);
+                                icon_de_incrementos.setImageDrawable(holder.ic_editar_item_inventario.getContext().getResources().getDrawable(R.drawable.ic_decremento));
+                            }
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+
+                btn_guardar_edicion.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        if (nombreAEditar.getEditText().getText().toString().isEmpty()) {
+                            nombreAEditar.setError("Ingrese un nombre");
+                        }else if (precioAEditar.getEditText().getText().toString().isEmpty()){
+                            precioAEditar.setError("Ingrese un precio");
+                        }else if (cantidad_stock.getEditText().getText().toString().isEmpty()){
+                            cantidad_stock.setError("Ingrese una cantidad");
+                        } else {
+                            String nombreEditado = nombreAEditar.getEditText().getText().toString();
+                            int precioEditado = Integer.parseInt(precioAEditar.getEditText().getText().toString());
+                            int cantidadEditado = Integer.parseInt(cantidad_stock.getEditText().getText().toString());
+                        //GUARDAR Y ACTUALIZAR DATOS
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("nombreProdcuto",nombreEditado);
+                        map.put("precioProducto",precioEditado);
+                        map.put("cantidadProducto",cantidadEditado);
+
+                        firebaseDatabase2.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .child("Inventario").child("productos").child(getRef(position).getKey()).updateChildren(map)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toasty.success(holder.ic_agregar_producto.getContext(),"Editado Correctamente!",Toast.LENGTH_LONG, true).show();
+                                        dialogEdit.dismiss();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toasty.error(holder.ic_agregar_producto.getContext(),"Hubo un error al editar!",Toast.LENGTH_LONG, true).show();
+                            }
+                        });
+
+                        }
+
+                    }
+                });
+
+                btn_dismiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogEdit.dismiss();
+                    }
+                });
+
+                dialogEdit.show();
             }
         });
 
@@ -230,7 +377,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
 
         TextView txtProducto, txtStockCantidad,txtPrecioItem;
         CardView bajoStockView;
-        ImageView ic_agregar_producto;
+        ImageView ic_agregar_producto,ic_editar_item_inventario;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -238,6 +385,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
             txtStockCantidad=(TextView)itemView.findViewById(R.id.txtStock);
             bajoStockView=(CardView) itemView.findViewById(R.id.bajo_stock_visible);
             ic_agregar_producto=(ImageView) itemView.findViewById(R.id.ic_agregar_producto);
+            ic_editar_item_inventario=(ImageView) itemView.findViewById(R.id.ic_editar_item_inventario);
             txtPrecioItem=(TextView) itemView.findViewById(R.id.precio_item);
 
         }

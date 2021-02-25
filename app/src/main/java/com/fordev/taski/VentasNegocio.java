@@ -29,6 +29,7 @@ import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.modelos.ModeloIdFactura;
 import com.fordev.taski.modelos.ModeloVenta;
 import com.fordev.taski.modelos.ModeloVentaInventario;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -65,10 +66,11 @@ public class VentasNegocio extends AppCompatActivity {
     long maxid = 0;
     int precioFinal;
     int totalDeFactura = 0;
+    int totalDeFacturaInventario = 0;
     boolean estadoDePago = true;
-    boolean bandera = false;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
     String key;
+    String key2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,17 +87,15 @@ public class VentasNegocio extends AppCompatActivity {
         listaDeProductos = findViewById(R.id.lista_de_productos_venta);
         lista_de_productos_venta_inventario = findViewById(R.id.lista_de_productos_venta_inventario);
         //Edit Text Material Text
-        txtprecioUnitario = findViewById(R.id.txtprecio);
+        txtprecioUnitario = findViewById(R.id.txtprecioUnitario);
         txtcantidadProducto = findViewById(R.id.txtcantidad);
         txtprecioFinalPorUsuario = findViewById(R.id.txtprecioFinal);
         btnLimpiar=(MaterialButton) findViewById(R.id.btnLimpiar);
         btnInventario=(MaterialButton) findViewById(R.id.btnInventario);
         cabeceraFacturas =(LinearLayout) findViewById(R.id.cabecera_factura);
         imgIlustra =(LinearLayout) findViewById(R.id.crear_venta_ilustra);
-        bandera = false;
 
         btnLimpiar.setVisibility(View.GONE);
-
 
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
@@ -104,9 +104,9 @@ public class VentasNegocio extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("facturas").child("fechas").child("listaDeFacturas");
 
-        //key
+        //keys
         key = databaseReference.push().getKey();
-        String key2 = databaseReference.push().getKey();
+        key2 = databaseReference.push().getKey();
 
         btnInventario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,8 +115,6 @@ public class VentasNegocio extends AppCompatActivity {
                 intent.putExtra("key", key);
                 FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("FacturaActualKey").setValue(key2);
-/*        ModeloIdFactura modeloIdFactura = new ModeloIdFactura();
-        modeloIdFactura.setIdFacturaActual(key);*/
                 startActivity(intent);
             }
         });
@@ -248,7 +246,15 @@ public class VentasNegocio extends AppCompatActivity {
 
                     }
 
-                    databaseReference.child(key).child(id).setValue(modeloVenta);
+                    databaseReference.child(key).child(id).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            edtProducto.getEditText().setText("");
+                            precioUnitario.getEditText().setText("");
+                            cantidadProducto.getEditText().setText("");
+                            precioFinalPorUsuario.getEditText().setText("");
+                        }
+                    });
 
 
                 }
@@ -297,7 +303,7 @@ public class VentasNegocio extends AppCompatActivity {
                         "Tranferencia bancaria",
                         "Otro"
                 };
-                txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura)));
+                txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura+totalDeFacturaInventario)));
 
                 //CLick Listener and others
                 radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -350,19 +356,20 @@ public class VentasNegocio extends AppCompatActivity {
 
                         ModeloFacturaCreada modeloFacturaCreada = new ModeloFacturaCreada();
                         modeloFacturaCreada.setId(key);
+                        modeloFacturaCreada.setIdInventario(key2);
                         modeloFacturaCreada.setCliente(datos_cliente);
                         modeloFacturaCreada.setConceptoDeVenta(datos_concepto_venta);
                         modeloFacturaCreada.setNotasInternas(datos_notas_internas);
                         modeloFacturaCreada.setEstadoDePago(estadoDePago);
-                        modeloFacturaCreada.setTotalCalculado(totalDeFactura);
+                        modeloFacturaCreada.setTotalCalculado(totalDeFactura+totalDeFacturaInventario);
                         modeloFacturaCreada.setMetodoDePago(datos_metodo_de_pago);
                         modeloFacturaCreada.setFechaRegistro(sdf.format(Cal.getTime()));
                         modeloFacturaCreada.setTimeStamp(getFechaMilisegundos() * -1);
                         modeloFacturaCreada.setYear(String.valueOf(Cal.get(Calendar.YEAR)));
                         SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
                         modeloFacturaCreada.setMonth(String.valueOf(sdf2.format(Cal.getTime())));
-
                         modeloFacturaCreada.setDay(String.valueOf(Cal.get(Calendar.DAY_OF_MONTH)));
+
                         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .child("facturas").child("facturasCreadas").child(String.valueOf(modeloFacturaCreada.getTimeStamp())).setValue(modeloFacturaCreada);
 
@@ -442,8 +449,43 @@ public class VentasNegocio extends AppCompatActivity {
                     Object suma = map.get("precioTotaldeTodosLosProductos");
                     int total = Integer.parseInt(String.valueOf(suma));
                     sum += total;
-                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
                     totalDeFactura = sum;
+                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(totalDeFactura+totalDeFacturaInventario)));
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void hacerSumaTotalDeProductosInventario() {
+
+        FirebaseDatabase firebaseDatabase1;
+        DatabaseReference databaseReference1;
+
+        firebaseDatabase1 = FirebaseDatabase.getInstance();
+
+        databaseReference1 = firebaseDatabase1.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("facturas").child("fechas").child("listaDeFacturasIV");
+
+        databaseReference1.child(key2).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int sum = 0;
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                    Object suma = map.get("precioTotaldeTodosLosProductos");
+                    int total = Integer.parseInt(String.valueOf(suma));
+                    sum += total;
+                    totalDeFacturaInventario = sum;
+                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(totalDeFactura+totalDeFacturaInventario)));
                 }
 
 
@@ -461,6 +503,7 @@ public class VentasNegocio extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         hacerSumaTotalDeProductos();
+        hacerSumaTotalDeProductosInventario();
         hacerSumaDeItems();
         hacerSumaDeItems2();
         adaptadorListaProductos.startListening();

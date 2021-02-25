@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Productos"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="@color/negro"
             android:fontFamily="@font/mazzard"/>
 
@@ -44,6 +44,7 @@
     <LinearLayout
         android:id="@+id/estasts"
         android:weightSum="2"
+        android:baselineAligned="false"
         android:layout_below="@+id/cabecera"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Productos"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:fontFamily="@font/mazzard"/>
 
             <TextView
@@ -69,8 +70,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="128"
-                android:textSize="34dp"
+                android:text="00"
+                android:textSize="34sp"
                 android:textColor="@color/negro"
                 android:fontFamily="@font/mazzard"/>
 
@@ -137,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mazzard"
                 android:text="Total Stock"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtTotalStock"
@@ -145,9 +146,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/mazzard"
-                android:text="2.350"
+                android:text="00"
                 android:textColor="@color/negro"
-                android:textSize="34dp" />
+                android:textSize="34sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_marginBottom="5dp"
@@ -201,9 +202,36 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+
+    <TextView
+        android:id="@+id/titulo"
         android:layout_below="@+id/estasts"
-        android:layout_margin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecciona los productos"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:textColor="@color/negro"
+        android:fontFamily="@font/mazzard"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/regresar"
+        android:layout_below="@+id/titulo"
+        android:layout_width="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="50dp"
+        app:cornerRadius="20dp"
+        android:backgroundTint="#ECF5EE"
+        android:textColor="@color/verde"
+        android:text="Regresar a la factura"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/regresar"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/cabeceraLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -213,7 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lista de productos"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:fontFamily="@font/mazzard"/>
 
         <ImageView
@@ -234,8 +262,8 @@
         android:layout_below="@+id/cabeceraLista"
         android:id="@+id/lista_de_productos_inventario"
         android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.button.MaterialButton
@@ -247,8 +275,8 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16sp"
         app:cornerRadius="20dp"
-        android:textSize="12dp"
-        android:text="Agregar Producto"
+        android:textSize="12sp"
+        android:text="Agregar nuevo Producto"
         app:icon="@drawable/ic_add"
         app:iconTint="@color/white"
         android:textColor="@color/white"

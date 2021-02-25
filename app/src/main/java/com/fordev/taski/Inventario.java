@@ -44,7 +44,7 @@ public class Inventario extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     RecyclerView listaDeProductos;
     AdaptadorListaInventario adaptadorListaInventario;
-    MaterialButton faq_add;
+    MaterialButton faq_add,regresar;
     TextView totalProductos, txtTotalStock;
     ImageView prueba;
     public String keyy;
@@ -57,6 +57,7 @@ public class Inventario extends AppCompatActivity {
         faq_add = findViewById(R.id.faq_inventario);
         totalProductos = findViewById(R.id.txtTotalProductos);
         txtTotalStock = findViewById(R.id.txtTotalStock);
+        regresar = findViewById(R.id.regresar);
         prueba = findViewById(R.id.search);
 
         //Obtener Intent EXTRA
@@ -150,6 +151,13 @@ public class Inventario extends AppCompatActivity {
                 });
 
                 dialogo.show();
+            }
+        });
+
+        regresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
