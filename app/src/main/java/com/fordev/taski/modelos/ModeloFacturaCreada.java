@@ -2,14 +2,14 @@ package com.fordev.taski.modelos;
 
 public class ModeloFacturaCreada {
     String id,conceptoDeVenta,notasInternas,cliente,fechaRegistro,metodoDePago,year,day,month,idInventario;
-    int totalCalculado;
+    int totalCalculado, abonar, abonado;
     Long timeStamp;
     boolean estadoDePago;
 
     public ModeloFacturaCreada() {
     }
 
-    public ModeloFacturaCreada(String id, String conceptoDeVenta, String notasInternas, String cliente, String fechaRegistro, String metodoDePago, String year, String day, String month, String idInventario, int totalCalculado, Long timeStamp, boolean estadoDePago) {
+    public ModeloFacturaCreada(String id, String conceptoDeVenta, String notasInternas, String cliente, String fechaRegistro, String metodoDePago, String year, String day, String month, String idInventario, int totalCalculado, int abonar, int abonado, Long timeStamp, boolean estadoDePago) {
         this.id = id;
         this.conceptoDeVenta = conceptoDeVenta;
         this.notasInternas = notasInternas;
@@ -21,6 +21,8 @@ public class ModeloFacturaCreada {
         this.month = month;
         this.idInventario = idInventario;
         this.totalCalculado = totalCalculado;
+        this.abonar = abonar;
+        this.abonado = abonado;
         this.timeStamp = timeStamp;
         this.estadoDePago = estadoDePago;
     }
@@ -127,5 +129,21 @@ public class ModeloFacturaCreada {
 
     public void setIdInventario(String idInventario) {
         this.idInventario = idInventario;
+    }
+
+    public int getAbonar() {
+        return abonar;
+    }
+
+    public void setAbonar(int abonar) {
+        this.abonar = abonar;
+    }
+
+    public int getAbonado() {
+        return abonado;
+    }
+
+    public void setAbonado(int abonado) {
+        this.abonado = abonado;
     }
 }

@@ -49,6 +49,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.TimeZone;
+import static ir.esfandune.calculatorlibe.CalculatorDialog.easyCalculate;
+
+import es.dmoral.toasty.Toasty;
+import ir.esfandune.calculatorlibe.CalculatorDialog;
 
 public class VentasNegocio extends AppCompatActivity {
 
@@ -62,6 +66,7 @@ public class VentasNegocio extends AppCompatActivity {
     LinearLayout cabeceraFacturas,imgIlustra;
     MaterialButton btnLimpiar,btnGuardarProducto,btnInventario;
     TextView txtCrearVenta,btnGuardarFactura;
+    ImageView atras;
     private int dia,mes,ano;
     long maxid = 0;
     int precioFinal;
@@ -86,6 +91,7 @@ public class VentasNegocio extends AppCompatActivity {
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
         listaDeProductos = findViewById(R.id.lista_de_productos_venta);
         lista_de_productos_venta_inventario = findViewById(R.id.lista_de_productos_venta_inventario);
+        atras = findViewById(R.id.atras);
         //Edit Text Material Text
         txtprecioUnitario = findViewById(R.id.txtprecioUnitario);
         txtcantidadProducto = findViewById(R.id.txtcantidad);
@@ -262,7 +268,12 @@ public class VentasNegocio extends AppCompatActivity {
             }
         });
 
-
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
         btnGuardarFactura.setOnClickListener(new View.OnClickListener() {
@@ -369,9 +380,13 @@ public class VentasNegocio extends AppCompatActivity {
                         SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
                         modeloFacturaCreada.setMonth(String.valueOf(sdf2.format(Cal.getTime())));
                         modeloFacturaCreada.setDay(String.valueOf(Cal.get(Calendar.DAY_OF_MONTH)));
+                        if (!estadoDePago){
+                            modeloFacturaCreada.setAbonar(modeloFacturaCreada.getTotalCalculado());
+                            modeloFacturaCreada.setAbonado(modeloFacturaCreada.getTotalCalculado());
+                        }
 
                         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .child("facturas").child("facturasCreadas").child(String.valueOf(modeloFacturaCreada.getTimeStamp())).setValue(modeloFacturaCreada);
+                                .child("facturas").child("facturasCreadas").child(key).setValue(modeloFacturaCreada);
 
                         //BORRAR DATOS FACTURA ACTUAL
                         borrarDatosDeFacturaActual();
@@ -570,4 +585,12 @@ public class VentasNegocio extends AppCompatActivity {
     }
 
 
+    public void showCalculadora(View view) {
+        new CalculatorDialog(this) {
+            @Override
+            public void onResult(String result) {
+                Toasty.info(VentasNegocio.this,"Resultado: " + result,Toast.LENGTH_LONG, true).show();
+            }
+        }.showDIalog();
+    }
 }

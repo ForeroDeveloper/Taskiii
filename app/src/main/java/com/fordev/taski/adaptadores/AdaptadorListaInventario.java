@@ -223,7 +223,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                             }else {
                                 cantidad_stock.setError("Ingrese un valor !");
                             }
-
+                            dialog.dismiss();
                     }
                 });
 
@@ -265,7 +265,11 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                 //Seteos por DEfecto de la base de Datos
                 nombreAEditar.getEditText().setText(model.getNombreProdcuto());
                 precioAEditar.getEditText().setText(String.valueOf(model.getPrecioProducto()));
-                cantidad_stock.getEditText().setText(String.valueOf(model.getCantidadProducto()));
+                if (model.getCantidadProducto()<0){
+                    cantidad_stock.getEditText().setText(String.valueOf(0));
+                }else {
+                    cantidad_stock.getEditText().setText(String.valueOf(model.getCantidadProducto()));
+                }
 
                 icon_de_incrementos.setVisibility(View.INVISIBLE);
 
@@ -348,6 +352,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                         });
 
                         }
+                        dialogEdit.dismiss();
 
                     }
                 });

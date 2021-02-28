@@ -146,7 +146,7 @@ public class Inventario extends AppCompatActivity {
                             databaseReference.child(id).setValue(modeloInventario);
                             dialogo.dismiss();
                         }
-
+                        dialogo.dismiss();
                     }
                 });
 

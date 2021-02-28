@@ -35,13 +35,14 @@
 
         <ImageView
             android:id="@+id/ic_pregunta"
+            android:onClick="showCalculadora"
             android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:padding="6dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
-            app:tint="@color/primario_oscuro_secundario"
-            android:src="@drawable/ic_ayuda"/>
+            android:src="@drawable/ic_calculadora"/>
 
     </RelativeLayout>
 
@@ -104,7 +105,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_alignParentEnd="true"
                     android:id="@+id/btnInventario"
-                    android:layout_width="120dp"
+                    android:layout_width="140dp"
                     app:cornerRadius="30dp"
                     app:backgroundTint="#057748"
                     android:fontFamily="@font/din"

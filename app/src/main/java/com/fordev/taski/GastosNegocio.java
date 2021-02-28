@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProductosGastos;
@@ -43,6 +44,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import es.dmoral.toasty.Toasty;
+import ir.esfandune.calculatorlibe.CalculatorDialog;
+
 public class GastosNegocio extends AppCompatActivity {
     TextInputLayout edtProducto,precioUnitario,cantidadProducto,precioFinalPorUsuario;
     TextInputEditText txtprecioUnitario,txtcantidadProducto,txtprecioFinalPorUsuario;
@@ -51,8 +55,8 @@ public class GastosNegocio extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     AdaptadorListaProductosGastos adaptadorListaProductosGastos;
     LinearLayout cabeceraFacturas,btnAcciones,imgIlustra;
-    MaterialButton btnLimpiar,btnGuardarFactura,btnGuardarProducto;
-    TextView txtCrearVenta;
+    MaterialButton btnLimpiar,btnGuardarProducto;
+    TextView txtCrearVenta,btnGuardarFactura;
     private int dia,mes,ano;
     long maxid = 0;
     int precioFinal;
@@ -74,12 +78,11 @@ public class GastosNegocio extends AppCompatActivity {
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
         listaDeProductos = findViewById(R.id.lista_de_productos_venta);
         //Edit Text Material Text
-        txtprecioUnitario = findViewById(R.id.txtprecio);
+        txtprecioUnitario = findViewById(R.id.txtprecioUnitario);
         txtcantidadProducto = findViewById(R.id.txtcantidad);
         txtprecioFinalPorUsuario = findViewById(R.id.txtprecioFinal);
         btnLimpiar=(MaterialButton) findViewById(R.id.btnLimpiar);
         cabeceraFacturas =(LinearLayout) findViewById(R.id.cabecera_factura);
-        btnAcciones =(LinearLayout) findViewById(R.id.btnAcciones);
         imgIlustra =(LinearLayout) findViewById(R.id.crear_venta_ilustra);
 
 
@@ -223,17 +226,13 @@ public class GastosNegocio extends AppCompatActivity {
                     }
                     databaseReference.child(key).child(id).setValue(modeloVenta);
                     cabeceraFacturas.setVisibility(View.VISIBLE);
-                    btnAcciones.setVisibility(View.VISIBLE);
                     imgIlustra.setVisibility(View.GONE);
                     btnGuardarFactura.setVisibility(View.VISIBLE);
-
 
                 }
 
             }
         });
-
-
 
 
         btnGuardarFactura.setOnClickListener(new View.OnClickListener() {
@@ -364,11 +363,11 @@ public class GastosNegocio extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("gastos").child("listaDeProductosEnGastos").child(key).removeValue();
                 sum=0;
-                txtCrearVenta.setText("$ 0");
-                cabeceraFacturas.setVisibility(View.INVISIBLE);
-                btnAcciones.setVisibility(View.INVISIBLE);
+                cabeceraFacturas.setVisibility(View.GONE);
+                btnLimpiar.setVisibility(View.GONE);
                 imgIlustra.setVisibility(View.VISIBLE);
                 btnGuardarFactura.setVisibility(View.INVISIBLE);
+                txtCrearVenta.setText("$ 0");
             }
         });
 
@@ -398,9 +397,31 @@ public class GastosNegocio extends AppCompatActivity {
         return  tiempounix;
     }
 
+    private void hacerSumaDeItems() {
+        adaptadorListaProductosGastos.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (adaptadorListaProductosGastos.getItemCount()==0){
+                    cabeceraFacturas.setVisibility(View.GONE);
+                    btnLimpiar.setVisibility(View.GONE);
+                    imgIlustra.setVisibility(View.VISIBLE);
+                    btnGuardarFactura.setVisibility(View.INVISIBLE);
+                }else {
+                    cabeceraFacturas.setVisibility(View.VISIBLE);
+                    btnLimpiar.setVisibility(View.VISIBLE);
+                    imgIlustra.setVisibility(View.GONE);
+                    btnGuardarFactura.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
+        hacerSumaDeItems();
         adaptadorListaProductosGastos.startListening();
         adaptadorListaProductosGastos.notifyDataSetChanged();
 
@@ -415,5 +436,14 @@ public class GastosNegocio extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    public void showCalculadora(View view) {
+        new CalculatorDialog(this) {
+            @Override
+            public void onResult(String result) {
+                Toasty.info(GastosNegocio.this,"Resultado: " + result, Toast.LENGTH_LONG, true).show();
+            }
+        }.showDIalog();
     }
 }

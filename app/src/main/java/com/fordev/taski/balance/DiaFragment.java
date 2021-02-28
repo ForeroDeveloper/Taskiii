@@ -1,6 +1,7 @@
 package com.fordev.taski.balance;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,10 +19,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.VentasNegocio;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.otros.ProgressAnimation;
 import com.fordev.taski.R;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +61,7 @@ public class DiaFragment extends Fragment {
     ImageView ic_sumar_fecha, ic_restar_fecha,ic_select_fecha_dialog;
     CardView sinContenido;
     RelativeLayout sinContenidoDos;
+    MaterialButton nuevaFactura;
     private int dia,mes,ano;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     DatabaseReference databaseReference;
@@ -98,7 +102,7 @@ public class DiaFragment extends Fragment {
         listaDeFacturas = view.findViewById(R.id.lista_de_facturas_dia);
         fechaActual = view.findViewById(R.id.txtFechaSelect);
         totalBalance = view.findViewById(R.id.totalDeuda);
-        ventasEnDeuda = view.findViewById(R.id.ventasEnDeuda);
+        ventasEnDeuda = view.findViewById(R.id.totalPorCobrarPagado);
         totalDeVentas = view.findViewById(R.id.totalDeVentas);
         sinContenido = view.findViewById(R.id.sinContenido);
         sinContenidoDos = view.findViewById(R.id.titulos);
@@ -108,8 +112,17 @@ public class DiaFragment extends Fragment {
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         ic_select_fecha_dialog = view.findViewById(R.id.ic_seleccionar_fecha);
+        nuevaFactura = view.findViewById(R.id.nuevaFactura);
         //seteos
         fechaActual.setText(sdf.format(calendar.getTime()));
+
+
+        nuevaFactura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VentasNegocio.class));
+            }
+        });
 
 
         ic_sumar_fecha.setOnClickListener(new View.OnClickListener() {

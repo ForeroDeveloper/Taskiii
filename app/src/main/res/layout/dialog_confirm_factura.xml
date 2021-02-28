@@ -166,7 +166,7 @@
                         app:boxCornerRadiusTopEnd="20dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         app:boxStrokeColor="@color/primario"
-                        android:hint="Met. Pago">
+                        android:hint="Pago - Metodo">
 
                         <AutoCompleteTextView
                             android:id="@+id/metodoDePago"
@@ -182,7 +182,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_below="@id/linear"
-                    app:startIconDrawable="@drawable/ic_persona"
+                    app:startIconDrawable="@drawable/ic_person"
                     android:id="@+id/edtCliente"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
@@ -192,7 +192,8 @@
                     app:boxCornerRadiusBottomStart="20dp"
                     app:boxCornerRadiusTopStart="20dp"
                     app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     app:boxStrokeColor="@color/primario"
                     android:hint="Cliente">
 

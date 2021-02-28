@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.R;
-import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturasEnGastos;
-import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.modelos.ModeloFacturaCreadaGastos;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -101,7 +99,7 @@ public class MesFragmentGastos extends Fragment {
         listaDeFacturas = view.findViewById(R.id.lista_de_facturas_dia);
         fechaActual = view.findViewById(R.id.txtFechaSelect);
         totalDeuda = view.findViewById(R.id.totalDeuda);//si
-        ventasEnDeuda = view.findViewById(R.id.ventasEnDeuda);
+        ventasEnDeuda = view.findViewById(R.id.totalPorCobrarPagado);
         totalDeGastos = view.findViewById(R.id.totalDeGastos);
         sinContenido = view.findViewById(R.id.sinContenido);
         sinContenidoDos = view.findViewById(R.id.titulos);

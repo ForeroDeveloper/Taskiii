@@ -4,9 +4,449 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_pantallas"
     tools:context=".GastosNegocio">
 
     <RelativeLayout
+        android:id="@+id/superior"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:id="@+id/atras"
+            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:tint="@color/primario_oscuro_secundario"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_arrow_left"/>
+        <TextView
+            android:id="@+id/crear_venta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear Gasto"
+            android:fontFamily="@font/din"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/primario_oscuro_secundario"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/ic_pregunta"
+            android:onClick="showCalculadora"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:padding="6dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_calculadora"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/superior"
+        android:elevation="3dp"
+        android:id="@+id/crear"
+        android:background="@drawable/cabecera_guardar_factura_venta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:fontFamily="@font/nunito_black"
+            android:layout_width="wrap_content"
+            android:textColor="#FF2A26"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Producto / servicio"/>
+
+        <RelativeLayout
+            android:id="@+id/separadorDeProducto"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nombreProducto"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/btnInventario"
+                android:hint="Ej: Vestido"
+                app:boxBackgroundColor="#FFE8E9"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeColor="#FF2A26"
+                app:boxStrokeWidth="0dp"
+                app:helperText="Ej: Vestido"
+                app:helperTextEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtProductoNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/din"
+                    android:inputType="textCapWords" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btnInventario"
+                android:layout_width="140dp"
+                app:cornerRadius="30dp"
+                app:backgroundTint="#AA1C19"
+                android:fontFamily="@font/din"
+                android:layout_height="60dp"
+                android:text="proveedores"
+                android:textSize="14sp"/>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:baselineAligned="false"
+            android:id="@+id/separadorDePuniYCantidad"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/nunito_black"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="#FF2A26"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Precio / P. Unitario"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/precio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="#FF2A26"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxBackgroundColor="#FFE8E9"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:helperTextEnabled="true"
+                    app:prefixText="$ "
+                    app:helperText="Ej: $ 1.500"
+                    android:hint="$ 1.500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtprecioUnitario"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:fontFamily="@font/din"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/nunito_black"
+                    android:layout_width="wrap_content"
+                    android:textColor="#FF2A26"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cantidad"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="#FF2A26"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxBackgroundColor="#FFE8E9"
+                    app:boxStrokeWidth="0dp"
+                    app:helperTextEnabled="true"
+                    app:helperText="Ej: 150"
+                    app:hintEnabled="false"
+                    android:hint="500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtcantidad"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:gravity="center"
+                        android:fontFamily="@font/din"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/nunito_black"
+            android:layout_width="wrap_content"
+            android:textColor="#FF2A26"
+            android:layout_height="wrap_content"
+            android:text="Precio Final"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/precioFinal"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="#FF2A26"
+            app:helperTextEnabled="false"
+            app:boxCornerRadiusBottomStart="30dp"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxCornerRadiusBottomEnd="30dp"
+            app:boxCornerRadiusTopEnd="30dp"
+            app:boxBackgroundColor="#FFE8E9"
+            app:prefixText="$ "
+            app:helperText="Automatico"
+            app:hintEnabled="false"
+            app:boxStrokeWidth="0dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtprecioFinal"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/din"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/add"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/btnGuardarFactura"
+                android:background="@drawable/finalizar_gasto_design"
+                android:layout_width="140dp"
+                android:text="Finalizar Venta"
+                android:gravity="center"
+                android:fontFamily="@font/din"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:textColor="#FF2A26"
+                android:layout_height="45dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btnGuardar"
+                android:layout_width="140dp"
+                app:cornerRadius="30dp"
+                android:backgroundTint="#FF2A26"
+                android:fontFamily="@font/din"
+                android:layout_marginEnd="20dp"
+                android:layout_height="60dp"
+                android:text="agreagar"
+                android:textSize="14sp"/>
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_below="@+id/crear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/crear_venta_ilustra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/taski_crear_venta"/>
+
+                <TextView
+                    android:id="@+id/crear_venta_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="¡Crea tu gasto aquí!"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/din"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:visibility="invisible"
+                android:id="@+id/cabecera_factura"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/cabecera_factura"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/txtProducto"
+                    android:layout_margin="5dp"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Producto"
+                    android:fontFamily="@font/din"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtCantidad"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="   cantidad"
+                        android:fontFamily="@font/din"/>
+
+                    <TextView
+                        android:id="@+id/txtTotal"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="end"
+                        android:paddingEnd="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Precio"
+                        android:fontFamily="@font/din"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lista_de_productos_venta"
+                android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lista_de_productos_venta_inventario"
+                android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/btnLimpiar"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="@color/rosado"
+                    android:layout_width="150dp"
+                    android:layout_height="45dp"
+                    android:text="Limpiar"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="20dp"
+                    app:icon="@drawable/ic_borrar"
+                    app:iconPadding="2dp"
+                    app:iconGravity="start"/>
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+<!--    <RelativeLayout
         android:id="@+id/superior"
         android:layout_width="match_parent"
         android:elevation="5dp"
@@ -290,6 +730,6 @@
         android:textSize="14sp"
         app:iconPadding="20dp"
         app:iconGravity="textStart"
-        app:icon="@drawable/ic_fac"/>
+        app:icon="@drawable/ic_fac"/>-->
 
 </RelativeLayout>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/cabecera_guardar_factura_dos"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_below="@+id/superior"
+        android:elevation="3dp"
+        android:id="@+id/crear"
+        android:backgroundTint="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:fontFamily="@font/nunito_black"
+            android:layout_width="wrap_content"
+            android:textColor="#00B2EB"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textSize="18dp"
+            android:text="Realiza el abono de tu venta"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:gravity="center_horizontal"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/contenidoPrecios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/txtTotalVenta"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/nunito_black"
+                    android:textColor="@color/negro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$00"/>
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/txtTotalVenta"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/mazzard_light"
+                    android:textColor="@color/gris_claro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Inicial"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_alignParentEnd="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:id="@+id/contenidoPrecios2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/txtFaltante"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/nunito_black"
+                    android:textColor="@color/negro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$00"/>
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/txtFaltante"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/mazzard_light"
+                    android:textColor="@color/gris_claro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Faltante"/>
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+        <TextView
+                android:fontFamily="@font/nunito_black"
+                android:layout_width="wrap_content"
+                android:textColor="#00B2EB"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Cantidad que vas ABONAR:"/>
+
+
+        <RelativeLayout
+            android:id="@+id/separadorDeProducto"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="#08B36D"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxBackgroundColor="#EBF9FD"
+                app:boxStrokeWidth="0dp"
+                app:helperTextEnabled="true"
+                app:helperText="Ej: $25.500"
+                app:hintEnabled="false"
+                android:hint="500">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtcantidad"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:fontFamily="@font/din"
+                    android:layout_height="wrap_content"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/add"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/btn_cancelar"
+                android:layout_width="140dp"
+                android:text="Cancelar"
+                android:gravity="center"
+                android:fontFamily="@font/din"
+                android:layout_marginTop="8dp"
+                android:textSize="14dp"
+                android:layout_marginStart="20dp"
+                android:textColor="#00B2EB"
+                android:layout_height="45dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btn_guardar_abono"
+                android:layout_width="140dp"
+                app:cornerRadius="30dp"
+                android:backgroundTint="#00B2EB"
+                android:fontFamily="@font/din"
+                android:layout_marginEnd="20dp"
+                android:layout_height="60dp"
+                android:text="Abonar"
+                android:textSize="14dp"/>
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

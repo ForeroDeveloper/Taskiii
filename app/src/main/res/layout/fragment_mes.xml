@@ -166,7 +166,7 @@
                                 android:textSize="14sp"/>
 
                             <TextView
-                                android:id="@+id/ventasEnDeuda"
+                                android:id="@+id/totalPorCobrarPagado"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="$180.000"
@@ -301,6 +301,7 @@
                             android:textSize="14sp"/>
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/nuevaFactura"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginTop="10dp"
