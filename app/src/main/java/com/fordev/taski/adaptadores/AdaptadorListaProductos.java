@@ -29,8 +29,9 @@ public class AdaptadorListaProductos extends FirebaseRecyclerAdapter<ModeloVenta
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull ModeloVenta model) {
         NumberFormat nformat = new DecimalFormat("##,###,###.##");
+        DecimalFormat format = new DecimalFormat("0.#");
         holder.txtProducto.setText(model.getNombreProdcuto());
-        holder.txtCantidad.setText(String.valueOf(model.getCantidadProducto()));
+        holder.txtCantidad.setText(String.valueOf(format.format(model.getPruebaDouble())));
         if (model.getPrecioFinalPorElUsuario()!=0){
             holder.txtTotal.setText("$ " + String.valueOf(nformat.format(model.getPrecioFinalPorElUsuario())));
         }else{

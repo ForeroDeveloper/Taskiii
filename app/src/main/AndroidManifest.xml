@@ -10,16 +10,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:forceDarkAllowed="false"
+        android:name=".Persistencia"
         android:theme="@style/Theme.Taski">
-        <activity android:name=".DetallesFacturaVentas"></activity>
+        <activity android:name=".DetallesFacturaVentas"/>
         <activity android:name=".Inventario" />
+        <activity android:name=".CreacionDeRecibo"/>
         <activity android:name=".GastosNegocio" />
+        <activity android:name=".DetallesFacturaGastos" />
         <activity android:name=".VentasNegocio" />
         <activity android:name=".UserMenuPrincipal" />
         <activity android:name=".DatosUsuarioDashboard" />
         <activity android:name=".VerificationOTP" />
         <activity android:name=".SignUpScreen" />
         <activity android:name=".LoginScreen" />
+        <activity android:name=".CreacionDeReciboCobrar" />
         <activity android:name=".UserDashboard" />
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -28,6 +33,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

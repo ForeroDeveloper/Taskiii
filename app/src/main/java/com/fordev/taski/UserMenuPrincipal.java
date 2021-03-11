@@ -2,6 +2,7 @@ package com.fordev.taski;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
@@ -82,6 +83,11 @@ public class UserMenuPrincipal extends AppCompatActivity {
                         posicion = 1;
                         faq.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.rosado)));
                         break;
+
+                    case R.id.profile:
+                        fragment = new PerfilFragment();
+                        posicion = 2;
+                        break;
             }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_layout
@@ -91,6 +97,10 @@ public class UserMenuPrincipal extends AppCompatActivity {
         }
 
         });
+
+        databaseReference.keepSynced(true);
+        info.keepSynced(true);
+        infoBasica.keepSynced(true);
 
         logoNegocio = findViewById(R.id.logoNegocio);
         nombreNegocio = findViewById(R.id.nameNegocio);

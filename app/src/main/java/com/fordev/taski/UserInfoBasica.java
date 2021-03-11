@@ -1,13 +1,13 @@
 package com.fordev.taski;
 
 public class UserInfoBasica {
-    String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez;
+    String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez,ubicacionNegocio,direccionNegocio,telefonoNegocio;
 
 
     public UserInfoBasica() {
     }
 
-    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez) {
+    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio) {
         this.nombreNegocio = nombreNegocio;
         this.nitNegocio = nitNegocio;
         this.nombrePropietario = nombrePropietario;
@@ -15,6 +15,9 @@ public class UserInfoBasica {
         this.numeroDeDocumento = numeroDeDocumento;
         this.correoElectronico = correoElectronico;
         this.primeraVez = primeraVez;
+        this.ubicacionNegocio = ubicacionNegocio;
+        this.direccionNegocio = direccionNegocio;
+        this.telefonoNegocio = telefonoNegocio;
     }
 
     public String getNombreNegocio() {
@@ -71,5 +74,29 @@ public class UserInfoBasica {
 
     public void setPrimeraVez(String primeraVez) {
         this.primeraVez = primeraVez;
+    }
+
+    public String getUbicacionNegocio() {
+        return ubicacionNegocio;
+    }
+
+    public void setUbicacionNegocio(String ubicacionNegocio) {
+        this.ubicacionNegocio = ubicacionNegocio;
+    }
+
+    public String getDireccionNegocio() {
+        return direccionNegocio;
+    }
+
+    public void setDireccionNegocio(String direccionNegocio) {
+        this.direccionNegocio = direccionNegocio;
+    }
+
+    public String getTelefonoNegocio() {
+        return telefonoNegocio;
+    }
+
+    public void setTelefonoNegocio(String telefonoNegocio) {
+        this.telefonoNegocio = telefonoNegocio;
     }
 }

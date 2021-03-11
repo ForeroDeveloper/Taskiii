@@ -138,7 +138,7 @@
                     android:textColor="#08B36D"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Precio Unitario"/>
+                    android:text="Precio U/kg..."/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/precio"
@@ -162,7 +162,7 @@
                         android:id="@+id/txtprecioUnitario"
                         android:gravity="center"
                         android:layout_width="match_parent"
-                        android:inputType="number"
+                        android:inputType="numberDecimal|phone"
                         android:fontFamily="@font/din"
                         android:layout_height="wrap_content"
                         />
@@ -199,14 +199,14 @@
                     app:boxBackgroundColor="#EAF8F2"
                     app:boxStrokeWidth="0dp"
                     app:helperTextEnabled="true"
-                    app:helperText="Ej: 150"
+                    app:helperText="Ej: 15 o 15.5"
                     app:hintEnabled="false"
                     android:hint="500">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtcantidad"
                         android:layout_width="match_parent"
-                        android:inputType="number"
+                        android:inputType="numberDecimal|phone"
                         android:gravity="center"
                         android:fontFamily="@font/din"
                         android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                 android:id="@+id/txtprecioFinal"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/din"
-                android:inputType="numberDecimal"
+                android:inputType="numberDecimal|phone"
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>

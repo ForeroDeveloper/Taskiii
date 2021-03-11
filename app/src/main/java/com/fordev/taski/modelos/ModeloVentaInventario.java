@@ -3,12 +3,12 @@ package com.fordev.taski.modelos;
 public class ModeloVentaInventario {
     String nombreProdcuto,fechaRegistro,id;
     Long timeStamp;
-    int precioProducto, cantidadProducto,valorTotalCalculadoAutomatico,precioFinalPorElUsuario,precioTotaldeTodosLosProductos;
+    double precioProducto, cantidadProducto,valorTotalCalculadoAutomatico,precioFinalPorElUsuario,precioTotaldeTodosLosProductos;
 
     public ModeloVentaInventario() {
     }
 
-    public ModeloVentaInventario(String nombreProdcuto, String fechaRegistro, String id, Long timeStamp, int precioProducto, int cantidadProducto, int valorTotalCalculadoAutomatico, int precioFinalPorElUsuario, int precioTotaldeTodosLosProductos) {
+    public ModeloVentaInventario(String nombreProdcuto, String fechaRegistro, String id, Long timeStamp, double precioProducto, double cantidadProducto, double valorTotalCalculadoAutomatico, double precioFinalPorElUsuario, double precioTotaldeTodosLosProductos) {
         this.nombreProdcuto = nombreProdcuto;
         this.fechaRegistro = fechaRegistro;
         this.id = id;
@@ -36,6 +36,14 @@ public class ModeloVentaInventario {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Long getTimeStamp() {
         return timeStamp;
     }
@@ -44,51 +52,43 @@ public class ModeloVentaInventario {
         this.timeStamp = timeStamp;
     }
 
-    public int getPrecioProducto() {
+    public double getPrecioProducto() {
         return precioProducto;
     }
 
-    public void setPrecioProducto(int precioProducto) {
+    public void setPrecioProducto(double precioProducto) {
         this.precioProducto = precioProducto;
     }
 
-    public int getCantidadProducto() {
+    public double getCantidadProducto() {
         return cantidadProducto;
     }
 
-    public void setCantidadProducto(int cantidadProducto) {
+    public void setCantidadProducto(double cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
     }
 
-    public int getValorTotalCalculadoAutomatico() {
+    public double getValorTotalCalculadoAutomatico() {
         return valorTotalCalculadoAutomatico;
     }
 
-    public void setValorTotalCalculadoAutomatico(int valorTotalCalculadoAutomatico) {
+    public void setValorTotalCalculadoAutomatico(double valorTotalCalculadoAutomatico) {
         this.valorTotalCalculadoAutomatico = valorTotalCalculadoAutomatico;
     }
 
-    public int getPrecioFinalPorElUsuario() {
+    public double getPrecioFinalPorElUsuario() {
         return precioFinalPorElUsuario;
     }
 
-    public void setPrecioFinalPorElUsuario(int precioFinalPorElUsuario) {
+    public void setPrecioFinalPorElUsuario(double precioFinalPorElUsuario) {
         this.precioFinalPorElUsuario = precioFinalPorElUsuario;
     }
 
-    public int getPrecioTotaldeTodosLosProductos() {
+    public double getPrecioTotaldeTodosLosProductos() {
         return precioTotaldeTodosLosProductos;
     }
 
-    public void setPrecioTotaldeTodosLosProductos(int precioTotaldeTodosLosProductos) {
+    public void setPrecioTotaldeTodosLosProductos(double precioTotaldeTodosLosProductos) {
         this.precioTotaldeTodosLosProductos = precioTotaldeTodosLosProductos;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

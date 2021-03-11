@@ -1,15 +1,18 @@
 package com.fordev.taski;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -37,6 +40,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.skydoves.balloon.ArrowConstraints;
+import com.skydoves.balloon.ArrowOrientation;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
+import com.skydoves.balloon.BalloonSizeSpec;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -55,8 +63,9 @@ public class GastosNegocio extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     AdaptadorListaProductosGastos adaptadorListaProductosGastos;
     LinearLayout cabeceraFacturas,btnAcciones,imgIlustra;
-    MaterialButton btnLimpiar,btnGuardarProducto;
+    MaterialButton btnLimpiar,btnGuardarProducto,btnProveedores;
     TextView txtCrearVenta,btnGuardarFactura;
+    ImageView atras;
     private int dia,mes,ano;
     long maxid = 0;
     int precioFinal;
@@ -64,6 +73,8 @@ public class GastosNegocio extends AppCompatActivity {
     int totales;
     boolean estadoDePago = true;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
+    String key;
+    String key2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +88,7 @@ public class GastosNegocio extends AppCompatActivity {
         cantidadProducto = findViewById(R.id.cantidad);
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
         listaDeProductos = findViewById(R.id.lista_de_productos_venta);
+        btnProveedores = findViewById(R.id.btnInventario);
         //Edit Text Material Text
         txtprecioUnitario = findViewById(R.id.txtprecioUnitario);
         txtcantidadProducto = findViewById(R.id.txtcantidad);
@@ -84,16 +96,21 @@ public class GastosNegocio extends AppCompatActivity {
         btnLimpiar=(MaterialButton) findViewById(R.id.btnLimpiar);
         cabeceraFacturas =(LinearLayout) findViewById(R.id.cabecera_factura);
         imgIlustra =(LinearLayout) findViewById(R.id.crear_venta_ilustra);
+        atras = findViewById(R.id.atras);
 
-
+        btnLimpiar.setVisibility(View.INVISIBLE);
+        edtProducto.requestFocus();
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         String fecha = getFechaNormal(getFechaMilisegundos());
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("facturas").child("gastos").child("listaDeProductosEnGastos");
+        databaseReference.keepSynced(true);
         //key
-        String key = databaseReference.push().getKey();
+
+        key = databaseReference.push().getKey();
+        key2 = databaseReference.push().getKey();
         //Obtener Cuantos productos agrego al recycler
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -174,8 +191,6 @@ public class GastosNegocio extends AppCompatActivity {
             }
         });
 
-        //remover ultima factura
-        //databaseReference.child("facturas").child("items").removeValue();
 
         btnGuardarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,7 +260,7 @@ public class GastosNegocio extends AppCompatActivity {
                 ano=Cal.get(Calendar.YEAR);
 
                 DialogPlus dialogPlus = DialogPlus.newDialog(btnGuardarFactura.getContext())
-                        .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura))
+                        .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura_gasto))
                         .setExpanded(true,1460)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
@@ -337,10 +352,17 @@ public class GastosNegocio extends AppCompatActivity {
                         modeloFacturaCreada.setYear(String.valueOf(Cal.get(Calendar.YEAR)));
                         SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
                         modeloFacturaCreada.setMonth(String.valueOf(sdf2.format(Cal.getTime())));
+                        modeloFacturaCreada.setAbonado(modeloFacturaCreada.getTotalCalculado());
+                        if (!estadoDePago){
+                            modeloFacturaCreada.setAbonar(modeloFacturaCreada.getTotalCalculado());
+                        }else {
+                            modeloFacturaCreada.setAbonar(0);
+                        }
 
                         modeloFacturaCreada.setDay(String.valueOf(Cal.get(Calendar.DAY_OF_MONTH)));
                         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .child("facturas").child("facturasCreadasEnGastos").child(String.valueOf(modeloFacturaCreada.getTimeStamp())).setValue(modeloFacturaCreada);
+                                .child("facturas").child("facturasCreadasEnGastos").child(key).setValue(modeloFacturaCreada);
+                        finish();
 
                     }
                 });
@@ -361,16 +383,45 @@ public class GastosNegocio extends AppCompatActivity {
         btnLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("gastos").child("listaDeProductosEnGastos").child(key).removeValue();
-                sum=0;
-                cabeceraFacturas.setVisibility(View.GONE);
-                btnLimpiar.setVisibility(View.GONE);
-                imgIlustra.setVisibility(View.VISIBLE);
-                btnGuardarFactura.setVisibility(View.INVISIBLE);
-                txtCrearVenta.setText("$ 0");
+                eliminarDatosFactura();
             }
         });
 
+
+        btnProveedores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Balloon balloon = new Balloon.Builder(GastosNegocio.this)
+                        .setArrowSize(10)
+                        .setArrowOrientation(ArrowOrientation.TOP)
+                        .setArrowConstraints(ArrowConstraints.ALIGN_ANCHOR)
+                        .setArrowPosition(0.5f)
+                        .setWidth(BalloonSizeSpec.WRAP)
+                        .setHeight(65)
+                        .setTextSize(15f)
+                        .setMargin(5)
+                        .setCornerRadius(6f)
+                        .setAlpha(0.9f)
+                        .setText(" En Desarrollo... :) ")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setTextIsHtml(true)
+                        .setIconDrawable(getResources().getDrawable(R.drawable.logo_taski))
+                        .setBackgroundColor(getResources().getColor(R.color.primario))
+                        .setBalloonAnimation(BalloonAnimation.FADE)
+                        .build();
+
+                balloon.showAlignBottom(btnProveedores);
+
+            }
+        });
+
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
         listaDeProductos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -381,6 +432,16 @@ public class GastosNegocio extends AppCompatActivity {
         adaptadorListaProductosGastos =new AdaptadorListaProductosGastos(options);
         listaDeProductos.setAdapter(adaptadorListaProductosGastos);
 
+    }
+
+    private void eliminarDatosFactura() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("gastos").child("listaDeProductosEnGastos").child(key).removeValue();
+        sum=0;
+        cabeceraFacturas.setVisibility(View.GONE);
+        btnLimpiar.setVisibility(View.GONE);
+        imgIlustra.setVisibility(View.VISIBLE);
+        btnGuardarFactura.setVisibility(View.INVISIBLE);
+        txtCrearVenta.setText("$ 0");
     }
 
 
@@ -417,6 +478,14 @@ public class GastosNegocio extends AppCompatActivity {
         });
     }
 
+    private void eliminarFacturaActual() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("gastos").child("listaDeFacturas").child(key).removeValue();
+        txtCrearVenta.setText("$ 0");
+        cabeceraFacturas.setVisibility(View.INVISIBLE);
+        btnLimpiar.setVisibility(View.INVISIBLE);
+        imgIlustra.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     protected void onStart() {
@@ -436,6 +505,7 @@ public class GastosNegocio extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        eliminarDatosFactura();
     }
 
     public void showCalculadora(View view) {

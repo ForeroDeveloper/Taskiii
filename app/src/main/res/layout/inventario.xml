@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Productos"
@@ -20,23 +21,41 @@
             android:textColor="@color/negro"
             android:fontFamily="@font/mazzard"/>
 
-        <ImageView
+<!--        <ImageView
             android:id="@+id/search"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_search"
             android:layout_centerVertical="true"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:tint="@color/gris_claro" />
+            app:tint="@color/gris_claro" />-->
 
-        <ImageView
+        <SearchView
+            android:layout_alignParentEnd="true"
+            android:id="@+id/search_view"
+            android:layout_centerVertical="true"
+            android:queryBackground="@android:color/transparent"
+            app:queryBackground="@android:color/transparent"
+            android:inputType="textCapWords"
+            android:descendantFocusability="afterDescendants"
+            android:queryHint="Buscar Producto"
+            android:iconifiedByDefault="false"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:layout_margin="2dp"
+            android:background="@color/white"
+            android:elevation="0dp">
+
+        </SearchView>
+
+<!--        <ImageView
             android:layout_toStartOf="@+id/search"
             android:layout_marginEnd="30dp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_scanner"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:tint="@color/gris_claro" />
+            app:tint="@color/gris_claro" />-->
 
 
     </RelativeLayout>
@@ -75,12 +94,14 @@
                 android:textColor="@color/negro"
                 android:fontFamily="@font/mazzard"/>
 
+
+<!--
             <androidx.cardview.widget.CardView
                 android:layout_marginBottom="5dp"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#ECF5EE"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
                 app:cardCornerRadius="10dp">
 
                 <RelativeLayout
@@ -88,43 +109,57 @@
                     android:layout_height="match_parent">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/card1"
+                        android:id="@+id/card33"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
                         app:cardBackgroundColor="#458F5A"
-                        android:layout_centerVertical="true"
-                        android:layout_width="20dp"
-                        android:layout_margin="5dp"
-                        app:cardCornerRadius="5dp"
-                        android:layout_height="match_parent">
+                        app:cardCornerRadius="5dp">
 
                         <ImageView
-                            android:src="@drawable/ic_arrow_arriba"
-                            android:layout_margin="2dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:src="@drawable/ic_factura"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_marginStart="5dp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/din"
+                            android:textSize="10sp"
+                            android:text="Total Vendidas"
+                            android:textColor="@color/white" />
 
                     </androidx.cardview.widget.CardView>
 
 
                     <TextView
+                        android:id="@+id/txtTotalVendido"
+                        android:layout_below="@+id/card33"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#458F5A"
-                        android:text="+8.00%"
-                        android:layout_marginStart="5dp"
                         android:fontFamily="@font/din"
-                        android:layout_toEndOf="@+id/card1"
-                        android:layout_centerInParent="true"/>
+                        android:text="$ 135.800"
+                        android:textColor="#458F5A" />
 
 
                 </RelativeLayout>
 
 
-
             </androidx.cardview.widget.CardView>
-
+-->
 
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,57 +185,77 @@
                 android:textColor="@color/negro"
                 android:textSize="34sp" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_marginBottom="5dp"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="#EBF9FD"
-                app:cardCornerRadius="10dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card2"
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="5dp"
-                        app:cardBackgroundColor="#00B2EB"
-                        app:cardCornerRadius="5dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:src="@drawable/ic_arrow_arriba" />
-
-                    </androidx.cardview.widget.CardView>
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@+id/card2"
-                        android:fontFamily="@font/din"
-                        android:text="+2.34%"
-                        android:textColor="#00B2EB" />
-
-
-                </RelativeLayout>
-
-
-            </androidx.cardview.widget.CardView>
 
 
         </LinearLayout>
 
+<!--
+        <androidx.cardview.widget.CardView
+            android:layout_below="@+id/regresar"
+            android:id="@+id/inv"
+            android:layout_marginStart="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#EBF9FD"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card22"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:cardBackgroundColor="#00B2EB"
+                    app:cardCornerRadius="5dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:src="@drawable/ic_cantidad"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/din"
+                        android:textSize="10sp"
+                        android:text="Total Inventario"
+                        android:textColor="@color/white" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/txtTotalInventario"
+                    android:layout_below="@+id/card22"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/din"
+                    android:text="$ 135.800"
+                    android:textColor="#00B2EB" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+-->
+
 
     </LinearLayout>
+
 
 
     <TextView
@@ -221,11 +276,14 @@
         android:layout_centerHorizontal="true"
         android:layout_height="50dp"
         app:cornerRadius="20dp"
+        android:fontFamily="@font/din"
         android:backgroundTint="#ECF5EE"
         android:textColor="@color/verde"
         android:text="Regresar a la factura"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"/>
+
+
 
     <RelativeLayout
         android:layout_below="@+id/regresar"
@@ -254,6 +312,23 @@
             android:layout_height="20dp"
             app:tint="@color/gris_claro" />
 
+<!--
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sinContenidoInventario"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            android:layout_width="240dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp">
+
+
+        </androidx.cardview.widget.CardView>
+-->
+
+
 
     </RelativeLayout>
 
@@ -262,18 +337,81 @@
         android:layout_below="@+id/cabeceraLista"
         android:id="@+id/lista_de_productos_inventario"
         android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_height="wrap_content"/>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ilustracion"
+        android:visibility="invisible"
+        android:layout_below="@+id/cabeceraLista"
+        android:layout_width="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="50dp"
+        android:elevation="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:padding="0dp"
+                android:src="@drawable/taski_contenido"/>
+
+
+            <TextView
+                android:id="@+id/titulo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Aún no tienes productos"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:fontFamily="@font/brandon_grotesque_black"
+                android:textColor="@color/primario"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/descrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Agrega tus productos dando click \nen el boton inferior!"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:fontFamily="@font/brandon_grotesque_light"
+                android:textColor="@color/negro"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/faq_inventario"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:fontFamily="@font/din"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="16sp"
+        android:layout_margin="10dp"
         app:cornerRadius="20dp"
         android:textSize="12sp"
         android:text="Agregar nuevo Producto"

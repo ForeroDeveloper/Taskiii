@@ -2,6 +2,7 @@ package com.fordev.taski;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,9 +47,15 @@ public class Inventario extends AppCompatActivity {
     RecyclerView listaDeProductos;
     AdaptadorListaInventario adaptadorListaInventario;
     MaterialButton faq_add,regresar;
-    TextView totalProductos, txtTotalStock;
+    TextView totalProductos, txtTotalStock,txtTotalInventario;
+    CardView sinContenidoInventario;
     ImageView prueba;
     public String keyy;
+    int sum = 0;
+    DecimalFormat format = new DecimalFormat("0.#");
+    NumberFormat nformat = new DecimalFormat("##,###,###.##");
+    SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +65,16 @@ public class Inventario extends AppCompatActivity {
         faq_add = findViewById(R.id.faq_inventario);
         totalProductos = findViewById(R.id.txtTotalProductos);
         txtTotalStock = findViewById(R.id.txtTotalStock);
+        searchView = findViewById(R.id.search_view);
+        sinContenidoInventario = findViewById(R.id.ilustracion);
+        /*txtTotalInventario = findViewById(R.id.txtTotalInventario);*/
         regresar = findViewById(R.id.regresar);
-        prueba = findViewById(R.id.search);
 
         //Obtener Intent EXTRA
         Bundle bundle = getIntent().getExtras();
         keyy = bundle.getString("key");
+        
+
 
 
         //Inicializar Base de Datos
@@ -71,21 +83,23 @@ public class Inventario extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("Inventario").child("productos");
 
-
-
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int sum = 0;
+                double sum = 0;
 
                 if (snapshot.exists()){
                     for (DataSnapshot ds : snapshot.getChildren()){
                         Map<String, Object> map = (Map<String, Object>) ds.getValue();
                         Object price = map.get("cantidadProducto");
-                        int pValue = Integer.parseInt(String.valueOf(price));
+                        double pValue = Double.parseDouble(String.valueOf(price));
                             sum += pValue;
-                            txtTotalStock.setText(String.valueOf(sum));
+                            txtTotalStock.setText(String.valueOf(format.format(sum)));
+                                sinContenidoInventario.setVisibility(View.GONE);
                     }
+
+                }else {
+                    sinContenidoInventario.setVisibility(View.VISIBLE);
                 }
 
 
@@ -96,6 +110,7 @@ public class Inventario extends AppCompatActivity {
 
             }
         });
+        databaseReference.keepSynced(true);
 
         faq_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +147,8 @@ public class Inventario extends AppCompatActivity {
                         } else {
 
                             String nombreProducto = nombre_Producto.getEditText().getText().toString();
-                            int precioUnitario = Integer.parseInt(precio_unitario.getEditText().getText().toString());
-                            int cantidadStock = Integer.parseInt(cantidad_stock.getEditText().getText().toString());
+                            double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
+                            double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
 
                             ModeloInventario modeloInventario = new ModeloInventario();
 
@@ -144,6 +159,7 @@ public class Inventario extends AppCompatActivity {
                             modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
                             modeloInventario.setId(id);
                             databaseReference.child(id).setValue(modeloInventario);
+                            databaseReference.keepSynced(true);
                             dialogo.dismiss();
                         }
                         dialogo.dismiss();
@@ -161,6 +177,19 @@ public class Inventario extends AppCompatActivity {
             }
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                procesobuscar(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                procesobuscar(s);
+                return false;
+            }
+        });
 
 
         listaDeProductos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -178,11 +207,69 @@ public class Inventario extends AppCompatActivity {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 totalProductos.setText(String.valueOf(adaptadorListaInventario.getItemCount()));
+
             }
         });
 
 
     }
+
+    private void procesobuscar(String s) {
+
+        FirebaseRecyclerOptions<ModeloInventario> options =
+                new FirebaseRecyclerOptions.Builder<ModeloInventario>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Inventario").child("productos")
+                                .orderByChild("nombreProdcuto").startAt(s).endAt(s + "\uf8ff"), ModeloInventario.class)
+                        .build();
+
+        adaptadorListaInventario=new AdaptadorListaInventario(options);
+        adaptadorListaInventario.startListening();
+        listaDeProductos.setAdapter(adaptadorListaInventario);
+        adaptadorListaInventario.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                    totalProductos.setText(String.valueOf(adaptadorListaInventario.getItemCount()));
+            }
+        });
+
+    }
+
+    private void totalDelInventario() {
+
+        FirebaseDatabase firebaseDatabase1;
+        DatabaseReference databaseReference1;
+
+        firebaseDatabase1 = FirebaseDatabase.getInstance();
+
+        databaseReference1 = firebaseDatabase1.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("Inventario").child("productos");
+
+        databaseReference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalInventario = 0;
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                    Object precioProductoObject = map.get("precioProducto");
+                    Object cantidadProductoObject = map.get("cantidadProducto");
+                    int totalPrecio = Integer.parseInt(String.valueOf(precioProductoObject));
+                    int totalCantidad = Integer.parseInt(String.valueOf(cantidadProductoObject));
+                    totalInventario += totalPrecio*totalCantidad;
+                }
+                txtTotalInventario.setText(String.valueOf("$ " + nformat.format(totalInventario)));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        databaseReference1.keepSynced(true);
+    }
+
 
     private String getFechaNormal(Long fechaMilisegundos) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -201,8 +288,10 @@ public class Inventario extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        /*totalDelInventario();*/
         adaptadorListaInventario.startListening();
         adaptadorListaInventario.notifyDataSetChanged();
+
     }
 
     @Override

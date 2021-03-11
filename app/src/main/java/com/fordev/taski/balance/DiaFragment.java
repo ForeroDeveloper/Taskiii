@@ -56,14 +56,14 @@ public class DiaFragment extends Fragment {
     //mis declaraciones
     RecyclerView listaDeFacturas;
     AdaptadorListaFacturas adaptadorListaFacturas;
-    TextView fechaActual,totalBalance,ventasEnDeuda,totalDeVentas;
+    TextView fechaActual,totalBalance,ventasEnDeuda,totalDeVentas,txtTotalFacturas;
     Calendar calendar = Calendar.getInstance();
     ImageView ic_sumar_fecha, ic_restar_fecha,ic_select_fecha_dialog;
     CardView sinContenido;
     RelativeLayout sinContenidoDos;
     MaterialButton nuevaFactura;
     private int dia,mes,ano;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DatabaseReference databaseReference;
     LinearProgressIndicator progressIndicator;
     com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha,faq_sumar_fecha;
@@ -113,8 +113,13 @@ public class DiaFragment extends Fragment {
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         ic_select_fecha_dialog = view.findViewById(R.id.ic_seleccionar_fecha);
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
+        txtTotalFacturas = view.findViewById(R.id.todas);
         //seteos
         fechaActual.setText(sdf.format(calendar.getTime()));
+        sinContenido.setVisibility(View.GONE);
+
+
+
 
 
         nuevaFactura.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +201,8 @@ public class DiaFragment extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
                 child("facturasCreadas");
+        databaseReference.keepSynced(true);
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -216,7 +223,8 @@ public class DiaFragment extends Fragment {
                             Object total = map.get("totalCalculado");
                             int tValue = Integer.parseInt(String.valueOf(total));
                             sumDeuda += tValue;
-                            ventasEnDeuda.setText(String.valueOf("$ " + nformat.format(balanceGeneral)));
+                            totalBalance.setText(String.valueOf("$ " + nformat.format(sumDeuda)));
+
                         }
                     }
 
@@ -234,9 +242,7 @@ public class DiaFragment extends Fragment {
                             Object total = map.get("totalCalculado");
                             int tValue = Integer.parseInt(String.valueOf(total));
                             balanceGeneral += tValue;
-                            totalBalance.setText(String.valueOf("$ " + nformat.format(sumDeuda)));
-                            ventasEnDeuda.setText(String.valueOf("$ " + nformat.format(balanceGeneral)));
-                        }
+                            ventasEnDeuda.setText(String.valueOf("$ " + nformat.format(balanceGeneral)));                        }
                     }
 
                 }
@@ -273,6 +279,11 @@ public class DiaFragment extends Fragment {
                     sinContenidoDos.setVisibility(View.VISIBLE);
                 }
 
+                if (sumDeuda!=0){
+                    sinContenido.setVisibility(View.GONE);
+                    sinContenidoDos.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override
@@ -280,6 +291,7 @@ public class DiaFragment extends Fragment {
 
             }
         });
+
 
         LinearLayoutManager mLayaoutManager = new LinearLayoutManager(getContext());
         mLayaoutManager.setReverseLayout(true);
@@ -300,10 +312,7 @@ public class DiaFragment extends Fragment {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                if (itemCount==0){
-                    sinContenido.setVisibility(View.VISIBLE);
-                }
-
+                txtTotalFacturas.setText(String.valueOf(adaptadorListaFacturas.getItemCount()));
             }
         });
         adaptadorListaFacturas.notifyDataSetChanged();

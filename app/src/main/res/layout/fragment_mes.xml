@@ -39,10 +39,10 @@
                             android:id="@+id/fecha"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="FECHA"
+                            android:text="Fecha"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="30dp"
-                            android:fontFamily="@font/baloo"
+                            android:fontFamily="@font/mazzard"
                             android:textColor="@color/negro"
                             android:textSize="22sp"/>
 
@@ -123,7 +123,7 @@
                                 android:text="Por cobrar"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginStart="30dp"
-                                android:fontFamily="@font/baloo"
+                                android:fontFamily="@font/mazzard"
                                 android:textColor="@color/negro"
                                 android:textSize="22sp"/>
 
@@ -278,7 +278,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="Aún no tienes facturas"
+                            android:text="Aún no tienes ventas"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="20dp"
@@ -292,7 +292,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="Crea y comparte tus facturas con tus clientes,\n¡llevar la contabilidad de tu negocio nunca fue tan fácil!"
+                            android:text="Crea y administra tus ventas mensualmente,\n¡llevar la contabilidad de tu negocio nunca fue tan fácil!"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
                             android:gravity="center"

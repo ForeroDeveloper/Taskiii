@@ -1,7 +1,7 @@
 package com.fordev.taski.modelos;
 
 public class ModeloFacturaCreadaGastos {
-    String id,conceptoDeVenta,notasInternas,cliente,fechaRegistro,metodoDePago,year,day,month;
+    String id,conceptoDeVenta,notasInternas,cliente,fechaRegistro,metodoDePago,year,day,month,idProveedores;
     int totalCalculado;
     Long timeStamp;
     boolean estadoDePago;
@@ -9,7 +9,7 @@ public class ModeloFacturaCreadaGastos {
     public ModeloFacturaCreadaGastos() {
     }
 
-    public ModeloFacturaCreadaGastos(String id, String conceptoDeVenta, String notasInternas, String cliente, String fechaRegistro, String metodoDePago, String year, String day, String month, int totalCalculado, Long timeStamp, boolean estadoDePago) {
+    public ModeloFacturaCreadaGastos(String id, String conceptoDeVenta, String notasInternas, String cliente, String fechaRegistro, String metodoDePago, String year, String day, String month, String idProveedores, int totalCalculado, Long timeStamp, boolean estadoDePago) {
         this.id = id;
         this.conceptoDeVenta = conceptoDeVenta;
         this.notasInternas = notasInternas;
@@ -19,6 +19,7 @@ public class ModeloFacturaCreadaGastos {
         this.year = year;
         this.day = day;
         this.month = month;
+        this.idProveedores = idProveedores;
         this.totalCalculado = totalCalculado;
         this.timeStamp = timeStamp;
         this.estadoDePago = estadoDePago;
@@ -118,5 +119,13 @@ public class ModeloFacturaCreadaGastos {
 
     public void setMonth(String month) {
         this.month = month;
+    }
+
+    public String getIdProveedores() {
+        return idProveedores;
+    }
+
+    public void setIdProveedores(String idProveedores) {
+        this.idProveedores = idProveedores;
     }
 }

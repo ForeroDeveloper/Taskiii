@@ -116,6 +116,7 @@ public class AnualFragment extends Fragment {
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
         //seteos
 
+
         calendar.get(Calendar.YEAR);
         fechaActual.setText(sdf.format(calendar.getTime()));
 
@@ -173,6 +174,7 @@ public class AnualFragment extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
                 child("facturasCreadas");
+        databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

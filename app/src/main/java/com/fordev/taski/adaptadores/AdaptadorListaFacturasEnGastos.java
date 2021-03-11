@@ -1,4 +1,5 @@
 package com.fordev.taski.adaptadores;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.DetallesFacturaGastos;
+import com.fordev.taski.DetallesFacturaVentas;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloFacturaCreadaGastos;
 
@@ -35,17 +38,21 @@ public class AdaptadorListaFacturasEnGastos extends FirebaseRecyclerAdapter<Mode
             holder.total.setText("$ " + String.valueOf(nformat.format(model.getTotalCalculado())));
             holder.total.setTextColor(holder.total.getContext().getResources().getColor(R.color.negro));
             holder.iconPunto.setColorFilter(holder.total.getContext().getResources().getColor(R.color.rosado));
+            holder.iconFlecha.setColorFilter(holder.total.getContext().getResources().getColor(R.color.rosado));
         }
 
-/*        holder.iconFlecha.setOnClickListener(new View.OnClickListener() {
+        holder.iconFlecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.iconPagado.getContext(),GastosNegocio.class);
+                Intent intent = new Intent(holder.iconFlecha.getContext(), DetallesFacturaGastos.class);
                 String key = model.getId();
+                String keyIV = model.getIdProveedores();
                 intent.putExtra("key", key);
+                intent.putExtra("keyIV", keyIV);
                 v.getContext().startActivity(intent);
             }
-        });*/
+        });
+
 
     }
 
@@ -67,7 +74,7 @@ public class AdaptadorListaFacturasEnGastos extends FirebaseRecyclerAdapter<Mode
             conceptoVenta = itemView.findViewById(R.id.nombreProducto);
             total = itemView.findViewById(R.id.total);
             iconPagado = itemView.findViewById(R.id.icon_estado_de_pago);
-            iconPagado = itemView.findViewById(R.id.icon_estado_de_pago);
+            iconFlecha = itemView.findViewById(R.id.ic_detalles_factura);
             iconPunto = itemView.findViewById(R.id.ic_restar_fehca);
 
 

@@ -39,10 +39,10 @@
                    android:id="@+id/fecha"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="FECHA"
+                   android:text="Fecha"
                    android:layout_centerVertical="true"
                    android:layout_marginStart="30dp"
-                   android:fontFamily="@font/baloo"
+                   android:fontFamily="@font/mazzard"
                    android:textColor="@color/negro"
                    android:textSize="22sp"/>
 
@@ -158,7 +158,7 @@
                        android:fontFamily="@font/din"
                        android:textColor="@color/azul"
                        android:text="$ 6.980"
-                       android:textSize="25sp"
+                       android:textSize="23sp"
                        android:layout_centerHorizontal="true"/>
 
                    <TextView
@@ -283,6 +283,7 @@
                    android:textSize="13sp"/>
 
                <com.google.android.material.button.MaterialButton
+                   android:id="@+id/nuevaFactura"
                    android:layout_width="match_parent"
                    android:layout_height="45dp"
                    android:layout_marginTop="10dp"

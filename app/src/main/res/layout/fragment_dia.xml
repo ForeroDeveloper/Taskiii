@@ -39,12 +39,12 @@
                    android:id="@+id/fecha"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="FECHA"
+                   android:text="Fecha"
                    android:layout_centerVertical="true"
                    android:layout_marginStart="30dp"
-                   android:fontFamily="@font/baloo"
+                   android:fontFamily="@font/mazzard"
                    android:textColor="@color/negro"
-                   android:textSize="22sp"/>
+                   android:textSize="22dp"/>
 
                <androidx.cardview.widget.CardView
                    android:layout_width="match_parent"
@@ -131,9 +131,9 @@
                        android:text="Por cobrar"
                        android:layout_marginTop="16dp"
                        android:layout_marginStart="30dp"
-                       android:fontFamily="@font/baloo"
+                       android:fontFamily="@font/mazzard"
                        android:textColor="@color/negro"
-                       android:textSize="22sp"/>
+                       android:textSize="22dp"/>
 
                    <TextView
                        android:id="@+id/totalDeuda"
@@ -171,7 +171,7 @@
                        android:layout_marginStart="30dp"
                        android:fontFamily="@font/brandon_grotesque_light"
                        android:textColor="@color/negro"
-                       android:textSize="14sp"/>
+                       android:textSize="14dp"/>
 
                    <TextView
                        android:id="@+id/totalPorCobrarPagado"
@@ -183,7 +183,7 @@
                        android:layout_marginTop="10dp"
                        android:fontFamily="@font/brandon_grotesque_light"
                        android:textColor="@color/azul"
-                       android:textSize="12sp"/>
+                       android:textSize="12dp"/>
 
                    <TextView
                        android:id="@+id/separador"
@@ -197,7 +197,7 @@
                        android:layout_marginStart="4dp"
                        android:fontFamily="@font/brandon_grotesque_regular_italic"
                        android:textColor="@color/negro"
-                       android:textSize="14sp"/>
+                       android:textSize="14dp"/>
 
                    <TextView
                        android:id="@+id/totalDeVentas"
@@ -210,7 +210,7 @@
                        android:layout_marginTop="10dp"
                        android:fontFamily="@font/brandon_grotesque_light"
                        android:textColor="@color/negro"
-                       android:textSize="12sp"/>
+                       android:textSize="12dp"/>
 
 
                </RelativeLayout>
@@ -286,27 +286,27 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_horizontal"
-                   android:text="Aún no tienes facturas"
+                   android:text="Aún no tienes ventas"
                    android:layout_marginStart="20dp"
                    android:layout_marginTop="5dp"
                    android:layout_marginEnd="20dp"
                    android:gravity="center"
                    android:fontFamily="@font/brandon_grotesque_black"
                    android:textColor="@color/primario"
-                   android:textSize="18sp"/>
+                   android:textSize="18dp"/>
 
                <TextView
                    android:id="@+id/descrip"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_horizontal"
-                   android:text="Crea y comparte tus facturas con tus clientes,\n¡llevar la contabilidad de tu negocio nunca fue tan fácil!"
+                   android:text="Crea y administra tus ventas diariamente ,\n¡llevar la contabilidad de tu negocio nunca fue tan fácil!"
                    android:layout_marginStart="20dp"
                    android:layout_marginEnd="20dp"
                    android:gravity="center"
                    android:fontFamily="@font/brandon_grotesque_light"
                    android:textColor="@color/negro"
-                   android:textSize="14sp"/>
+                   android:textSize="14dp"/>
 
                <com.google.android.material.button.MaterialButton
                    android:id="@+id/nuevaFactura"
@@ -318,7 +318,7 @@
                    app:icon="@drawable/ic_fac"
                    app:iconGravity="textStart"
                    app:iconPadding="20dp"
-                   app:iconSize="16sp"
+                   app:iconSize="16dp"
                    android:layout_marginBottom="15dp"
                    app:backgroundTint="@color/verde_dos"
                    android:layout_marginStart="20dp"
@@ -351,7 +351,7 @@
                        android:layout_marginStart="30dp"
                        android:fontFamily="@font/hammer_bold"
                        android:textColor="@color/negro"
-                       android:textSize="22sp"/>
+                       android:textSize="22dp"/>
 
                    <TextView
                        android:id="@+id/todas"
@@ -363,7 +363,7 @@
                        android:layout_marginEnd="5dp"
                        android:fontFamily="@font/hammer"
                        android:textColor="@color/negro"
-                       android:textSize="14sp"/>
+                       android:textSize="14dp"/>
 
                    <ImageView
                        android:id="@+id/icon_flecha_dos"

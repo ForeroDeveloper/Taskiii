@@ -162,7 +162,7 @@
                         android:id="@+id/txtprecioUnitario"
                         android:gravity="center"
                         android:layout_width="match_parent"
-                        android:inputType="number"
+                        android:inputType="numberDecimal|phone"
                         android:fontFamily="@font/din"
                         android:layout_height="wrap_content"
                         />
@@ -206,7 +206,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtcantidad"
                         android:layout_width="match_parent"
-                        android:inputType="number"
+                        android:inputType="numberDecimal|phone"
                         android:gravity="center"
                         android:fontFamily="@font/din"
                         android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                 android:id="@+id/txtprecioFinal"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/din"
-                android:inputType="numberDecimal"
+                android:inputType="numberDecimal|phone"
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>

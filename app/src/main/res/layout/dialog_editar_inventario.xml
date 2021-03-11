@@ -307,7 +307,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtcantidad"
                         android:layout_width="match_parent"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:gravity="center"
                         android:fontFamily="@font/din"
                         android:layout_height="wrap_content"

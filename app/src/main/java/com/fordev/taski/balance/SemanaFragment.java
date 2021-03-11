@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anychart.scales.DateTime;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.VentasNegocio;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
@@ -35,7 +36,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -58,22 +61,21 @@ public class SemanaFragment extends Fragment {
     //mis declaraciones
     RecyclerView listaDeFacturas;
     AdaptadorListaFacturas adaptadorListaFacturas;
-    TextView fechaActual,totalBalance,ventasEnDeuda,totalDeVentas,facturasTotales,txtFechaSelectFin;
+    TextView fechaActual, totalBalance, ventasEnDeuda, totalDeVentas, facturasTotales, txtFechaSelectFin;
     Calendar fechaInicio = Calendar.getInstance();
-    Calendar fechaFin = Calendar.getInstance();
-    Calendar fechauno = Calendar.getInstance();
     Calendar fechados = Calendar.getInstance();
     Calendar fechatres = Calendar.getInstance();
     Calendar fechacuatro = Calendar.getInstance();
     Calendar fechacinco = Calendar.getInstance();
+    Calendar fechaFin = Calendar.getInstance();
     ImageView ic_sumar_fecha, ic_restar_fecha;
     MaterialButton nuevaFactura;
     CardView sinContenido;
     RelativeLayout sinContenidoDos;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DatabaseReference databaseReference;
     LinearProgressIndicator progressIndicator;
-    com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha,faq_sumar_fecha;
+    com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha, faq_sumar_fecha;
 
     public SemanaFragment() {
         // Required empty public constructor
@@ -122,13 +124,33 @@ public class SemanaFragment extends Fragment {
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
         //seteos
-        fechaActual.setText(sdf.format(fechaInicio.getTime()));
-        fechaFin.add(Calendar.DATE, + 6);
-        txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
-        fechados.add(Calendar.DATE,  1);
+        fechaInicio.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        fechados.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        fechados.add(Calendar.DATE, 1);
+        fechatres.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechatres.add(Calendar.DATE, 2);
+        fechacuatro.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechacuatro.add(Calendar.DATE, 3);
+        fechacinco.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechacinco.add(Calendar.DATE, 4);
+
+        fechaActual.setText(sdf.format(fechaInicio.getTime()));
+        fechaFin.add(Calendar.DATE, 4);
+        txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
+
+        Date dt = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.DATE, 1);
+        dt = c.getTime();
+
+        totalBalance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "date " + sdf.format(fechados.getTime()), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         nuevaFactura.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,33 +162,32 @@ public class SemanaFragment extends Fragment {
         ic_sumar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(6);
-                Toast.makeText(getContext(), sdf.format(fechatres.getTime()) , Toast.LENGTH_SHORT).show();
-                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
+                selectorDeFecha(7);
+                cargarDatosSegunFecha(fechaInicio, fechados, fechatres, fechacuatro, fechacinco, fechaFin);
             }
         });
 
         ic_restar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(-6);
-                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
+                selectorDeFecha(-7);
+                cargarDatosSegunFecha(fechaInicio, fechados, fechatres, fechacuatro, fechacinco, fechaFin);
             }
         });
 
         faq_sumar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(6);
-                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
+                selectorDeFecha(7);
+                cargarDatosSegunFecha(fechaInicio, fechados, fechatres, fechacuatro, fechacinco, fechaFin);
             }
         });
 
         faq_restar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(-6);
-                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
+                selectorDeFecha(-7);
+                cargarDatosSegunFecha(fechaInicio, fechados, fechatres, fechacuatro, fechacinco, fechaFin);
             }
         });
 
@@ -187,7 +208,7 @@ public class SemanaFragment extends Fragment {
 
     }
 
-    private void cargarDatosSegunFecha(Calendar fechaInicio, Calendar fechaFin, Calendar fechados, Calendar fechatres, Calendar fechacuatro, Calendar fechacinco) {
+    private void cargarDatosSegunFecha(Calendar fechaInicio, Calendar fechados, Calendar fechatres, Calendar fechacuatro, Calendar fechacinco, Calendar fechaFin) {
         NumberFormat nformat = new DecimalFormat("##,###,###.##");
         totalBalance.setText(String.valueOf("$ " + nformat.format(0)));
         ventasEnDeuda.setText(String.valueOf("$ " + nformat.format(0)));
@@ -195,9 +216,9 @@ public class SemanaFragment extends Fragment {
         progressIndicator.setProgress(100);
 
 
-
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
                 child("facturasCreadas");
+        databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -212,14 +233,14 @@ public class SemanaFragment extends Fragment {
                     String fValue = String.valueOf(fecha);
 
                     if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime())) ||
-                            fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime())) ) {
+                            fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
                         Object estadoDePago = map.get("estadoDePago");
                         boolean eValue = Boolean.parseBoolean(String.valueOf(estadoDePago));
                         if (!eValue) {
                             Object total = map.get("totalCalculado");
                             int tValue = Integer.parseInt(String.valueOf(total));
                             sumDeuda += tValue;
-                            ventasEnDeuda.setText(String.valueOf("$ " + nformat.format(balanceGeneral)));
+                            totalBalance.setText(String.valueOf("$ " + nformat.format(sumDeuda)));
                         }
                     }
 
@@ -238,7 +259,6 @@ public class SemanaFragment extends Fragment {
                             Object total = map.get("totalCalculado");
                             int tValue = Integer.parseInt(String.valueOf(total));
                             balanceGeneral += tValue;
-                            totalBalance.setText(String.valueOf("$ " + nformat.format(sumDeuda)));
                             ventasEnDeuda.setText(String.valueOf("$ " + nformat.format(balanceGeneral)));
                         }
                     }
@@ -251,7 +271,7 @@ public class SemanaFragment extends Fragment {
                     String fValue = String.valueOf(fecha);
 
                     if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime())) ||
-                            fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime())) ) {
+                            fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
                         Object total = map.get("totalCalculado");
                         int tValue = Integer.parseInt(String.valueOf(total));
                         sumTotal += tValue;
@@ -260,19 +280,24 @@ public class SemanaFragment extends Fragment {
 
                 }
 
-                if (sumTotal==0){
+                if (sumTotal == 0) {
                     progressIndicator.setProgress(100);
                     sinContenido.setVisibility(View.VISIBLE);
                     sinContenidoDos.setVisibility(View.GONE);
-                }else if(balanceGeneral==0){
+                } else if (balanceGeneral == 0) {
                     totalBalance.setText(String.valueOf("$ " + nformat.format(sumDeuda)));
                     progressIndicator.setProgress(0);
-                }else {
+                } else {
 
-                    int p =  balanceGeneral * 100 / sumTotal;
+                    int p = balanceGeneral * 100 / sumTotal;
                     ProgressAnimation progressAnimation = new ProgressAnimation(progressIndicator, 0, p);
                     progressAnimation.setDuration(1000);
                     progressIndicator.setAnimation(progressAnimation);
+                    sinContenido.setVisibility(View.GONE);
+                    sinContenidoDos.setVisibility(View.VISIBLE);
+                }
+
+                if (sumDeuda != 0) {
                     sinContenido.setVisibility(View.GONE);
                     sinContenidoDos.setVisibility(View.VISIBLE);
                 }
@@ -296,7 +321,7 @@ public class SemanaFragment extends Fragment {
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
                                 child("facturasCreadas").orderByChild("fechaRegistro").startAt(sdf.format(fechaInicio.getTime())).endAt(sdf.format(fechaFin.getTime())), ModeloFacturaCreada.class)
                         .build();
-        adaptadorListaFacturas=new AdaptadorListaFacturas(options);
+        adaptadorListaFacturas = new AdaptadorListaFacturas(options);
         listaDeFacturas.setAdapter(adaptadorListaFacturas);
 
         adaptadorListaFacturas.startListening();
@@ -317,7 +342,7 @@ public class SemanaFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
+        cargarDatosSegunFecha(fechaInicio, fechados, fechatres, fechacuatro, fechacinco, fechaFin);
     }
 
     @Override

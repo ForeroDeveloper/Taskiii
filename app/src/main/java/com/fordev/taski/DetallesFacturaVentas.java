@@ -6,12 +6,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,27 +47,36 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 public class DetallesFacturaVentas extends AppCompatActivity {
 
     TextView nombreCliente, totalVenta, totalPorCobrar,
-            fecha,txtMetodoDePago,txtEstadoDePago,txt_metodo_de_pago, totalPorCobrarPagado,totalDeVentas;
-    RecyclerView lista_de_productos_venta,lista_de_productos_venta_inventario;
-    DatabaseReference databaseReference;
+            fecha, txtMetodoDePago, txtEstadoDePago, notaIngresada, totalPorCobrarPagado, totalDeVentas;
+    RecyclerView lista_de_productos_venta, lista_de_productos_venta_inventario;
+    DatabaseReference databaseReference, databaseReference1;
     FirebaseDatabase firebaseDatabase, firebaseDatabase1;
     AdaptadorListaProductos adaptadorListaProductos;
     AdaptadorListaProductosEnInventario adaptadorListaProductosEnInventario;
-    RelativeLayout fondoPrincipal;
-    MaterialButton faq_abonar;
+    RelativeLayout fondoPrincipal, eliminar_factura;
+    MaterialButton faq_abonar, faq_enviar_factura;
     CardView metodo_de_pago;
-    LinearProgressIndicator progressIndicator;
-    int sumaTotalItems = 0;
-    int sumaTotalItems2 = 0;
+    LinearProgressIndicator progressIndicator2;
+    ImageView icon_detalles_notas;
+    LinearLayout visibilidad_nota_interna;
     int totalVentaGlobal = 0;
     int totalAbonadoGlobal = 0;
     int cantidaActualizada = 0;
     int saberSiEsCero = 0;
     int totalPagado = 0;
+    int abonar = 0;
+    int abonado = 0;
+    String key = null;
+    String key2 = null;
+    boolean click = false;
+    boolean estadoDePago;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,115 +95,158 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         metodo_de_pago = findViewById(R.id.metodo_de_pago);
         totalPorCobrarPagado = findViewById(R.id.totalPorCobrarPagado);
         totalDeVentas = findViewById(R.id.totalDeVentas);
-        progressIndicator = findViewById(R.id.indicador);
-
+        progressIndicator2 = findViewById(R.id.indicador2);
+        icon_detalles_notas = findViewById(R.id.icon_detalles_notas);
+        visibilidad_nota_interna = findViewById(R.id.visibilidad_nota_interna);
+        faq_enviar_factura = findViewById(R.id.faq_enviar_factura);
+        notaIngresada = findViewById(R.id.notaIngresada);
+        eliminar_factura = findViewById(R.id.eliminar_factura);
 
         Bundle bundle = getIntent().getExtras();
-        String key = bundle.getString("key");
-        String key2 = bundle.getString("keyIV");
+        key = bundle.getString("key");
+        key2 = bundle.getString("keyIV");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase1 = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("facturas").child("facturasCreadas").child(key);
+        databaseReference.keepSynced(true);
 
-        databaseReference.child("cliente").addValueEventListener(new ValueEventListener() {
-            String clienteValor = null;
+        eliminar_factura.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Object cNombre = snapshot.getValue();
-                    clienteValor = String.valueOf(cNombre);
-                    if (clienteValor.isEmpty()){
-                        nombreCliente.setText("Sin Especificar");
-                    }else {
-                        nombreCliente.setText(clienteValor);
+            public void onClick(View v) {
+
+                DialogPlus dialog = DialogPlus.newDialog(DetallesFacturaVentas.this)
+                        .setContentHolder(new ViewHolder(R.layout.dialog_confirm_delete))
+                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .setGravity(Gravity.CENTER)
+                        .setContentBackgroundResource(android.R.color.transparent)
+                        .create();
+
+                View views = dialog.getHolderView();
+                MaterialButton btn_delete = views.findViewById(R.id.btn_delete);
+                TextView cancel = views.findViewById(R.id.btn_cancel);
+
+
+                btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        databaseReference.removeValue();
+                        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturasIV").child(key2).removeValue();
+                        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturas").child(key).removeValue();
+                        finish();
+                        dialog.dismiss();
+                        Toasty.success(DetallesFacturaVentas.this,"Eliminada Correctamente!",Toast.LENGTH_LONG, true).show();
+
                     }
+                });
 
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                dialog.show();
 
             }
         });
 
-        databaseReference.child("abonado").addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                Object total = snapshot.getValue();
-                String totalVentaValor = String.valueOf(total);
-                int totales = Integer.parseInt(totalVentaValor);
-                totalVenta.setText("$ " + nformat.format(totales));
-                totalDeVentas.setText("$ " + nformat.format(totales));
-                totalVentaGlobal = totales;
-                }else {
-                    Toast.makeText(DetallesFacturaVentas.this, "No hay datos", Toast.LENGTH_SHORT).show();
+
+                Object clienteObject = snapshot.child("cliente").getValue();
+                String clienteValor = String.valueOf(clienteObject);
+
+                if (clienteValor.isEmpty()) {
+                    nombreCliente.setText("Sin Especificar");
+                } else {
+                    nombreCliente.setText(clienteValor);
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                //abono
+                try {
+                    Object abonarObject = snapshot.child("abonado").getValue();
+                    String abonardos = String.valueOf(abonarObject);
+                    abonar = Integer.parseInt(abonardos);
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Error NumberFormatException value: " + abonar);
+                }
+                totalVenta.setText("$ " + String.valueOf(nformat.format(abonar)));
+                totalDeVentas.setText(String.valueOf(nformat.format(abonar)));
 
-        databaseReference.child("metodoDePago").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Object mValor = snapshot.getValue();
-                if (mValor.toString().equals("")){
+                totalVentaGlobal = abonar;
+
+                try {
+                    Object ePAgo = snapshot.child("abonar").getValue();
+                    abonado = Integer.parseInt(String.valueOf(ePAgo));
+
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Error NumberFormatException value: " + abonado);
+                }
+
+                totalPorCobrar.setText("$ " + nformat.format(abonado));
+                totalAbonadoGlobal = abonado;
+                totalPorCobrarPagado.setText(String.valueOf(nformat.format(abonar - abonado)));
+                totalPagado = abonar - abonado;
+
+
+                if (abonar != 0) {
+                    int p = totalPagado * 100 / abonar;
+                    progressIndicator2.setProgress(p);
+                } else {
+                    progressIndicator2.setProgress(100);
+                }
+
+                //metodo de Pago
+                Object metPagoObject = snapshot.child("metodoDePago").getValue();
+                String metodoDePago = String.valueOf(metPagoObject);
+
+                if (metodoDePago.toString().equals("")) {
                     txtMetodoDePago.setText("Sin elegir");
-                }else {
-                String metodoDePagoValor = String.valueOf(mValor);
-                txtMetodoDePago.setText(metodoDePagoValor);
+                } else {
+                    txtMetodoDePago.setText(metodoDePago);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        databaseReference.child("estadoDePago").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Object ePAgo = snapshot.getValue();
-                boolean bandera = Boolean.parseBoolean(String.valueOf(ePAgo));
-                if (bandera){
+                //Estado de Pago
+                Object estadoDePagoObject = snapshot.child("estadoDePago").getValue();
+                estadoDePago = Boolean.parseBoolean(String.valueOf(estadoDePagoObject));
+                if (estadoDePago) {
                     txtEstadoDePago.setText("Pagado");
-                }else {
+                    faq_enviar_factura.setText("Recibo");
+                    faq_abonar.setVisibility(View.INVISIBLE);
+                } else {
                     txtEstadoDePago.setText("Por Cobrar");
+                    faq_enviar_factura.setText("Recibo de Cobro");
                     fondoPrincipal.setBackgroundColor(getResources().getColor(R.color.rojo_fondos));
                     nombreCliente.setTextColor(getResources().getColor(R.color.rojo_naranja));
                     metodo_de_pago.setCardBackgroundColor(getResources().getColor(R.color.rojo_fondos));
                     txtEstadoDePago.setTextColor(getResources().getColor(R.color.rojo_naranja));
-
+                    faq_abonar.setVisibility(View.VISIBLE);
                 }
 
-            }
+                //Notas Internas
+                Object notInternasObject = snapshot.child("notasInternas").getValue();
+                String notInternas = String.valueOf(notInternasObject);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                if (notInternas.toString().equals("")) {
+                    notaIngresada.setText("No hay notas en esta venta :(");
+                } else {
+                    notaIngresada.setText(notInternas);
+                }
 
-            }
-        });
+                //Fecha factura
+                Object fechaFacturaObject = snapshot.child("fechaRegistro").getValue();
+                String fechaRegistro = String.valueOf(fechaFacturaObject);
 
-        databaseReference.child("abonar").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                Object ePAgo = snapshot.getValue();
-                int abonado = Integer.parseInt(String.valueOf(ePAgo));
-                totalPorCobrar.setText("$ " + nformat.format(abonado));
-                    totalPorCobrarPagado.setText("$ " + nformat.format(totalVentaGlobal-abonado));
-                    totalAbonadoGlobal = abonado;
-                    totalPagado = totalVentaGlobal-abonado;
-                    //totalVentaGlobal = abonado;
-
-
+                if (fechaRegistro.toString().equals("")) {
+                    fecha.setText("No hay fecha.");
+                } else {
+                    fecha.setText(fechaRegistro);
                 }
 
             }
@@ -235,30 +292,26 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         int cantidadIngresadaTotal = 0;
-                        if (cantidad_abonar.getEditText().getText().toString().isEmpty()){
+                        if (cantidad_abonar.getEditText().getText().toString().isEmpty()) {
                             cantidadIngresadaTotal = 0;
-                        }else {
+                        } else {
                             cantidadIngresadaTotal = Integer.parseInt(cantidad_abonar.getEditText().getText().toString());
                         }
 
-                        if (cantidad_abonar.getEditText().getText().toString().isEmpty()){
+                        if (cantidad_abonar.getEditText().getText().toString().isEmpty()) {
                             cantidad_abonar.setHint("Ingrese un valor");
                             txt_total_faltante.setText("$ " + nformat.format(totalAbonadoGlobal));
-                        }else if (cantidadIngresadaTotal>totalAbonadoGlobal){
-                            if (cantidad_abonar.getEditText().getText().toString().isEmpty()){
+                        } else if (cantidadIngresadaTotal > totalAbonadoGlobal) {
+                            if (cantidad_abonar.getEditText().getText().toString().isEmpty()) {
                                 cantidad_abonar.setHint("Ingrese un valor");
                                 txt_total_faltante.setText("$ " + nformat.format(totalAbonadoGlobal));
-                            }else{
-                            cantidad_abonar.setHelperText("No puedes abonar más de la venta total.");
-                            cantidad_abonar.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.rojo)));
-                            cantidad_abonar_txt_listener.setHint("");
-                            guardar_abono.setClickable(false);
+                            } else {
+                                cantidad_abonar_txt_listener.setText(String.valueOf(totalAbonadoGlobal));
                             }
 
-                        }else {
+                        } else {
                             int cantidaIngresada = Integer.parseInt(cantidad_abonar.getEditText().getText().toString().trim());
                             cantidaActualizada = totalAbonadoGlobal - cantidaIngresada;
-                            guardar_abono.setClickable(true);
                             txt_total_faltante.setText("$ " + nformat.format(cantidaActualizada));
                             cantidad_abonar.setHelperText("Excelente!");
                             cantidad_abonar.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
@@ -275,16 +328,16 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                 guardar_abono.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!cantidad_abonar.getEditText().getText().toString().isEmpty()){
+                        if (!cantidad_abonar.getEditText().getText().toString().isEmpty()) {
                             int cantidadIngresaGuardar = Integer.parseInt(cantidad_abonar.getEditText().getText().toString());
                             saberSiEsCero = totalAbonadoGlobal - cantidadIngresaGuardar;
 
                             Map<String, Object> map = new HashMap<>();
-                            map.put("abonar",totalAbonadoGlobal - cantidadIngresaGuardar);
-                            map.put("totalCalculado",totalAbonadoGlobal - cantidadIngresaGuardar);
-                            if (saberSiEsCero==0){
-                                map.put("estadoDePago",true);
-                                map.put("totalCalculado",totalVentaGlobal);
+                            map.put("abonar", totalAbonadoGlobal - cantidadIngresaGuardar);
+                            map.put("totalCalculado", totalAbonadoGlobal - cantidadIngresaGuardar);
+                            if (saberSiEsCero == 0) {
+                                map.put("estadoDePago", true);
+                                map.put("totalCalculado", totalVentaGlobal);
                                 fondoPrincipal.setBackgroundColor(getResources().getColor(R.color.verde_fondos));
                                 nombreCliente.setTextColor(getResources().getColor(R.color.verde_complemento));
                                 metodo_de_pago.setCardBackgroundColor(getResources().getColor(R.color.verde_fondos));
@@ -317,12 +370,37 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                 });
 
 
-
                 dialog.show();
             }
         });
 
+        icon_detalles_notas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (visibilidad_nota_interna.getVisibility() == View.VISIBLE) {
+                    visibilidad_nota_interna.setVisibility(View.GONE);
+                } else {
+                    visibilidad_nota_interna.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
+        faq_enviar_factura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (estadoDePago) {
+                    Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeRecibo.class);
+                    intent.putExtra("key", key);
+                    intent.putExtra("key2", key2);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeReciboCobrar.class);
+                    intent.putExtra("key", key);
+                    intent.putExtra("key2", key2);
+                    startActivity(intent);
+                }
+            }
+        });
 
 
         //FIREBASE
@@ -331,7 +409,7 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<ModeloVenta>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturas").child(key), ModeloVenta.class)
                         .build();
-        adaptadorListaProductos=new AdaptadorListaProductos(options);
+        adaptadorListaProductos = new AdaptadorListaProductos(options);
         lista_de_productos_venta.setAdapter(adaptadorListaProductos);
 
         //FIREBASE
@@ -340,11 +418,10 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<ModeloVentaInventario>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturasIV").child(key2), ModeloVentaInventario.class)
                         .build();
-        adaptadorListaProductosEnInventario=new AdaptadorListaProductosEnInventario(options2);
+        adaptadorListaProductosEnInventario = new AdaptadorListaProductosEnInventario(options2);
         lista_de_productos_venta_inventario.setAdapter(adaptadorListaProductosEnInventario);
 
     }
-
 
     @Override
     protected void onStop() {
@@ -352,6 +429,7 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         adaptadorListaProductos.stopListening();
         adaptadorListaProductosEnInventario.stopListening();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -360,4 +438,13 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         adaptadorListaProductos.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

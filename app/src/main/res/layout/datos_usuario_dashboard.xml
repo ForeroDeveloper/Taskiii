@@ -163,10 +163,27 @@
                         android:layout_height="wrap_content"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         app:boxStrokeColor="@color/primario"
-                        android:hint="Nombre y apellido">
+                        android:hint="Nombre">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/txtNombrePropietario"
+                            android:layout_width="match_parent"
+                            android:inputType="textPersonName"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtApellidoPropietario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/primario"
+                        android:hint="Apellido">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtApellidoPropietario"
                             android:layout_width="match_parent"
                             android:inputType="textPersonName"
                             android:layout_height="wrap_content"

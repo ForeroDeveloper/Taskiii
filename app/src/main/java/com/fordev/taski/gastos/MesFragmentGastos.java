@@ -1,5 +1,6 @@
 package com.fordev.taski.gastos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.GastosNegocio;
 import com.fordev.taski.R;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturasEnGastos;
 import com.fordev.taski.modelos.ModeloFacturaCreadaGastos;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,6 +65,8 @@ public class MesFragmentGastos extends Fragment {
     DatabaseReference databaseReference;
     CircularProgressBar progressIndicator;
     com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha,faq_sumar_fecha;
+    MaterialButton nuevaFactura;
+
 
     public MesFragmentGastos() {
         // Required empty public constructor
@@ -110,10 +115,19 @@ public class MesFragmentGastos extends Fragment {
         faq_sumar_fecha = view.findViewById(R.id.faq_sumar_fecha);
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
+        nuevaFactura = view.findViewById(R.id.nuevaFactura);
         //seteos
+
 
         calendar.get(Calendar.MONTH);
         fechaActual.setText(sdf.format(calendar.getTime()));
+
+        nuevaFactura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GastosNegocio.class));
+            }
+        });
 
         ic_sumar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +178,7 @@ public class MesFragmentGastos extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
                 child("facturasCreadasEnGastos");
+        databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

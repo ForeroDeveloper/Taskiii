@@ -1,6 +1,7 @@
 package com.fordev.taski.gastos;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.GastosNegocio;
 import com.fordev.taski.R;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturasEnGastos;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.modelos.ModeloFacturaCreadaGastos;
 import com.fordev.taski.otros.ProgressAnimation;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -58,8 +61,8 @@ public class SemanaFragmentGastos extends Fragment {
     //mis declaraciones
     RecyclerView listaDeFacturas;
     AdaptadorListaFacturasEnGastos adaptadorListaFacturasEnGastos;
-    TextView fechaActual,totalDeuda,ventasEnDeuda,totalDeGastos,facturasTotales,txtFechaSelectFin;
-    Calendar calendar = Calendar.getInstance();
+    TextView fechaActual, totalDeuda, ventasEnDeuda, totalDeGastos, facturasTotales, txtFechaSelectFin;
+    Calendar fechaInicio = Calendar.getInstance();
     Calendar fechaFin = Calendar.getInstance();
     Calendar fechauno = Calendar.getInstance();
     Calendar fechados = Calendar.getInstance();
@@ -72,7 +75,8 @@ public class SemanaFragmentGastos extends Fragment {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     DatabaseReference databaseReference;
     CircularProgressBar progressIndicator;
-    com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha,faq_sumar_fecha;
+    com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha, faq_sumar_fecha;
+    MaterialButton nuevaFactura;
 
     public SemanaFragmentGastos() {
         // Required empty public constructor
@@ -117,60 +121,56 @@ public class SemanaFragmentGastos extends Fragment {
         faq_sumar_fecha = view.findViewById(R.id.faq_sumar_fecha);
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
+        nuevaFactura = view.findViewById(R.id.nuevaFactura);
+
         //seteos
-        fechaActual.setText(sdf.format(calendar.getTime()));
-        fechaFin.add(Calendar.DATE, + 6);
+        fechaInicio.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        fechaActual.setText(sdf.format(fechaInicio.getTime()));
+        fechaFin.add(Calendar.DATE, +5);
         fechados.add(Calendar.DATE, 1);
         fechatres.add(Calendar.DATE, 2);
         fechacuatro.add(Calendar.DATE, 3);
         fechacinco.add(Calendar.DATE, 4);
         txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
+        cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
+
+        nuevaFactura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GastosNegocio.class));
+            }
+        });
+
 
         ic_sumar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(6);
-                fechados.add(Calendar.DATE, 1);
-                fechatres.add(Calendar.DATE, 1);
-                fechacuatro.add(Calendar.DATE, 1);
-                fechacinco.add(Calendar.DATE, 1);
-                cargarDatosSegunFecha(calendar, fechaFin);
+                selectorDeFecha(7);
+                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
             }
         });
 
         ic_restar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(-6);
-                fechados.add(Calendar.DATE, -1);
-                fechatres.add(Calendar.DATE, -1);
-                fechacuatro.add(Calendar.DATE, -1);
-                fechacinco.add(Calendar.DATE, -1);
-                cargarDatosSegunFecha(calendar, fechaFin);
+                selectorDeFecha(-7);
+                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
             }
         });
 
         faq_sumar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(6);
-                fechados.add(Calendar.DATE, 1);
-                fechatres.add(Calendar.DATE, 1);
-                fechacuatro.add(Calendar.DATE, 1);
-                fechacinco.add(Calendar.DATE, 1);
-                cargarDatosSegunFecha(calendar, fechaFin);
+                selectorDeFecha(7);
+                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
             }
         });
 
         faq_restar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectorDeFecha(-6);
-                fechados.add(Calendar.DATE, -1);
-                fechatres.add(Calendar.DATE, -1);
-                fechacuatro.add(Calendar.DATE, -1);
-                fechacinco.add(Calendar.DATE, -1);
-                cargarDatosSegunFecha(calendar, fechaFin);
+                selectorDeFecha(-7);
+                cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
             }
         });
 
@@ -178,18 +178,20 @@ public class SemanaFragmentGastos extends Fragment {
     }
 
     private void selectorDeFecha(int i) {
-        calendar.add(Calendar.DATE, i);
-        fechaFin.add(Calendar.DATE, i);
+
+        fechaInicio.add(Calendar.DATE, i);
         fechados.add(Calendar.DATE, i);
         fechatres.add(Calendar.DATE, i);
         fechacuatro.add(Calendar.DATE, i);
         fechacinco.add(Calendar.DATE, i);
-        fechaActual.setText(sdf.format(calendar.getTime()));
+        fechaFin.add(Calendar.DATE, i);
+        fechaActual.setText(sdf.format(fechaInicio.getTime()));
         txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
+            
 
     }
 
-    private void cargarDatosSegunFecha(Calendar fechaInicio, Calendar fechaFin) {
+    private void cargarDatosSegunFecha(Calendar fechaInicio, Calendar fechaFin, Calendar fechados, Calendar fechatres, Calendar fechacuatro, Calendar fechacinco) {
         NumberFormat nformat = new DecimalFormat("##,###,###.##");
         totalDeuda.setText(String.valueOf("$ " + nformat.format(0)));
         //ventasEnDeuda.setText(String.valueOf("$ " + nformat.format(0)));
@@ -197,6 +199,7 @@ public class SemanaFragmentGastos extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
                 child("facturasCreadasEnGastos");
+        databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -210,8 +213,8 @@ public class SemanaFragmentGastos extends Fragment {
                     Object fecha = map.get("fechaRegistro");
                     String fValue = String.valueOf(fecha);
 
-                    if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime()))
-                            || fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
+                    if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime())) ||
+                            fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
                         Object estadoDePago = map.get("estadoDePago");
                         boolean eValue = Boolean.parseBoolean(String.valueOf(estadoDePago));
                         if (!eValue) {
@@ -230,8 +233,8 @@ public class SemanaFragmentGastos extends Fragment {
                     Object fecha = map.get("fechaRegistro");
                     String fValue = String.valueOf(fecha);
 
-                    if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime()))
-                            || fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
+                    if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime())) ||
+                            fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
                         Object estadoDePago = map.get("estadoDePago");
                         boolean eValue = Boolean.parseBoolean(String.valueOf(estadoDePago));
                         if (eValue) {
@@ -250,8 +253,8 @@ public class SemanaFragmentGastos extends Fragment {
                     Object fecha = map.get("fechaRegistro");
                     String fValue = String.valueOf(fecha);
 
-                    if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime()))
-                            || fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
+                    if (fValue.equals(sdf.format(fechaInicio.getTime())) || fValue.equals(sdf.format(fechaFin.getTime())) || fValue.equals(sdf.format(fechados.getTime())) ||
+                            fValue.equals(sdf.format(fechatres.getTime())) || fValue.equals(sdf.format(fechacuatro.getTime())) || fValue.equals(sdf.format(fechacinco.getTime()))) {
                         Object total = map.get("totalCalculado");
                         int tValue = Integer.parseInt(String.valueOf(total));
                         sumTotal += tValue;
@@ -261,14 +264,14 @@ public class SemanaFragmentGastos extends Fragment {
 
                 }
 
-                if (sumTotal==0){
+                if (sumTotal == 0) {
                     progressIndicator.setProgress(100);
                     sinContenido.setVisibility(View.VISIBLE);
                     sinContenidoDos.setVisibility(View.GONE);
 
-                }else {
+                } else {
 
-                    int p =  balanceGeneral * 100 / sumTotal;
+                    int p = balanceGeneral * 100 / sumTotal;
                     progressIndicator.setProgress(p);
                     sinContenido.setVisibility(View.GONE);
                     sinContenidoDos.setVisibility(View.VISIBLE);
@@ -290,9 +293,9 @@ public class SemanaFragmentGastos extends Fragment {
         FirebaseRecyclerOptions<ModeloFacturaCreadaGastos> options =
                 new FirebaseRecyclerOptions.Builder<ModeloFacturaCreadaGastos>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
-                                child("facturasCreadasEnGastos").orderByChild("fechaRegistro").startAt(sdf.format(calendar.getTime())).endAt(sdf.format(calendar.getTime())), ModeloFacturaCreadaGastos.class)
+                                child("facturasCreadasEnGastos").orderByChild("fechaRegistro").startAt(sdf.format(fechaInicio.getTime())).endAt(sdf.format(fechaFin.getTime())), ModeloFacturaCreadaGastos.class)
                         .build();
-        adaptadorListaFacturasEnGastos =new AdaptadorListaFacturasEnGastos(options);
+        adaptadorListaFacturasEnGastos = new AdaptadorListaFacturasEnGastos(options);
         listaDeFacturas.setAdapter(adaptadorListaFacturasEnGastos);
 
         adaptadorListaFacturasEnGastos.startListening();
@@ -304,7 +307,7 @@ public class SemanaFragmentGastos extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        cargarDatosSegunFecha(calendar, fechaFin);
+        cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
     }
 
     @Override

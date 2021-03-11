@@ -29,8 +29,9 @@ public class AdaptadorListaProductosEnInventario extends FirebaseRecyclerAdapter
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull ModeloVentaInventario model) {
         NumberFormat nformat = new DecimalFormat("##,###,###.##");
+        DecimalFormat format = new DecimalFormat("0.#");
         holder.txtProducto.setText(model.getNombreProdcuto());
-        holder.txtCantidad.setText(String.valueOf(model.getCantidadProducto()));
+        holder.txtCantidad.setText(String.valueOf(format.format(model.getCantidadProducto())));
         if (model.getPrecioFinalPorElUsuario()!=0){
             holder.txtTotal.setText("$ " + String.valueOf(nformat.format(model.getPrecioFinalPorElUsuario())));
         }else{
@@ -41,8 +42,6 @@ public class AdaptadorListaProductosEnInventario extends FirebaseRecyclerAdapter
     }
 
 
-
-
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,13 +50,9 @@ public class AdaptadorListaProductosEnInventario extends FirebaseRecyclerAdapter
 
     }
 
-
     static class myViewHolder extends RecyclerView.ViewHolder{
 
-        TextView txtProducto, txtCantidad, txtTotal,txtTotalProdcutos;
-        MaterialButton btnLimpiar, btnGuardarFactura,btnGuardar;
-        LinearLayout cabeceraFacturas;
-
+        TextView txtProducto, txtCantidad, txtTotal;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             txtProducto=(TextView)itemView.findViewById(R.id.txtProducto);

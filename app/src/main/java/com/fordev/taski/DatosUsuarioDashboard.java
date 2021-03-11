@@ -136,7 +136,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
                     getResources().getColor(R.color.white),getResources().getColor(R.color.rosado), Toasty.LENGTH_SHORT, true, true).show();
         }else {
 
-            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si");
+            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si","","","");
             FirebaseDatabase.getInstance().getReference("users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
             Toasty.custom(this, "Guardado Correctamente!", getResources().getDrawable(R.drawable.logo_taski),

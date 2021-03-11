@@ -1,66 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/colorPrincipal"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/colorPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAF8F2"
     tools:context=".DetallesFacturaVentas">
 
-
     <RelativeLayout
-        android:id="@+id/parteSuperior"
-        android:gravity="center_horizontal"
-        android:layout_margin="30dp"
-        android:layout_width="match_parent"
+        android:id="@+id/eliminar_factura"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/fondo_eliminar"
+        android:elevation="2dp"
+        android:padding="5dp">
+
         <ImageView
-            android:id="@+id/ic_persona"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_persona"/>
+            android:id="@+id/borrar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_borrar"
+            app:tint="@color/rojo" />
 
         <TextView
-            android:id="@+id/clienteDeVenta"
-            android:textSize="24sp"
-            android:fontFamily="@font/brandon_grotesque_light"
-            android:textColor="@color/negro"
-            android:layout_toEndOf="@+id/ic_persona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cliente de Venta"/>
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/borrar"
+            android:fontFamily="@font/montserrat"
+            android:text="Eliminar"
+            android:textColor="@color/negro" />
 
-        <TextView
-            android:id="@+id/nombreCliente"
-            android:layout_below="@+id/clienteDeVenta"
-            android:textSize="24sp"
-            android:fontFamily="@font/mazzard"
-            android:textColor="#08B36D"
-            android:layout_toEndOf="@+id/ic_persona"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nombre Cliente"/>
 
     </RelativeLayout>
 
 
     <RelativeLayout
-        android:elevation="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/parteSuperior"
+        android:id="@+id/parteSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/ic_persona"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_persona" />
+
+        <TextView
+            android:id="@+id/clienteDeVenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ic_persona"
+            android:fontFamily="@font/brandon_grotesque_light"
+            android:text="Cliente de Venta"
+            android:textColor="@color/negro"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/nombreCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clienteDeVenta"
+            android:layout_toEndOf="@+id/ic_persona"
+            android:fontFamily="@font/mazzard"
+            android:text="Nombre Cliente"
+            android:textColor="#08B36D"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/cabecera_detalles_factura">
+        android:layout_below="@+id/parteSuperior"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/cabecera_detalles_factura"
+        android:elevation="5dp">
 
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,179 +105,191 @@
 
 
                     <RelativeLayout
-                        android:gravity="center_horizontal"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="30dp"
                         android:id="@+id/contenidoPrecios"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal">
 
                         <TextView
-                            android:layout_centerHorizontal="true"
                             android:id="@+id/txtTotalVenta"
-                            android:textSize="22sp"
-                            android:fontFamily="@font/nunito_black"
-                            android:textColor="@color/negro"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$00"/>
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/nunito_black"
+                            android:text="$00"
+                            android:textColor="@color/negro"
+                            android:textSize="22sp" />
 
                         <TextView
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/txtTotalVenta"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/mazzard_light"
-                            android:textColor="@color/gris_claro"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Venta"/>
+                            android:layout_below="@+id/txtTotalVenta"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/mazzard_light"
+                            android:text="Total Venta"
+                            android:textColor="@color/gris_claro"
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
 
                     <RelativeLayout
-                        android:layout_alignParentEnd="true"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="40dp"
                         android:id="@+id/contenidoPrecios2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="40dp"
+                        android:gravity="center_horizontal">
 
                         <TextView
-                            android:layout_centerHorizontal="true"
                             android:id="@+id/txtTotalPorCobrar"
-                            android:textSize="22sp"
-                            android:fontFamily="@font/nunito_black"
-                            android:textColor="@color/negro"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$00"/>
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/nunito_black"
+                            android:text="$00"
+                            android:textColor="@color/negro"
+                            android:textSize="22sp" />
 
                         <TextView
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/txtTotalPorCobrar"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/mazzard_light"
-                            android:textColor="@color/gris_claro"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Por Cobrar"/>
+                            android:layout_below="@+id/txtTotalPorCobrar"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/mazzard_light"
+                            android:text="Por Cobrar"
+                            android:textColor="@color/gris_claro"
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/txtIndicador"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_below="@+id/contenidoPrecios2"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/mazzard_light"
-                        android:textColor="@color/gris_claro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Indicador"/>
+                        android:layout_below="@+id/contenidoPrecios2"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Indicador"
+                        android:textColor="@color/gris_claro"
+                        android:textSize="12sp" />
 
 
                     <LinearLayout
-                        android:layout_marginTop="5dp"
                         android:id="@+id/indicadores"
-                        android:weightSum="2"
-                        android:layout_below="@+id/txtIndicador"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_below="@+id/txtIndicador"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:layout_weight="1"
-                            android:id="@+id/indicador"
+                            android:id="@+id/indicador2"
                             android:layout_width="match_parent"
-                            android:layout_marginEnd="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
-                            app:trackCornerRadius="4dp"
-                            app:trackColor="#F2897D"
-                            app:trackThickness="25dp"
-                            app:indicatorDirectionLinear="startToEnd"
+                            android:layout_marginEnd="30dp"
+                            android:layout_weight="1"
                             app:indicatorColor="#08B36D"
-                            android:layout_height="wrap_content"/>
+                            app:indicatorDirectionLinear="startToEnd"
+                            app:trackColor="#F2897D"
+                            app:trackCornerRadius="4dp"
+                            app:trackThickness="20dp" />
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/txtCobrado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/indicadores"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Cobrado"
+                        android:textColor="@color/gris_claro"
+                        android:textSize="12sp" />
+
                     <RelativeLayout
                         android:id="@+id/txtTotalVentaIndicador"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="30dp"
-                        android:layout_below="@+id/indicadores"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/indicadores"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="30dp">
+
                         <TextView
                             android:id="@+id/totalPorCobrarPagado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$180.000"
-                            android:layout_toStartOf="@+id/separador"
                             android:layout_marginTop="10dp"
+                            android:layout_toStartOf="@+id/separador"
                             android:fontFamily="@font/brandon_grotesque_light"
+                            android:text="$180.000"
                             android:textColor="#08B36D"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/separador"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/totalDeVentas"
-                            android:text="/"
+                            android:layout_marginStart="4dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="4dp"
-                            android:layout_marginStart="4dp"
+                            android:layout_toStartOf="@+id/totalDeVentas"
                             android:fontFamily="@font/brandon_grotesque_regular_italic"
+                            android:text="/"
                             android:textColor="@color/negro"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/totalDeVentas"
-                            android:layout_alignParentEnd="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$280.000"
+                            android:layout_alignParentEnd="true"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/brandon_grotesque_light"
+                            android:text="$280.000"
                             android:textColor="@color/negro"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
 
-
                     <RelativeLayout
-                        android:layout_marginTop="30dp"
-                        android:layout_marginStart="20dp"
                         android:id="@+id/txtMetodoDePago"
-                        android:layout_below="@+id/indicadores"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/indicadores"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="30dp">
 
                         <TextView
                             android:id="@+id/metodo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginStart="40dp"
                             android:layout_marginTop="20dp"
-                            android:textSize="14sp"
                             android:fontFamily="@font/din"
+                            android:text="Metodo de Pago:"
                             android:textColor="@color/negro"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Metodo de Pago:"/>
+                            android:textSize="14sp" />
 
                         <androidx.cardview.widget.CardView
-                            android:layout_marginBottom="5dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/metodo"
                             android:id="@+id/bajo_stock_visible"
-                            android:layout_marginTop="6dp"
-                            app:cardBackgroundColor="#EBF9FD"
                             android:layout_width="wrap_content"
-                            android:elevation="0dp"
                             android:layout_height="25dp"
+                            android:layout_below="@+id/metodo"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="5dp"
+                            android:elevation="0dp"
+                            app:cardBackgroundColor="#EBF9FD"
                             app:cardCornerRadius="5dp">
 
                             <RelativeLayout
@@ -255,16 +298,16 @@
 
                                 <TextView
                                     android:id="@+id/txtMetodo"
-                                    android:padding="5dp"
-                                    android:layout_marginEnd="5dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="#00B2EB"
-                                    android:text="Tarjeta de Credito"
-                                    android:textSize="10sp"
+                                    android:layout_centerInParent="true"
                                     android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
                                     android:fontFamily="@font/din"
-                                    android:layout_centerInParent="true"/>
+                                    android:padding="5dp"
+                                    android:text="Tarjeta de Credito"
+                                    android:textColor="#00B2EB"
+                                    android:textSize="10sp" />
 
                             </RelativeLayout>
 
@@ -273,36 +316,36 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_alignParentEnd="true"
                         android:id="@+id/estadoDePAgo"
-                        android:layout_below="@+id/indicadores"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/indicadores"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="20dp">
 
                         <TextView
                             android:id="@+id/estado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginStart="40dp"
                             android:layout_marginTop="20dp"
-                            android:textSize="14sp"
                             android:fontFamily="@font/din"
+                            android:text="Estado de Pago:"
                             android:textColor="@color/negro"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Estado de Pago:"/>
+                            android:textSize="14sp" />
 
                         <androidx.cardview.widget.CardView
-                            android:layout_marginBottom="5dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/estado"
                             android:id="@+id/metodo_de_pago"
-                            android:layout_marginTop="6dp"
-                            app:cardBackgroundColor="#EAF8F2"
                             android:layout_width="wrap_content"
-                            android:elevation="0dp"
                             android:layout_height="25dp"
+                            android:layout_below="@+id/estado"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="5dp"
+                            android:elevation="0dp"
+                            app:cardBackgroundColor="#EAF8F2"
                             app:cardCornerRadius="5dp">
 
                             <RelativeLayout
@@ -311,16 +354,16 @@
 
                                 <TextView
                                     android:id="@+id/txtEstadoDePago"
-                                    android:padding="5dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="#08B36D"
-                                    android:text="Pagado"
-                                    android:textSize="10sp"
+                                    android:layout_centerInParent="true"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginEnd="10dp"
                                     android:fontFamily="@font/din"
-                                    android:layout_centerInParent="true"/>
+                                    android:padding="5dp"
+                                    android:text="Pagado"
+                                    android:textColor="#08B36D"
+                                    android:textSize="10sp" />
 
                             </RelativeLayout>
 
@@ -329,71 +372,69 @@
                     </RelativeLayout>
 
 
-
-
-
-
-
                     <TextView
+                        android:id="@+id/listaItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/txtMetodoDePago"
                         android:layout_marginStart="40dp"
                         android:layout_marginTop="20dp"
-                        android:id="@+id/listaItems"
-                        android:textSize="24sp"
                         android:fontFamily="@font/mazzard"
+                        android:text="Lista Items"
                         android:textColor="@color/negro"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Lista Items"/>
+                        android:textSize="24sp" />
 
                     <TextView
                         android:id="@+id/fecha"
-                        android:layout_below="@+id/txtMetodoDePago"
-                        android:layout_toEndOf="@+id/listaItems"
-                        android:layout_marginTop="29dp"
-                        android:textSize="14sp"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/mazzard_light"
-                        android:textColor="@color/gris_claro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sep 2021"/>
+                        android:layout_below="@+id/txtMetodoDePago"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="29dp"
+                        android:layout_toEndOf="@+id/listaItems"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Sep 2021"
+                        android:textColor="@color/gris_claro"
+                        android:textSize="14sp" />
 
 
                     <LinearLayout
-                        android:layout_margin="10dp"
-                        android:layout_below="@+id/listaItems"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/listaItems"
+                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/lista_de_productos_venta"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_height="wrap_content"/>
+                            android:layout_marginEnd="10dp" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/lista_de_productos_venta_inventario"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_height="wrap_content"/>
+                            android:layout_marginEnd="10dp" />
 
                         <androidx.cardview.widget.CardView
-                            app:cardCornerRadius="5dp"
                             android:id="@+id/notasInternas"
-                            android:layout_margin="10dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="20dp"
+                            app:cardCornerRadius="5dp">
 
                             <RelativeLayout
                                 android:id="@+id/superiorNotas"
-                                android:layout_margin="10dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp">
 
                                 <ImageView
                                     android:id="@+id/icons"
@@ -404,45 +445,45 @@
 
                                 <TextView
                                     android:id="@+id/notasTXT"
-                                    android:layout_toEndOf="@+id/icons"
-                                    android:textSize="14sp"
-                                    android:layout_marginTop="3dp"
-                                    android:layout_marginStart="10dp"
-                                    android:fontFamily="@font/mazzard_light"
-                                    android:textColor="@color/gris_claro"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Notas Internas de la Venta"/>
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_toEndOf="@+id/icons"
+                                    android:fontFamily="@font/mazzard_light"
+                                    android:text="Notas Internas de la Venta"
+                                    android:textColor="@color/gris_claro"
+                                    android:textSize="14sp" />
 
                                 <ImageView
-                                    android:layout_alignParentEnd="true"
                                     android:id="@+id/icon_detalles_notas"
-                                    android:padding="5dp"
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:padding="2dp"
                                     android:src="@drawable/ic_arrow_factura"
                                     app:tint="@color/azul" />
 
                                 <LinearLayout
                                     android:id="@+id/visibilidad_nota_interna"
-                                    android:visibility="gone"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_below="@+id/icons"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical">
+                                    android:layout_below="@+id/icons"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="vertical"
+                                    android:visibility="gone">
 
                                     <TextView
                                         android:id="@+id/notaIngresada"
-                                        android:layout_toEndOf="@+id/icons"
-                                        android:textSize="14sp"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginStart="10dp"
-                                        android:fontFamily="@font/din"
-                                        android:textColor="@color/gris_claro"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Notas Internas de la Venta"/>
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_toEndOf="@+id/icons"
+                                        android:fontFamily="@font/din"
+                                        android:text="No hay notas en esta venta :("
+                                        android:textColor="@color/gris_claro"
+                                        android:textSize="14sp" />
 
 
                                 </LinearLayout>
@@ -450,18 +491,12 @@
                             </RelativeLayout>
 
 
-
-
                         </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
 
 
-
-
-
                 </RelativeLayout>
-
 
 
             </LinearLayout>
@@ -472,39 +507,37 @@
             android:id="@+id/faq_abonar"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:fontFamily="@font/din"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_margin="16sp"
-            app:cornerRadius="20dp"
-            android:textSize="12sp"
+            android:fontFamily="@font/din"
             android:text="Abonar"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:backgroundTint="#EC4F3C"
+            app:cornerRadius="20dp"
             app:icon="@drawable/ic_precio_final"
             app:iconTint="@color/white"
-            android:textColor="@color/white"
-            app:backgroundTint="#EC4F3C"
-            app:tint="@color/white"/>
+            app:tint="@color/white" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/faq_enviar_factura"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:fontFamily="@font/din"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
             android:layout_margin="16sp"
-            app:cornerRadius="20dp"
-            android:textSize="12sp"
+            android:fontFamily="@font/din"
             android:text="Recibo"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:backgroundTint="#FF9A00"
+            app:cornerRadius="20dp"
             app:icon="@drawable/ic_factura"
             app:iconTint="@color/white"
-            android:textColor="@color/white"
-            app:backgroundTint="#FF9A00"
-            app:tint="@color/white"/>
+            app:tint="@color/white" />
 
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>
