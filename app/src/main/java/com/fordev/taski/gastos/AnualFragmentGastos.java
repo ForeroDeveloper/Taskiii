@@ -114,6 +114,7 @@ public class AnualFragmentGastos extends Fragment {
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
+        facturasTotales = view.findViewById(R.id.todas);
         //seteos
 
         calendar.get(Calendar.YEAR);
@@ -265,8 +266,14 @@ public class AnualFragmentGastos extends Fragment {
                         .build();
         adaptadorListaFacturasEnGastos =new AdaptadorListaFacturasEnGastos(options);
         listaDeFacturas.setAdapter(adaptadorListaFacturasEnGastos);
-
         adaptadorListaFacturasEnGastos.startListening();
+        adaptadorListaFacturasEnGastos.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                facturasTotales.setText(String.valueOf(adaptadorListaFacturasEnGastos.getItemCount()));
+            }
+        });
         adaptadorListaFacturasEnGastos.notifyDataSetChanged();
 
     }

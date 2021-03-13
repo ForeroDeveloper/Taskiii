@@ -253,7 +253,7 @@ public class GastosNegocio extends AppCompatActivity {
         btnGuardarFactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 final Calendar Cal = Calendar.getInstance();
                 dia=Cal.get(Calendar.DAY_OF_MONTH);
                 mes=Cal.get(Calendar.MONTH);
@@ -446,7 +446,7 @@ public class GastosNegocio extends AppCompatActivity {
 
 
     private String getFechaNormal(Long fechaMilisegundos) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
         String fecha = sdf.format(fechaMilisegundos);
         return fecha;

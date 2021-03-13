@@ -61,7 +61,7 @@ public class DiaFragmentGastos extends Fragment {
     CardView sinContenido;
     RelativeLayout sinContenidoDos;
     private int dia,mes,ano;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DatabaseReference databaseReference;
     CircularProgressBar progressIndicator;
     com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha,faq_sumar_fecha;
@@ -297,7 +297,6 @@ public class DiaFragmentGastos extends Fragment {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 txtTotalFacturas.setText(String.valueOf(adaptadorListaFacturasEnGastos.getItemCount()));
-
             }
         });
 

@@ -72,7 +72,7 @@ public class SemanaFragmentGastos extends Fragment {
     ImageView ic_sumar_fecha, ic_restar_fecha;
     CardView sinContenido;
     RelativeLayout sinContenidoDos;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DatabaseReference databaseReference;
     CircularProgressBar progressIndicator;
     com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha, faq_sumar_fecha;
@@ -122,16 +122,22 @@ public class SemanaFragmentGastos extends Fragment {
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
+        facturasTotales = view.findViewById(R.id.todas);
 
         //seteos
         fechaInicio.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        fechaActual.setText(sdf.format(fechaInicio.getTime()));
-        fechaFin.add(Calendar.DATE, +5);
+        fechados.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechados.add(Calendar.DATE, 1);
+        fechatres.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechatres.add(Calendar.DATE, 2);
+        fechacuatro.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechacuatro.add(Calendar.DATE, 3);
+        fechacinco.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechacinco.add(Calendar.DATE, 4);
+        fechaActual.setText(sdf.format(fechaInicio.getTime()));
+        fechaFin.add(Calendar.DATE, 4);
         txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
+
         cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);
 
         nuevaFactura.setOnClickListener(new View.OnClickListener() {
@@ -297,8 +303,14 @@ public class SemanaFragmentGastos extends Fragment {
                         .build();
         adaptadorListaFacturasEnGastos = new AdaptadorListaFacturasEnGastos(options);
         listaDeFacturas.setAdapter(adaptadorListaFacturasEnGastos);
-
         adaptadorListaFacturasEnGastos.startListening();
+        adaptadorListaFacturasEnGastos.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                facturasTotales.setText(String.valueOf(adaptadorListaFacturasEnGastos.getItemCount()));
+            }
+        });
         adaptadorListaFacturasEnGastos.notifyDataSetChanged();
 
     }

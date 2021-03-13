@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fordev.taski.otros.PorcentajesInformacion;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,7 +44,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     DatabaseReference databaseReference;
     TextView txtUri;
     TextInputLayout lista_doc,edt_NombreNegocio;
-    TextInputEditText nombre_Negocio,nit_Negocio,nombre_Propietario,numero_documento,correo;
+    TextInputEditText nombre_Negocio,nit_Negocio,nombre_Propietario,numero_documento,correo,txtApellidoPropietario;
     AutoCompleteTextView autoCompleteTextView;
     CircleImageView ponerFoto, profile_image;
     public Uri imageUri;
@@ -51,6 +52,8 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     Dialog myDiagol;
     String primeraVez2;
     RelativeLayout cargandoInfo,registrarInfo;
+    int infoPersonal;
+    int infoNegocio;
 
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -75,6 +78,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
         profile_image = findViewById(R.id.profile_image);
         cargandoInfo = findViewById(R.id.cargandoDatos);
         registrarInfo = findViewById(R.id.registrarInformacion);
+        txtApellidoPropietario = findViewById(R.id.txtApellidoPropietario);
 
         //Store DAta Firebase
         storage = FirebaseStorage.getInstance();
@@ -129,6 +133,29 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
         String numeroDocumento = numero_documento.getText().toString();
         String tipoDocumento = autoCompleteTextView.getText().toString();
         String correoElectronico = correo.getText().toString();
+        String txtApellidoProp = txtApellidoPropietario.getText().toString();
+
+        if (!nombrePropietario.isEmpty()){
+            infoPersonal += 20;
+        }else if (!numeroDocumento.isEmpty()){
+            infoPersonal += 20;
+        }else if (!tipoDocumento.isEmpty()){
+            infoPersonal += 20;
+        }else if (!correoElectronico.isEmpty()){
+            infoPersonal += 20;
+        }else if (!txtApellidoProp.isEmpty()){
+            infoPersonal +=20;
+        }
+        //negocio
+        if (!nombreNegocio.isEmpty()){
+            infoNegocio += 20;
+        }
+
+
+        PorcentajesInformacion porcentajesInformacion = new PorcentajesInformacion();
+        porcentajesInformacion.setInfoPersonal(infoPersonal);
+        FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("PorcentajeInformacion").setValue(porcentajesInformacion);
+
 
         if(nombreNegocio.isEmpty()){
             edt_NombreNegocio.setError("Ingrese por favor un nombre");
@@ -136,7 +163,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
                     getResources().getColor(R.color.white),getResources().getColor(R.color.rosado), Toasty.LENGTH_SHORT, true, true).show();
         }else {
 
-            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si","","","");
+            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si","","","",txtApellidoProp);
             FirebaseDatabase.getInstance().getReference("users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
             Toasty.custom(this, "Guardado Correctamente!", getResources().getDrawable(R.drawable.logo_taski),
@@ -202,6 +229,12 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     }
 
     public void loHareLuego(View view) {
-        myDiagol.show();
+        UserInfoBasica userInfoBasica = new UserInfoBasica("","","","","","","si","","","","");
+        FirebaseDatabase.getInstance().getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
+        Toasty.custom(this, "Recuerda Agregalos Luego!", getResources().getDrawable(R.drawable.logo_taski),
+                getResources().getColor(R.color.white),getResources().getColor(R.color.primario), Toasty.LENGTH_LONG, true, true).show();
+        startActivity(new Intent(getApplicationContext(),UserMenuPrincipal.class));
+
     }
 }

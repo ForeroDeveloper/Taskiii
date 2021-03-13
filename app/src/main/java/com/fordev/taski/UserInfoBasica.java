@@ -1,13 +1,13 @@
 package com.fordev.taski;
 
 public class UserInfoBasica {
-    String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez,ubicacionNegocio,direccionNegocio,telefonoNegocio;
+    String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez,ubicacionNegocio,direccionNegocio,telefonoNegocio,apellidoPropietario;
 
 
     public UserInfoBasica() {
     }
 
-    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio) {
+    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio, String apellidoPropietario) {
         this.nombreNegocio = nombreNegocio;
         this.nitNegocio = nitNegocio;
         this.nombrePropietario = nombrePropietario;
@@ -18,6 +18,7 @@ public class UserInfoBasica {
         this.ubicacionNegocio = ubicacionNegocio;
         this.direccionNegocio = direccionNegocio;
         this.telefonoNegocio = telefonoNegocio;
+        this.apellidoPropietario = apellidoPropietario;
     }
 
     public String getNombreNegocio() {
@@ -98,5 +99,13 @@ public class UserInfoBasica {
 
     public void setTelefonoNegocio(String telefonoNegocio) {
         this.telefonoNegocio = telefonoNegocio;
+    }
+
+    public String getApellidoPropietario() {
+        return apellidoPropietario;
+    }
+
+    public void setApellidoPropietario(String apellidoPropietario) {
+        this.apellidoPropietario = apellidoPropietario;
     }
 }

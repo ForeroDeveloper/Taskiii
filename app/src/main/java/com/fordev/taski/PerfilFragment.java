@@ -1,5 +1,6 @@
 package com.fordev.taski;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +26,8 @@ public class PerfilFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RelativeLayout info_personal;
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -64,7 +68,14 @@ public class PerfilFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_perfil_gragment, container, false);
 
 
+        info_personal = view.findViewById(R.id.info_personal);
 
+        info_personal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),InformacionPersonal.class));
+            }
+        });
 
 
         return view;
