@@ -1,14 +1,10 @@
 package com.fordev.taski.adaptadores;
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.fordev.taski.Inventario;
 import com.fordev.taski.R;
-import com.fordev.taski.VentasNegocio;
 import com.fordev.taski.modelos.ModeloInventario;
 import com.fordev.taski.modelos.ModeloVenta;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,7 +22,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -117,8 +109,8 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                 TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
                 MaterialButton btn_guardar_cantidad = views.findViewById(R.id.btn_guardar_producto_inventario);
                 TextView btn_dismiss = views.findViewById(R.id.btn_cancelar);
-                TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreProducto);
-                TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.precio_item);
+                TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreClientes);
+                TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.numeroClientes);
                 TextView txtStockProductoSeleccionado = views.findViewById(R.id.txtStock);
                 CardView bajo_stock_visible = views.findViewById(R.id.bajo_stock_visible);
 
@@ -258,12 +250,12 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
 
                 TextInputLayout cantidad_stock = views.findViewById(R.id.cantidad);
                 TextInputLayout nombreAEditar = views.findViewById(R.id.nombreProductoEditar);
-                TextInputLayout precioAEditar = views.findViewById(R.id.precio);
+                TextInputLayout precioAEditar = views.findViewById(R.id.numeroCliente);
                 TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
                 MaterialButton btn_guardar_edicion = views.findViewById(R.id.btn_guardar_edicion);
                 TextView btn_dismiss = views.findViewById(R.id.btn_cancelar);
-                TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreProducto);
-                TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.precio_item);
+                TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreClientes);
+                TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.numeroClientes);
                 TextView txtStockProductoSeleccionado = views.findViewById(R.id.txtStock);
                 ImageView icon_de_incrementos = views.findViewById(R.id.icon_de_incrementos);
 
@@ -323,7 +315,6 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                 btn_guardar_edicion.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
 
                         if (nombreAEditar.getEditText().getText().toString().isEmpty()) {
                             nombreAEditar.setError("Ingrese un nombre");
@@ -391,12 +382,12 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtProducto=(TextView)itemView.findViewById(R.id.nombreProducto);
+            txtProducto=(TextView)itemView.findViewById(R.id.nombreClientes);
             txtStockCantidad=(TextView)itemView.findViewById(R.id.txtStock);
             bajoStockView=(CardView) itemView.findViewById(R.id.bajo_stock_visible);
             ic_agregar_producto=(ImageView) itemView.findViewById(R.id.ic_agregar_producto);
             ic_editar_item_inventario=(ImageView) itemView.findViewById(R.id.ic_editar_item_inventario);
-            txtPrecioItem=(TextView) itemView.findViewById(R.id.precio_item);
+            txtPrecioItem=(TextView) itemView.findViewById(R.id.numeroClientes);
 
         }
 

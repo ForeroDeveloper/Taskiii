@@ -48,15 +48,16 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     CircleImageView ponerFoto, profile_image;
     public Uri imageUri;
+    FirebaseStorage storage;
+    StorageReference storageReference;
     UploadTask uploadTask;
     Dialog myDiagol;
     String primeraVez2;
     RelativeLayout cargandoInfo,registrarInfo;
-    int infoPersonal;
-    int infoNegocio;
+    int infoPersonal = 0;
+    int infoNegocio = 0;
 
-    FirebaseStorage storage;
-    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,13 +128,13 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     }
 
     public void GuardarDatos(View view) {
-        String nombreNegocio = nombre_Negocio.getText().toString();
-        String nitNegocio = nit_Negocio.getText().toString();
-        String nombrePropietario = nombre_Propietario.getText().toString();
-        String numeroDocumento = numero_documento.getText().toString();
-        String tipoDocumento = autoCompleteTextView.getText().toString();
-        String correoElectronico = correo.getText().toString();
-        String txtApellidoProp = txtApellidoPropietario.getText().toString();
+        String nombreNegocio = nombre_Negocio.getText().toString().trim();
+        String nitNegocio = nit_Negocio.getText().toString().trim();
+        String nombrePropietario = nombre_Propietario.getText().toString().trim();
+        String numeroDocumento = numero_documento.getText().toString().trim();
+        String tipoDocumento = autoCompleteTextView.getText().toString().trim();
+        String correoElectronico = correo.getText().toString().trim();
+        String txtApellidoProp = txtApellidoPropietario.getText().toString().trim();
 
         if (!nombrePropietario.isEmpty()){
             infoPersonal += 20;
@@ -152,9 +153,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
         }
 
 
-        PorcentajesInformacion porcentajesInformacion = new PorcentajesInformacion();
-        porcentajesInformacion.setInfoPersonal(infoPersonal);
-        FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("PorcentajeInformacion").setValue(porcentajesInformacion);
+        porcentajesMetodo();
 
 
         if(nombreNegocio.isEmpty()){
@@ -172,6 +171,13 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
 
         }
 
+    }
+
+    private void porcentajesMetodo() {
+        PorcentajesInformacion porcentajesInformacion = new PorcentajesInformacion();
+        porcentajesInformacion.setInfoPersonal(infoPersonal);
+        porcentajesInformacion.setInfoNegocio(infoNegocio);
+        FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("PorcentajeInformacion").setValue(porcentajesInformacion);
     }
 
     private void subirFotoPerfil() {
@@ -232,6 +238,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
         UserInfoBasica userInfoBasica = new UserInfoBasica("","","","","","","si","","","","");
         FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
+        porcentajesMetodo();
         Toasty.custom(this, "Recuerda Agregalos Luego!", getResources().getDrawable(R.drawable.logo_taski),
                 getResources().getColor(R.color.white),getResources().getColor(R.color.primario), Toasty.LENGTH_LONG, true, true).show();
         startActivity(new Intent(getApplicationContext(),UserMenuPrincipal.class));

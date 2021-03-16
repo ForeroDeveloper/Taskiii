@@ -1,18 +1,15 @@
 package com.fordev.taski;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -28,6 +25,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProductosGastos;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.modelos.ModeloGastos;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -81,9 +79,9 @@ public class GastosNegocio extends AppCompatActivity {
         setContentView(R.layout.gastos_negocio);
 
         btnGuardarProducto = findViewById(R.id.btnGuardar);
-        edtProducto = findViewById(R.id.nombreProducto);
+        edtProducto = findViewById(R.id.nombreClientes);
         txtCrearVenta = findViewById(R.id.crear_venta);
-        precioUnitario = findViewById(R.id.precio);
+        precioUnitario = findViewById(R.id.numeroCliente);
         btnGuardarFactura = findViewById(R.id.btnGuardarFactura);
         cantidadProducto = findViewById(R.id.cantidad);
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
@@ -239,7 +237,15 @@ public class GastosNegocio extends AppCompatActivity {
                         modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
                         txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
                     }
-                    databaseReference.child(key).child(id).setValue(modeloVenta);
+                    databaseReference.child(key).child(id).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            edtProducto.getEditText().setText("");
+                            precioUnitario.getEditText().setText("");
+                            cantidadProducto.getEditText().setText("");
+                            precioFinalPorUsuario.getEditText().setText("");
+                        }
+                    });
                     cabeceraFacturas.setVisibility(View.VISIBLE);
                     imgIlustra.setVisibility(View.GONE);
                     btnGuardarFactura.setVisibility(View.VISIBLE);
@@ -261,7 +267,7 @@ public class GastosNegocio extends AppCompatActivity {
 
                 DialogPlus dialogPlus = DialogPlus.newDialog(btnGuardarFactura.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura_gasto))
-                        .setExpanded(true,1460)
+                        .setExpanded(true,1470)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
                 View view = dialogPlus.getHolderView();
@@ -302,8 +308,9 @@ public class GastosNegocio extends AppCompatActivity {
                             estadoDePago = false;
                         }else {
                             txtTotalFactura.setTextColor(getResources().getColor(R.color.verde));
+                            cliente.setHelperText("Recomendado");
+                            cliente.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
                             estadoDePago = true;
-                            cliente.setHelperTextEnabled(false);
                         }
                     }
                 });

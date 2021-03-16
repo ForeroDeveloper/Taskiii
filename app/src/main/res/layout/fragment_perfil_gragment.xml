@@ -24,7 +24,7 @@
             <RelativeLayout
                 android:id="@+id/cabecera_principal"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="135dp"
                 android:elevation="2dp"
                 android:background="@drawable/cabecera_perfil">
 
@@ -32,9 +32,9 @@
                     android:id="@+id/ic_perfil"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
+                    android:layout_marginTop="25dp"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="30dp"
                     android:src="@drawable/ic_profile" />
 
                 <TextView
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp"
                     android:layout_toEndOf="@id/ic_perfil"
                     android:fontFamily="@font/mazzard"
                     android:text="¡Hola, "
@@ -50,9 +50,10 @@
                     android:textSize="24dp" />
 
                 <TextView
+                    android:id="@+id/nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="31dp"
+                    android:layout_marginTop="27dp"
                     android:layout_toEndOf="@id/hola"
                     android:fontFamily="@font/mazzard_light"
                     android:text="Jeferson!"
@@ -61,6 +62,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/licencia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/hola"
@@ -68,36 +70,57 @@
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/ic_perfil"
                     android:fontFamily="@font/mazzard_light"
-                    android:text="Estas con Taski hace 10 minutos."
-                    android:textColor="@color/primario"
+                    android:text="Tu licencia en Taski :"
+                    android:textColor="@color/gris_claro"
                     android:textSize="10dp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/premiums"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hola"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/licencia"
+                    android:fontFamily="@font/mazzard"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="4dp"
+                    android:text="BASICO"
+                    android:textColor="#792E03"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+                <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/activo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/old_standard_tt_bold"
-                    android:text="POBRE"
-                    android:textColor="@color/primario"
-                    android:textSize="18dp" />
+                    app:lottie_rawRes="@raw/premium_anim"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:textSize="12dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/activo"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/mazzard_light"
-                    android:text="Tu licencia"
-                    android:textColor="#8C8A96"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
+                    android:layout_below="@+id/licencia"
+                    android:visibility="visible"
+                    android:id="@+id/btnPremium"
+                    android:background="@drawable/hazte_premium"
+                    android:layout_width="170dp"
+                    android:text="Hazte Premium"
+                    android:fontFamily="@font/din"
+                    android:layout_marginTop="13dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:textColor="#FDB700"
+                    android:layout_height="35dp"/>
 
             </RelativeLayout>
 
@@ -161,11 +184,12 @@
                             android:textStyle="normal" />
 
                         <TextView
+                            android:id="@+id/txtIndicadorInfoPersonal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="5dp"
-                            android:layout_toStartOf="@+id/indicador"
+                            android:layout_toStartOf="@+id/indicadorPersonal"
                             android:fontFamily="@font/mazzard_light"
                             android:text="100%"
                             android:textColor="@color/primario"
@@ -173,7 +197,7 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/indicador"
+                            android:id="@+id/indicadorPersonal"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/totalDeuda"
@@ -224,11 +248,12 @@
                             android:textStyle="normal" />
 
                         <TextView
+                            android:id="@+id/txtprogressIndicatorNegocio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="5dp"
-                            android:layout_toStartOf="@+id/indicador2"
+                            android:layout_toStartOf="@+id/progressIndicatorNegocio"
                             android:fontFamily="@font/mazzard_light"
                             android:text="100%"
                             android:textColor="@color/primario"
@@ -236,7 +261,7 @@
                             android:textStyle="normal" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/indicador2"
+                            android:id="@+id/progressIndicatorNegocio"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/totalDeuda"
@@ -293,7 +318,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_toStartOf="@+id/indicador3"
                             android:fontFamily="@font/mazzard_light"
-                            android:text="100%"
+                            android:text="0%"
                             android:textColor="@color/primario"
                             android:textSize="8dp"
                             android:textStyle="normal" />

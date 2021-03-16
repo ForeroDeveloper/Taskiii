@@ -76,7 +76,7 @@ public class AdaptadorListaProductosGastos extends FirebaseRecyclerAdapter<Model
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtProducto=(TextView)itemView.findViewById(R.id.txtProducto);
+            txtProducto=(TextView)itemView.findViewById(R.id.txtNombreCliente);
             txtCantidad=(TextView)itemView.findViewById(R.id.txtCantidad);
             txtTotal=(TextView)itemView.findViewById(R.id.txtTotal);
             txtTotalProdcutos=(TextView)itemView.findViewById(R.id.crear_venta);

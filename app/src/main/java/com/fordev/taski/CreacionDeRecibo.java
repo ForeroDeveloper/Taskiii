@@ -168,18 +168,20 @@ public class CreacionDeRecibo extends AppCompatActivity {
         datosFactura.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                fecha_factura = snapshot.child("fechaRegistro").getValue().toString();
-                txt_fecha_factura_cliente.setText("Fecha: "+ fecha_factura);
-                //Nombre Cliente
-                 nombre_cliente = snapshot.child("cliente").getValue().toString();
-                if (nombre_cliente.toString().isEmpty()){
-                    txt_nombre_cliente.setText("SEÑOR(ES): " + "Sin Especificar...");
-                }else{
-                txt_nombre_cliente.setText("SEÑOR(ES): "+ nombre_cliente);
-                }
+                if (snapshot.exists()){
+                    fecha_factura = snapshot.child("fechaRegistro").getValue().toString();
+                    txt_fecha_factura_cliente.setText("Fecha: "+ fecha_factura);
+                    //Nombre Cliente
+                    nombre_cliente = snapshot.child("cliente").getValue().toString();
+                    if (nombre_cliente.toString().isEmpty()){
+                        txt_nombre_cliente.setText("SEÑOR(ES): " + "Sin Especificar...");
+                    }else{
+                        txt_nombre_cliente.setText("SEÑOR(ES): "+ nombre_cliente);
+                    }
 
-                total_factura = Integer.parseInt(String.valueOf(snapshot.child("abonado").getValue().toString()));
-                txt_total_factura_cliente.setText("$ " + String.valueOf(nformat.format(total_factura)));
+                    total_factura = Integer.parseInt(String.valueOf(snapshot.child("abonado").getValue().toString()));
+                    txt_total_factura_cliente.setText("$ " + String.valueOf(nformat.format(total_factura)));
+                }
 
             }
 
@@ -225,7 +227,7 @@ public class CreacionDeRecibo extends AppCompatActivity {
                 //Nombre Vendedor
                 String nom_vendedor = snapshot.child("nombrePropietario").getValue().toString();
                 txtNombreVendedorRecibo.setText("Vende: " + nom_vendedor);
-/*                //ubicacion Negocio
+                //ubicacion Negocio
                 String ubicacion_negocio = snapshot.child("ubicacionNegocio").getValue().toString();
                 if (!ubicacion_negocio.toString().isEmpty()){
                     txtUbicacionNegocioRecibo.setText(ubicacion_negocio);
@@ -240,9 +242,9 @@ public class CreacionDeRecibo extends AppCompatActivity {
                 //telefono Negocio
                 String telefono_negocio = snapshot.child("telefonoNegocio").getValue().toString();
                 if (!telefono_negocio.toString().isEmpty()){
-                    txtTelefonoNegocio.setText(telefono_negocio);
+                    txtTelefonoNegocio.setText("Cel. " + telefono_negocio);
                     txtTelefonoNegocio.setVisibility(View.VISIBLE);
-                }*/
+                }
             }
 
             @Override
@@ -316,7 +318,11 @@ public class CreacionDeRecibo extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     protected void onStop() {

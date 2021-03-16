@@ -30,7 +30,7 @@
             <TextView
                 android:layout_toEndOf="@+id/icon_estado_de_pago"
                 android:layout_centerVertical="true"
-                android:id="@+id/nombreProducto"
+                android:id="@+id/nombreClientes"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

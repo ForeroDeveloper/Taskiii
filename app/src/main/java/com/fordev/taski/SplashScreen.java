@@ -56,25 +56,9 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-                infoBasica.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.child("info").exists()){
-                            infoIngresada = true;
-                        }else {
-                            infoIngresada = false;
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null && infoIngresada) {
+                if (user != null) {
                     // User is signed in
                     Intent i = new Intent(SplashScreen.this, UserMenuPrincipal.class);
                     startActivity(i);
@@ -85,6 +69,7 @@ public class SplashScreen extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+
 
 
             }

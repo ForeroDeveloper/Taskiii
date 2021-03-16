@@ -11,23 +11,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/img_logo_negocio_recibo"
+            android:src="@drawable/logo_taski"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:scaleType="centerInside"
-            android:src="@drawable/logo_taski" />
+            android:layout_gravity="center"
+            android:layout_height="90dp" />
 
         <TextView
             android:id="@+id/txtNombreNegocioRecibo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:fontFamily="serif-monospace"
             android:text="taski.co f.o.r.d.e.v"
             android:textAllCaps="true"
@@ -285,9 +287,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_gravity="start"
-                android:layout_marginEnd="10dp"
+                android:layout_centerHorizontal="true"
+                android:paddingEnd="50dp"
                 android:fontFamily="serif-monospace"
                 android:text="TOTAL: "
                 android:textColor="@color/negro"
@@ -309,6 +311,7 @@
 
         </RelativeLayout>
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -318,17 +321,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_gravity="start"
-                android:layout_marginEnd="10dp"
                 android:fontFamily="serif-monospace"
-                android:text="TOTAL ABONADO: "
+                android:text="TOTAL POR PAGAR: "
+                android:layout_centerHorizontal="true"
+                android:paddingEnd="50dp"
                 android:textColor="@color/negro"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_total_abonado"
+                android:id="@+id/txt_total_por_pagar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -341,7 +344,6 @@
                 android:textStyle="bold" />
 
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -351,17 +353,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_gravity="start"
-                android:layout_marginEnd="10dp"
+                android:layout_centerHorizontal="true"
+                android:paddingEnd="50dp"
                 android:fontFamily="serif-monospace"
-                android:text="TOTAL POR PAGAR: "
+                android:text="TOTAL ABONADO: "
                 android:textColor="@color/negro"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_total_por_pagar"
+                android:id="@+id/txt_total_abonado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

@@ -11,7 +11,9 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
@@ -26,7 +28,6 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProductos;
 import com.fordev.taski.adaptadores.AdaptadorListaProductosEnInventario;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
-import com.fordev.taski.modelos.ModeloIdFactura;
 import com.fordev.taski.modelos.ModeloVenta;
 import com.fordev.taski.modelos.ModeloVentaInventario;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +47,9 @@ import com.orhanobut.dialogplus.ViewHolder;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -60,7 +63,7 @@ public class VentasNegocio extends AppCompatActivity {
     TextInputLayout edtProducto, precioUnitario, cantidadProducto, precioFinalPorUsuario;
     TextInputEditText txtprecioUnitario, txtcantidadProducto, txtprecioFinalPorUsuario;
     RecyclerView listaDeProductos, lista_de_productos_venta_inventario;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReferenceClientes;
     FirebaseDatabase firebaseDatabase;
     AdaptadorListaProductos adaptadorListaProductos;
     AdaptadorListaProductosEnInventario adaptadorListaProductosEnInventario;
@@ -86,9 +89,9 @@ public class VentasNegocio extends AppCompatActivity {
         NumberFormat nformat = new DecimalFormat("##,###,###.##");
 
         btnGuardarProducto = findViewById(R.id.btnGuardar);
-        edtProducto = findViewById(R.id.nombreProducto);
+        edtProducto = findViewById(R.id.nombreClientes);
         txtCrearVenta = findViewById(R.id.crear_venta);
-        precioUnitario = findViewById(R.id.precio);
+        precioUnitario = findViewById(R.id.numeroCliente);
         btnGuardarFactura = findViewById(R.id.btnGuardarFactura);
         cantidadProducto = findViewById(R.id.cantidad);
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
@@ -105,13 +108,14 @@ public class VentasNegocio extends AppCompatActivity {
         imgIlustra = (LinearLayout) findViewById(R.id.crear_venta_ilustra);
 
         btnLimpiar.setVisibility(View.GONE);
-        edtProducto.requestFocus();
+//        edtProducto.requestFocus();
 
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         String fecha = getFechaNormal(getFechaMilisegundos());
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        databaseReferenceClientes = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.keepSynced(true);
 
 //                .child("facturas").child("fechas").child("listaDeFacturas");
@@ -296,7 +300,10 @@ public class VentasNegocio extends AppCompatActivity {
 
                 DialogPlus dialogPlus = DialogPlus.newDialog(btnGuardarFactura.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura))
-                        .setExpanded(true, 1460)
+                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .setExpanded(true, 1470)
+                        .setGravity(Gravity.BOTTOM)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
                 View view = dialogPlus.getHolderView();
@@ -316,6 +323,32 @@ public class VentasNegocio extends AppCompatActivity {
                 //setFechaActual
                 txtFechaSelect.setText(sdf.format(Cal.getTime()));
 
+                databaseReference.child("Clientes").child("cliente").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //array lista clientes
+                        ArrayList clientes = new ArrayList<String>();
+
+                        for (DataSnapshot childSnapshot: snapshot.getChildren()){
+                            HashMap map =(HashMap) childSnapshot.getValue();
+                            if(map!=null) {
+                                clientes.add(map.get("nombreCliente"));
+                            }
+                        }
+
+                        ArrayAdapter<String> adapterClientes = new ArrayAdapter<>(getApplicationContext(),
+                                R.layout.lista_items_dos,
+                                clientes);
+                        clienteNombre.setAdapter(adapterClientes);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 //Variables and others
                 String[] tipoDocumento = new String[]{
                         "Efectivo",
@@ -323,6 +356,9 @@ public class VentasNegocio extends AppCompatActivity {
                         "Tranferencia bancaria",
                         "Otro"
                 };
+
+
+
                 txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario)));
 
                 //CLick Listener and others
@@ -337,8 +373,10 @@ public class VentasNegocio extends AppCompatActivity {
                             estadoDePago = false;
                         } else {
                             txtTotalFactura.setTextColor(getResources().getColor(R.color.verde));
+                            cliente.setHelperText("Recomendado");
+                            cliente.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
                             estadoDePago = true;
-                            cliente.setHelperTextEnabled(false);
+                            cliente.setHelperTextEnabled(true);
                         }
                     }
                 });
@@ -411,6 +449,8 @@ public class VentasNegocio extends AppCompatActivity {
                         R.layout.lista_items_dos,
                         tipoDocumento);
                 autoCompleteTextView.setAdapter(adapter);
+
+
 
                 dialogPlus.show();
 

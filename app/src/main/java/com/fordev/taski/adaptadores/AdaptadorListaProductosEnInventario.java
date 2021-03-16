@@ -2,8 +2,6 @@ package com.fordev.taski.adaptadores;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +11,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloVentaInventario;
-import com.google.android.material.button.MaterialButton;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -55,7 +52,7 @@ public class AdaptadorListaProductosEnInventario extends FirebaseRecyclerAdapter
         TextView txtProducto, txtCantidad, txtTotal;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtProducto=(TextView)itemView.findViewById(R.id.txtProducto);
+            txtProducto=(TextView)itemView.findViewById(R.id.txtNombreCliente);
             txtCantidad=(TextView)itemView.findViewById(R.id.txtCantidad);
             txtTotal=(TextView)itemView.findViewById(R.id.txtTotal);
         }

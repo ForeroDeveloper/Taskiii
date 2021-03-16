@@ -139,8 +139,13 @@ public class UserMenuPrincipal extends AppCompatActivity {
         infoBasica.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String nombre_Negocio = snapshot.child("nombreNegocio").getValue().toString();
-                nombreNegocio.setText(nombre_Negocio);
+                if (snapshot.child("nombreNegocio").exists()){
+                    String nombre_Negocio = snapshot.child("nombreNegocio").getValue().toString();
+                    nombreNegocio.setText(nombre_Negocio);
+                }else {
+                    nombreNegocio.setText("Nombre Negocio");
+                }
+
             }
 
             @Override

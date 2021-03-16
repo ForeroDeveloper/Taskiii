@@ -41,7 +41,7 @@
 
             <TextView
                 android:layout_toEndOf="@+id/icon_estado_de_pago"
-                android:id="@+id/nombreProducto"
+                android:id="@+id/nombreClientes"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="6dp"
                 android:layout_height="wrap_content"
@@ -52,9 +52,9 @@
                 android:fontFamily="@font/din"/>
 
             <TextView
-                android:layout_below="@+id/nombreProducto"
+                android:layout_below="@+id/nombreClientes"
                 android:layout_toEndOf="@+id/icon_estado_de_pago"
-                android:id="@+id/precio_item"
+                android:id="@+id/numeroClientes"
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:fontFamily="@font/brandon_grotesque_light"/>
 
             <TextView
-                android:layout_below="@+id/precio_item"
+                android:layout_below="@+id/numeroClientes"
                 android:layout_toEndOf="@+id/icon_estado_de_pago"
                 android:id="@+id/txtStock"
                 android:layout_width="110dp"
@@ -81,7 +81,7 @@
                 android:id="@+id/bajo_stock_visible"
                 android:layout_marginTop="6dp"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/nombreProducto"
+                android:layout_toEndOf="@+id/nombreClientes"
                 app:cardBackgroundColor="#FFECDD"
                 android:layout_width="55dp"
                 android:elevation="0dp"

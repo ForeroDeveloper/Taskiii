@@ -67,7 +67,7 @@
 
 
                     <TextView
-                        android:id="@+id/nombreProducto"
+                        android:id="@+id/nombreClientes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -79,10 +79,10 @@
                         android:textColor="@color/negro" />
 
                     <TextView
-                        android:id="@+id/precio_item"
+                        android:id="@+id/numeroClientes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/nombreProducto"
+                        android:layout_below="@+id/nombreClientes"
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/icon_estado_de_pago"
@@ -94,7 +94,7 @@
                     <RelativeLayout
                         android:layout_toEndOf="@+id/icon_estado_de_pago"
                         android:layout_width="wrap_content"
-                        android:layout_below="@+id/precio_item"
+                        android:layout_below="@+id/numeroClientes"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -187,7 +187,7 @@
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtProducto"
+                    android:id="@+id/txtNombreCliente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/din"
@@ -243,7 +243,7 @@
                     android:text="Precio Unitario"/>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/precio"
+                    android:id="@+id/numeroCliente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -261,7 +261,7 @@
                     android:hint="$ 1.500">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtprecio"
+                        android:id="@+id/txtNumeroCliente"
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:inputType="number"

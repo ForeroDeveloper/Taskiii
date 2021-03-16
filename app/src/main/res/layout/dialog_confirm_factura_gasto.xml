@@ -193,6 +193,8 @@
                     app:boxCornerRadiusTopStart="20dp"
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusTopEnd="20dp"
+                    app:helperText="Recomendado"
+                    app:helperTextTextColor="@color/verde"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     app:boxStrokeColor="@color/primario"
                     android:hint="Proveedor o Gasto">

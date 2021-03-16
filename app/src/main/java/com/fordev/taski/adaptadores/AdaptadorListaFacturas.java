@@ -71,7 +71,7 @@ public class AdaptadorListaFacturas extends FirebaseRecyclerAdapter<ModeloFactur
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            conceptoVenta = itemView.findViewById(R.id.nombreProducto);
+            conceptoVenta = itemView.findViewById(R.id.nombreClientes);
             total = itemView.findViewById(R.id.total);
             iconPagado = itemView.findViewById(R.id.icon_estado_de_pago);
             iconFlecha = itemView.findViewById(R.id.ic_detalles_factura);

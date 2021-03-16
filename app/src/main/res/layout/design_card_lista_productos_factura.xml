@@ -17,7 +17,7 @@
         android:layout_marginStart="10dp"/>
 
     <TextView
-        android:id="@+id/txtProducto"
+        android:id="@+id/txtNombreCliente"
         android:layout_centerVertical="true"
         android:layout_margin="5dp"
         android:layout_marginStart="10dp"
@@ -29,7 +29,7 @@
 
     <LinearLayout
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/txtProducto"
+        android:layout_toEndOf="@+id/txtNombreCliente"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

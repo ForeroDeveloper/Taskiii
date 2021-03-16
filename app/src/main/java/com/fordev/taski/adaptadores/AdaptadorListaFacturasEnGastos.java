@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.DetallesFacturaGastos;
-import com.fordev.taski.DetallesFacturaVentas;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloFacturaCreadaGastos;
 
@@ -71,7 +70,7 @@ public class AdaptadorListaFacturasEnGastos extends FirebaseRecyclerAdapter<Mode
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            conceptoVenta = itemView.findViewById(R.id.nombreProducto);
+            conceptoVenta = itemView.findViewById(R.id.nombreClientes);
             total = itemView.findViewById(R.id.total);
             iconPagado = itemView.findViewById(R.id.icon_estado_de_pago);
             iconFlecha = itemView.findViewById(R.id.ic_detalles_factura);

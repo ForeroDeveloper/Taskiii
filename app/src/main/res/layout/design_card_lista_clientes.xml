@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:layout_centerVertical="true"
+                android:id="@+id/icon_estado_de_pago"
+                android:backgroundTint="#F7D8C9"
+                android:background="@drawable/background_color_circle_selector"
+                android:layout_width="55dp"
+                android:layout_height="55dp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_clientes"/>
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:layout_toEndOf="@+id/icon_estado_de_pago"
+                android:id="@+id/nombreClientes"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="Cliente Nombre"
+                android:textColor="@color/negro"
+                android:fontFamily="@font/din"/>
+
+            <TextView
+                android:layout_below="@+id/nombreClientes"
+                android:layout_toEndOf="@+id/icon_estado_de_pago"
+                android:id="@+id/numeroClientes"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="Numero Cel."
+                android:textColor="@color/negro"
+                android:fontFamily="@font/brandon_grotesque_light"/>
+
+
+            <ImageView
+                android:id="@+id/ic_llamar"
+                android:layout_toStartOf="@+id/ic_editar_cliente"
+                android:layout_marginEnd="30dp"
+                android:padding="1dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_llamar"/>
+
+            <ImageView
+                android:id="@+id/ic_editar_cliente"
+                android:layout_toStartOf="@+id/ic_agregar_producto"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:padding="1dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_editar_inventario"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

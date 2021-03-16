@@ -6,23 +6,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaInventario;
-import com.fordev.taski.adaptadores.AdaptadorListaProductos;
 import com.fordev.taski.modelos.ModeloInventario;
-import com.fordev.taski.modelos.ModeloVenta;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -128,8 +122,8 @@ public class Inventario extends AppCompatActivity {
                 View dialog = dialogo.getHolderView();
 
                 MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_inventario);
-                TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreProducto);
-                TextInputLayout precio_unitario = dialog.findViewById(R.id.precio);
+                TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
+                TextInputLayout precio_unitario = dialog.findViewById(R.id.numeroCliente);
                 TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
 
                 btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {

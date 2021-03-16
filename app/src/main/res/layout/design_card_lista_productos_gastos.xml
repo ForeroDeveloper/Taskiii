@@ -17,7 +17,7 @@
         app:tint="@color/rojo" />
 
     <TextView
-        android:id="@+id/txtProducto"
+        android:id="@+id/txtNombreCliente"
         android:layout_centerVertical="true"
         android:layout_margin="5dp"
         android:layout_toEndOf="@+id/icon_estado_de_pago"
@@ -27,7 +27,7 @@
         android:fontFamily="@font/din"/>
 
     <LinearLayout
-        android:layout_toEndOf="@+id/txtProducto"
+        android:layout_toEndOf="@+id/txtNombreCliente"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
