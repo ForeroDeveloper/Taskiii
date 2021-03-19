@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
@@ -60,10 +62,11 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
     AdaptadorListaProductosInventarioRecibo adaptadorListaProductosInventarioRecibo;
     ImageView img_logo_negocio_recibo;
     TextView txtNombreNegocioRecibo,txtNitNegocioRecibo,txt_fecha_factura_cliente,txtNombreVendedorRecibo,txt_nombre_cliente,txt_numero_factura_cliente,txtUbicacionNegocioRecibo
-            ,txtDireccionNegocioRecibo,txtTelefonoNegocio,txt_total_factura_cliente,txt_total_abonado,txt_total_por_pagar;
+            ,txtDireccionNegocioRecibo,txtTelefonoNegocio,txt_total_factura_cliente,txt_total_abonado,txt_total_por_pagar,txtProductoRecibo,txtPrecioRecibo,txtTotalRecibo;
     MaterialButton enviarRecibo;
     NestedScrollView contenidoLayout;
     RelativeLayout marcaDeAgua;
+    LinearLayout venta_rapida_info;
 
     String key = null;
     String key2 = null;
@@ -94,6 +97,10 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
         setContentView(R.layout.creacion_de_recibo_cobrar);
         lista_de_productos_venta_recibo = findViewById(R.id.lista_de_productos_venta_recibo);
         lista_de_productos_venta_recibo_inventario = findViewById(R.id.lista_de_productos_venta_recibo_inventario);
+        venta_rapida_info = findViewById(R.id.venta_rapida_info);
+        txtProductoRecibo = findViewById(R.id.txtProductoRecibo);
+        txtPrecioRecibo = findViewById(R.id.txtPrecioRecibo);
+        txtTotalRecibo = findViewById(R.id.txtTotalRecibo);
         //Logo Negocio
         img_logo_negocio_recibo = findViewById(R.id.img_logo_negocio_recibo);
         //Nombre Negocio
@@ -264,6 +271,25 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
             }
         });
 
+        //VISIBILIDAD venta RAPIDA
+        datosFactura.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("ventaRapida").exists()){
+                    venta_rapida_info.setVisibility(View.VISIBLE);
+                    String conceptoVenta = snapshot.child("conceptoDeVenta").getValue().toString();
+                    txtProductoRecibo.setText(conceptoVenta);
+                    String ventaTotal = snapshot.child("totalCalculado").getValue().toString();
+                    int venta = Integer.parseInt(ventaTotal);
+                    txtPrecioRecibo.setText("$"+String.valueOf(nformat.format(venta)));
+                    txtTotalRecibo.setText("$"+ String.valueOf(nformat.format(venta)));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -302,8 +328,8 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
         }
 
         view.draw(canvas);
-
-        String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(),returnBitmap,"IMG_",  null);
+        Date currentTime;
+        String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(),returnBitmap,"RECIBO_TASKI_GASTO-" + (currentTime = Calendar.getInstance().getTime()),  null);
 
         Uri uri = Uri.parse(bitmapPath);
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -316,8 +342,6 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
 
         return  returnBitmap;
     }
-
-
 
 
     @Override

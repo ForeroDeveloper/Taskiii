@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.fordev.taski.adaptadores.AdaptadorListaInventario;
 import com.fordev.taski.adaptadores.AdaptadorListaInventarioPerfil;
 import com.fordev.taski.modelos.ModeloInventario;
 import com.google.android.material.button.MaterialButton;
@@ -120,8 +119,9 @@ public class InventarioPerfil extends AppCompatActivity {
 
                 MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_inventario);
                 TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
-                TextInputLayout precio_unitario = dialog.findViewById(R.id.numeroCliente);
+                TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
                 TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
+                TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
 
                 btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -153,6 +153,13 @@ public class InventarioPerfil extends AppCompatActivity {
                             databaseReference.keepSynced(true);
                             dialogo.dismiss();
                         }
+                    }
+                });
+
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogo.dismiss();;
                     }
                 });
 

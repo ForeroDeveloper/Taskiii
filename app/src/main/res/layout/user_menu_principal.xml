@@ -96,31 +96,63 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/faq_gastos"
+    <androidx.cardview.widget.CardView
+        app:cardBackgroundColor="@color/verde"
+        app:cardCornerRadius="20dp"
+        android:id="@+id/venta_multiple"
         android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fab_colorPressed="@color/primario_claro"
-        app:fab_icon="@drawable/ic_gasto"
-        app:fab_colorNormal="@color/rojo"
-        app:fab_size="normal"
-        android:layout_alignBottom="@+id/inferior"
+        android:background="@color/verde"
+        android:layout_width="155dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="90dp"/>
+        android:layout_marginBottom="115dp">
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/faq_ventas"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Venta Multiple"
+                android:textColor="@color/white"
+                android:fontFamily="@font/din"
+                android:textSize="17dp"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        app:cardBackgroundColor="@color/rojo_naranja"
+        app:cardCornerRadius="20dp"
+        android:id="@+id/venta_rapida"
         android:visibility="gone"
-        app:fabSize="normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fab_colorPressed="@color/primario_claro"
-        app:fab_icon="@drawable/ic_factura"
-        app:fab_colorNormal="@color/verde"
-        android:layout_alignBottom="@+id/faq_gastos"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/venta_multiple"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp"/>
+        android:layout_marginBottom="60dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Venta Rapida"
+                android:textColor="@color/white"
+                android:fontFamily="@font/din"
+                android:textSize="17dp"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
 
 </RelativeLayout>

@@ -110,6 +110,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/fechas"
+                        android:layout_marginStart="3dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="2dp"
                         android:layout_width="match_parent"
@@ -172,6 +173,7 @@
                             android:id="@+id/metodoDePago"
                             android:layout_width="match_parent"
                             android:inputType="none"
+                            android:text="Efectivo"
                             android:layout_height="wrap_content"
                             />
 

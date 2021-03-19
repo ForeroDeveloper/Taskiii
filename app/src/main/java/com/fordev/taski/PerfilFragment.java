@@ -1,6 +1,7 @@
 package com.fordev.taski;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class PerfilFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    RelativeLayout info_personal,info_negocio,info_clientes,info_proveedores,info_inventario;
+    RelativeLayout info_personal,info_negocio,info_clientes,info_proveedores,info_inventario,contacto_whatsapp,contacto_facebook,terminos_condiciones;
     LinearProgressIndicator progressIndicator,progressIndicatorNegocio;
     TextView txtIndicadorInfoPersonal,txtProgressIndicatorNegocio,nombre;
     private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -89,6 +90,9 @@ public class PerfilFragment extends Fragment {
         info_proveedores = view.findViewById(R.id.info_proveedores);
         progressIndicator = view.findViewById(R.id.indicadorPersonal);
         info_inventario = view.findViewById(R.id.info_inventario);
+        contacto_whatsapp = view.findViewById(R.id.contacto_whatsapp);
+        contacto_facebook = view.findViewById(R.id.contacto_facebook);
+        terminos_condiciones = view.findViewById(R.id.terminos_condiciones);
         progressIndicatorNegocio = view.findViewById(R.id.progressIndicatorNegocio);
         txtIndicadorInfoPersonal = view.findViewById(R.id.txtIndicadorInfoPersonal);
         txtProgressIndicatorNegocio = view.findViewById(R.id.txtprogressIndicatorNegocio);
@@ -174,6 +178,36 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), InventarioPerfil.class));
+            }
+        });
+
+        contacto_whatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://wa.me/+573178816094/?text=Hola,%20quiero%20chatear%20con%20alguien";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+        contacto_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://fb.me/taski.app.co";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+        terminos_condiciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://docs.google.com/document/d/1UCea1PneoyGPPcqVAf5hkH_bVAecA_E6MXMauFkQnKo/edit?usp=sharing";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 

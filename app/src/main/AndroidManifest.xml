@@ -31,6 +31,7 @@
         <activity android:name=".InformacionNegocio" />
         <activity android:name=".ListaProveedores" />
         <activity android:name=".InventarioPerfil" />
+        <activity android:name=".VentaRapidaNegocio" />
         <activity android:name=".UserDashboard" />
         <activity android:name=".SplashScreen">
             <intent-filter>

@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".EstadisticasFragment">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,8 +22,475 @@
                 android:orientation="vertical">
 
 
+                <RelativeLayout
+                    android:id="@+id/cabecera_principal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cabecera_perfil"
+                    android:elevation="2dp">
 
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_below="@+id/stats"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_toEndOf="@+id/fecha"
+                        app:cardBackgroundColor="#F5F5F6"
+                        app:cardCornerRadius="30dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#F5F5F6">
+
+                            <ImageView
+                                android:id="@+id/ic_restar_fehca"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="10dp"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_flehca_izq" />
+
+                            <TextView
+                                android:id="@+id/txtFechaSelect"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/din"
+                                android:textSize="16dp"
+                                android:gravity="center"
+                                android:text="Hoy, 16 de Feb" />
+
+
+                            <ImageView
+                                android:id="@+id/ic_sumar_fecha"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:padding="5dp"
+                                android:rotation="180"
+                                android:src="@drawable/ic_flehca_izq" />
+
+
+                        </RelativeLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/stats"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_margin="20dp"
+                        app:cardCornerRadius="20dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/hola"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/mazzard"
+                                android:text="¡Tus Estadisticas, "
+                                android:textColor="@color/primario"
+                                android:textSize="20dp" />
+
+                            <ImageView
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/taski_stats" />
+
+                            <TextView
+                                android:id="@+id/nombre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="28dp"
+                                android:layout_toEndOf="@id/hola"
+                                android:fontFamily="@font/mazzard_light"
+                                android:text="Mes a Mes!"
+                                android:textColor="@color/primario"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="30dp"
+                        android:fontFamily="@font/mazzard"
+                        android:text="TUS GANANCIAS TOTALES"
+                        android:textColor="@color/primario"
+                        android:textSize="13dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="30dp"
+                        android:src="@drawable/ic_info_outline_white_24dp"
+                        app:tint="@color/primario" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        app:cardBackgroundColor="#F3EEFE"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="2dp"
+                        app:cardCornerRadius="20dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+
+
+                            <TextView
+                                android:layout_marginStart="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/mazzard_light"
+                                android:text="Ventas Totales"
+                                android:textColor="@color/primario"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/ventasTotales"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/mazzard"
+                                android:text="$ 0"
+                                android:textColor="@color/primario"
+                                android:textSize="22dp" />
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_alignParentEnd="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_venta_pagada" />
+
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="35dp"
+                        android:layout_marginTop="85dp"
+                        app:cardBackgroundColor="#ffebee"
+                        android:layout_marginEnd="35dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="4dp"
+                        app:cardCornerRadius="40dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+                            <TextView
+                                android:id="@+id/titulo2"
+                                android:layout_marginStart="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/mazzard_light"
+                                android:text="Ventas Por Cobrar"
+                                android:textColor="@color/rojo"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_below="@+id/titulo2"
+                                android:id="@+id/ventasTotalesPorCobrar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/mazzard"
+                                android:text="$ 2,580,890"
+                                android:textColor="@color/rojo"
+                                android:textSize="14dp" />
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_alignParentEnd="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_ventas_no_pagas" />
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="30dp"
+                        android:fontFamily="@font/mazzard"
+                        android:text="TUS GASTOS TOTALES"
+                        android:textColor="@color/primario"
+                        android:textSize="13dp"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="30dp"
+                        android:src="@drawable/ic_info_outline_white_24dp"
+                        app:tint="@color/primario" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        app:cardBackgroundColor="#ffebee"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="2dp"
+                        app:cardCornerRadius="20dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+
+
+                            <TextView
+                                android:layout_marginStart="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/mazzard_light"
+                                android:text="Gastos Totales"
+                                android:textColor="@color/rojo"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/gastosTotales"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/mazzard"
+                                android:text="$ 2,580,890"
+                                android:textColor="@color/rojo"
+                                android:textSize="22dp" />
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_alignParentEnd="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_gastos" />
+
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="35dp"
+                        android:layout_marginTop="85dp"
+                        app:cardBackgroundColor="#E8E8FF"
+                        android:layout_marginEnd="35dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="4dp"
+                        app:cardCornerRadius="40dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+                            <TextView
+                                android:id="@+id/titulo22"
+                                android:layout_marginStart="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/mazzard_light"
+                                android:text="Gastos Por Pagar"
+                                android:textColor="@color/azul"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_below="@+id/titulo22"
+                                android:id="@+id/gastosTotalesPorPagar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/mazzard"
+                                android:text="$ 2,580,890"
+                                android:textColor="@color/azul"
+                                android:textSize="14dp" />
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_alignParentEnd="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_ventas_no_pagas" />
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="30dp"
+                        android:fontFamily="@font/mazzard"
+                        android:text="Balance neto"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primario"
+                        android:textSize="13dp"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="30dp"
+                        android:src="@drawable/ic_info_outline_white_24dp"
+                        app:tint="@color/primario" />
+
+                </RelativeLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    app:cardBackgroundColor="#F3EEFE"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:elevation="2dp"
+                    app:cardCornerRadius="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp">
+
+
+                        <TextView
+                            android:layout_marginStart="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/mazzard_light"
+                            android:text="Gastos Totales (-) Ventas Totales"
+                            android:textColor="@color/primario"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/gastosMenosVentas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="35dp"
+                            android:fontFamily="@font/mazzard"
+                            android:text="$ 2,580,890"
+                            android:textColor="@color/primario"
+                            android:textSize="22dp" />
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_alignParentEnd="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_premium" />
+
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
 
 
 

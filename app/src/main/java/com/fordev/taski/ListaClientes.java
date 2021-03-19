@@ -69,7 +69,8 @@ public class ListaClientes extends AppCompatActivity {
 
                 MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_proveedor);
                 TextInputLayout nombre_Cliente = dialog.findViewById(R.id.nombreClientes);
-                TextInputLayout numero_cliente = dialog.findViewById(R.id.numeroCliente);
+                TextInputLayout numero_cliente = dialog.findViewById(R.id.valorTotalVenta);
+                TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
 
                 btn_guardar_cliente.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -90,6 +91,13 @@ public class ListaClientes extends AppCompatActivity {
                             dialogo.dismiss();
 
                         }
+                    }
+                });
+
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogo.dismiss();;
                     }
                 });
 

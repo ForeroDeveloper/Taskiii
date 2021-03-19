@@ -123,8 +123,9 @@ public class Inventario extends AppCompatActivity {
 
                 MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_inventario);
                 TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
-                TextInputLayout precio_unitario = dialog.findViewById(R.id.numeroCliente);
+                TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
                 TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
+                TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
 
                 btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -156,7 +157,13 @@ public class Inventario extends AppCompatActivity {
                             databaseReference.keepSynced(true);
                             dialogo.dismiss();
                         }
-                        dialogo.dismiss();
+                    }
+                });
+
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogo.dismiss();;
                     }
                 });
 

@@ -91,7 +91,7 @@ public class VentasNegocio extends AppCompatActivity {
         btnGuardarProducto = findViewById(R.id.btnGuardar);
         edtProducto = findViewById(R.id.nombreClientes);
         txtCrearVenta = findViewById(R.id.crear_venta);
-        precioUnitario = findViewById(R.id.numeroCliente);
+        precioUnitario = findViewById(R.id.valorTotalVenta);
         btnGuardarFactura = findViewById(R.id.btnGuardarFactura);
         cantidadProducto = findViewById(R.id.cantidad);
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
@@ -155,24 +155,27 @@ public class VentasNegocio extends AppCompatActivity {
         txtprecioUnitario.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (precioUnitario.getEditText().getText().toString().equals("")) {
-                    precioUnitario.setHint("Precio unitario (obligatorio)");
-                    txtprecioFinalPorUsuario.setText(String.valueOf(0));
-                } else if (cantidadProducto.getEditText().getText().toString().isEmpty()) {
-                    String precio = precioUnitario.getEditText().getText().toString();
-                    precioFinal = Double.parseDouble(precio);
-                    txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
-                } else {
-                    double cantidad = Double.parseDouble(cantidadProducto.getEditText().getText().toString());
-                    double precioUni = Double.parseDouble(precioUnitario.getEditText().getText().toString());
-                    double res = precioUni * cantidad;
-                    txtprecioFinalPorUsuario.setText(String.valueOf(format.format(res)));
+                try {
+                    if (precioUnitario.getEditText().getText().toString().equals("")) {
+                        precioUnitario.setHint("Precio unitario (obligatorio)");
+                        txtprecioFinalPorUsuario.setText(String.valueOf(0));
+                    } else if (cantidadProducto.getEditText().getText().toString().isEmpty()) {
+                        String precio = precioUnitario.getEditText().getText().toString();
+                        precioFinal = Double.parseDouble(precio);
+                        txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
+                    } else {
+                        double cantidad = Double.parseDouble(cantidadProducto.getEditText().getText().toString());
+                        double precioUni = Double.parseDouble(precioUnitario.getEditText().getText().toString());
+                        double res = precioUni * cantidad;
+                        txtprecioFinalPorUsuario.setText(String.valueOf(format.format(res)));
+                    }
+                }catch (NumberFormatException formatException){
+
                 }
+
             }
 
             @Override
@@ -190,25 +193,30 @@ public class VentasNegocio extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (cantidadProducto.getEditText().getText().toString().equals("")) {
-                    cantidadProducto.setHint("Cantidad (obligatorio)");
-                    txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
-                } else {
-                    String cantidad = cantidadProducto.getEditText().getText().toString();
-                    double cantidadFloat = Double.parseDouble(cantidad);
-                    //operaciones
-                    double res = cantidadFloat * precioFinal;
-                    if (cantidad.isEmpty()) {
-                        cantidadProducto.setHelperTextEnabled(true);
-                        cantidadProducto.setHelperText("Cantidad * Precio Unitario");
-                    } else if (cantidad.equals("0")) {
-                        txtprecioFinalPorUsuario.setText(String.valueOf(format.format(precioFinal)));
+                try {
+                    if (cantidadProducto.getEditText().getText().toString().equals("")) {
+                        cantidadProducto.setHint("Cantidad (obligatorio)");
+                        txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
                     } else {
-                        txtprecioFinalPorUsuario.setText(String.valueOf(format.format(res)));
-                        precioFinalPorUsuario.setHelperTextEnabled(true);
-                        precioFinalPorUsuario.setHelperText("Puede Modificar el Valor");
+                        String cantidad = cantidadProducto.getEditText().getText().toString();
+                        double cantidadFloat = Double.parseDouble(cantidad);
+                        //operaciones
+                        double res = cantidadFloat * precioFinal;
+                        if (cantidad.isEmpty()) {
+                            cantidadProducto.setHelperTextEnabled(true);
+                            cantidadProducto.setHelperText("Cantidad * Precio Unitario");
+                        } else if (cantidad.equals("0")) {
+                            txtprecioFinalPorUsuario.setText(String.valueOf(format.format(precioFinal)));
+                        } else {
+                            txtprecioFinalPorUsuario.setText(String.valueOf(format.format(res)));
+                            precioFinalPorUsuario.setHelperTextEnabled(true);
+                            precioFinalPorUsuario.setHelperText("Puede Modificar el Valor");
+                        }
                     }
+                }catch (NumberFormatException formatException){
+
                 }
+
             }
 
             @Override
@@ -217,65 +225,67 @@ public class VentasNegocio extends AppCompatActivity {
             }
         });
 
-        //remover ultima factura
-        //databaseReference.child("facturas").child("items").removeValue();
 
         btnGuardarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //condiciones para guardar el producto a la lista
-                if (edtProducto.getEditText().getText().toString().isEmpty()) {
-                    edtProducto.setError("Ingrese un nombre");
-                } else if (precioUnitario.getEditText().getText().toString().isEmpty()) {
-                    precioUnitario.setErrorEnabled(true);
-                    precioUnitario.setError("Ingrese un valor");
-                    edtProducto.setErrorEnabled(false);
-                } else if (cantidadProducto.getEditText().getText().toString().isEmpty()) {
-                    cantidadProducto.setErrorEnabled(true);
-                    cantidadProducto.setError("ingrese un valor");
-                    precioUnitario.setErrorEnabled(false);
-                } else {
-
-                    //Obtener datos del usuario en los edit Text
-                    String nombre_producto = edtProducto.getEditText().getText().toString();
-                    double precio_producto = Double.parseDouble(precioUnitario.getEditText().getText().toString());
-                    double cantidad_producto2 = Double.parseDouble(cantidadProducto.getEditText().getText().toString());
-                    double cantidad_producto = Double.parseDouble(cantidadProducto.getEditText().getText().toString());
-                    double precio_final_producto = Double.parseDouble(precioFinalPorUsuario.getEditText().getText().toString());
-                    String id = databaseReference.push().getKey();
-
-                    //Variables iniciales para el constructor del ModeloVista REqueridos o faltantes
-                    int precioTotaldeTodosLosProductos = 0;
-                    double valorTotalCalculadoAutomatico = precio_producto * cantidad_producto;
-                    ModeloVenta modeloVenta = new ModeloVenta();
-                    modeloVenta.setId(id);
-                    modeloVenta.setNombreProdcuto(nombre_producto);
-                    modeloVenta.setPrecioProducto(precio_producto);
-                    modeloVenta.setCantidadProducto(cantidad_producto);
-                    modeloVenta.setPrecioFinalPorElUsuario(precio_final_producto);
-                    modeloVenta.setValorTotalCalculadoAutomatico(valorTotalCalculadoAutomatico);
-                    modeloVenta.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
-                    modeloVenta.setTimeStamp(getFechaMilisegundos() * -1);
-                    modeloVenta.setPruebaDouble(cantidad_producto2);
-                    //set precio total de todos los productos
-                    if (modeloVenta.getPrecioFinalPorElUsuario() == 0) {
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(valorTotalCalculadoAutomatico);
+                try {
+                    if (edtProducto.getEditText().getText().toString().isEmpty()) {
+                        edtProducto.setError("Ingrese un nombre");
+                    } else if (precioUnitario.getEditText().getText().toString().isEmpty()) {
+                        precioUnitario.setErrorEnabled(true);
+                        precioUnitario.setError("Ingrese un valor");
+                        edtProducto.setErrorEnabled(false);
+                    } else if (cantidadProducto.getEditText().getText().toString().isEmpty()) {
+                        cantidadProducto.setErrorEnabled(true);
+                        cantidadProducto.setError("ingrese un valor");
+                        precioUnitario.setErrorEnabled(false);
                     } else {
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(precio_final_producto);
-                    }
 
-                    databaseReference.child("facturas").child("fechas").child("listaDeFacturas").child(key).child(id).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            edtProducto.getEditText().setText("");
-                            precioUnitario.getEditText().setText("");
-                            cantidadProducto.getEditText().setText("");
-                            precioFinalPorUsuario.getEditText().setText("");
+                        //Obtener datos del usuario en los edit Text
+                        String nombre_producto = edtProducto.getEditText().getText().toString();
+                        double precio_producto = Double.parseDouble(precioUnitario.getEditText().getText().toString());
+                        double cantidad_producto2 = Double.parseDouble(cantidadProducto.getEditText().getText().toString());
+                        double cantidad_producto = Double.parseDouble(cantidadProducto.getEditText().getText().toString());
+                        double precio_final_producto = Double.parseDouble(precioFinalPorUsuario.getEditText().getText().toString());
+                        String id = databaseReference.push().getKey();
+
+                        //Variables iniciales para el constructor del ModeloVista REqueridos o faltantes
+                        int precioTotaldeTodosLosProductos = 0;
+                        double valorTotalCalculadoAutomatico = precio_producto * cantidad_producto;
+                        ModeloVenta modeloVenta = new ModeloVenta();
+                        modeloVenta.setId(id);
+                        modeloVenta.setNombreProdcuto(nombre_producto);
+                        modeloVenta.setPrecioProducto(precio_producto);
+                        modeloVenta.setCantidadProducto(cantidad_producto);
+                        modeloVenta.setPrecioFinalPorElUsuario(precio_final_producto);
+                        modeloVenta.setValorTotalCalculadoAutomatico(valorTotalCalculadoAutomatico);
+                        modeloVenta.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
+                        modeloVenta.setTimeStamp(getFechaMilisegundos() * -1);
+                        modeloVenta.setPruebaDouble(cantidad_producto2);
+                        //set precio total de todos los productos
+                        if (modeloVenta.getPrecioFinalPorElUsuario() == 0) {
+                            modeloVenta.setPrecioTotaldeTodosLosProductos(valorTotalCalculadoAutomatico);
+                        } else {
+                            modeloVenta.setPrecioTotaldeTodosLosProductos(precio_final_producto);
                         }
-                    });
-                    databaseReference.keepSynced(true);
+
+                        databaseReference.child("facturas").child("fechas").child("listaDeFacturas").child(key).child(id).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                edtProducto.getEditText().setText("");
+                                precioUnitario.getEditText().setText("");
+                                cantidadProducto.getEditText().setText("");
+                                precioFinalPorUsuario.getEditText().setText("");
+                            }
+                        });
+                        databaseReference.keepSynced(true);
 
 
+                    }
+                }catch (NumberFormatException numberFormatException){
+                    Toasty.error(VentasNegocio.this,"Verifica lo signos que usas en los campos!",Toast.LENGTH_LONG, true).show();
                 }
 
             }

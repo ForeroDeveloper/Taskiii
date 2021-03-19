@@ -26,6 +26,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,7 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
 
@@ -72,10 +74,11 @@ public class CreacionDeRecibo extends AppCompatActivity {
     AdaptadorListaProductosInventarioRecibo adaptadorListaProductosInventarioRecibo;
     ImageView img_logo_negocio_recibo;
     TextView txtNombreNegocioRecibo,txtNitNegocioRecibo,txt_fecha_factura_cliente,txtNombreVendedorRecibo,txt_nombre_cliente,txt_numero_factura_cliente,txtUbicacionNegocioRecibo
-            ,txtDireccionNegocioRecibo,txtTelefonoNegocio,txt_total_factura_cliente;
+            ,txtDireccionNegocioRecibo,txtTelefonoNegocio,txt_total_factura_cliente,txtProductoRecibo,txtPrecioRecibo,txtTotalRecibo;
     MaterialButton enviarRecibo;
     NestedScrollView contenidoLayout;
     RelativeLayout marcaDeAgua;
+    LinearLayout venta_rapida_info;
 
     String key = null;
     String key2 = null;
@@ -86,16 +89,6 @@ public class CreacionDeRecibo extends AppCompatActivity {
     int total_factura;
     String fecha_factura;
 
-    String imageaUri;
-    String path;
-    Bitmap bitmap;
-
-    int totalHeight;
-    int totalWidth;
-
-    public static final int READ_PHONE = 110;
-    String file_name = "Screenshot";
-    File myPath;
 
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
     @Override
@@ -104,6 +97,10 @@ public class CreacionDeRecibo extends AppCompatActivity {
         setContentView(R.layout.creacion_de_recibo);
         lista_de_productos_venta_recibo = findViewById(R.id.lista_de_productos_venta_recibo);
         lista_de_productos_venta_recibo_inventario = findViewById(R.id.lista_de_productos_venta_recibo_inventario);
+        venta_rapida_info = findViewById(R.id.venta_rapida_info);
+        txtProductoRecibo = findViewById(R.id.txtProductoRecibo);
+        txtPrecioRecibo = findViewById(R.id.txtPrecioRecibo);
+        txtTotalRecibo = findViewById(R.id.txtTotalRecibo);
         //Logo Negocio
         img_logo_negocio_recibo = findViewById(R.id.img_logo_negocio_recibo);
         //Nombre Negocio
@@ -192,6 +189,7 @@ public class CreacionDeRecibo extends AppCompatActivity {
         });
 
 
+
         //Seteo de logo desde FIREBASE USER
         imagenLogo.addValueEventListener(new ValueEventListener() {
             @Override
@@ -266,9 +264,6 @@ public class CreacionDeRecibo extends AppCompatActivity {
         });
 
 
-
-
-
         //FIREBASE
         lista_de_productos_venta_recibo.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         FirebaseRecyclerOptions<ModeloVenta> options =
@@ -277,6 +272,7 @@ public class CreacionDeRecibo extends AppCompatActivity {
                         .build();
         adaptadorListaProductosRecibo=new AdaptadorListaProductosRecibo(options);
         lista_de_productos_venta_recibo.setAdapter(adaptadorListaProductosRecibo);
+        adaptadorListaProductosRecibo.notifyDataSetChanged();
 
 
         //FIREBASE
@@ -287,8 +283,30 @@ public class CreacionDeRecibo extends AppCompatActivity {
                         .build();
         adaptadorListaProductosInventarioRecibo=new AdaptadorListaProductosInventarioRecibo(options2);
         lista_de_productos_venta_recibo_inventario.setAdapter(adaptadorListaProductosInventarioRecibo);
+        adaptadorListaProductosInventarioRecibo.notifyDataSetChanged();
 
-    }
+        //VISIBILIDAD venta RAPIDA
+            datosFactura.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("ventaRapida").exists()){
+                        venta_rapida_info.setVisibility(View.VISIBLE);
+                        String conceptoVenta = snapshot.child("conceptoDeVenta").getValue().toString();
+                        txtProductoRecibo.setText(conceptoVenta);
+                        String ventaTotal = snapshot.child("totalCalculado").getValue().toString();
+                        int venta = Integer.parseInt(ventaTotal);
+                        txtPrecioRecibo.setText("$"+String.valueOf(nformat.format(venta)));
+                        txtTotalRecibo.setText("$"+ String.valueOf(nformat.format(venta)));
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+        }
 
 
     private Bitmap getBitmapFromView(View view){
@@ -304,13 +322,14 @@ public class CreacionDeRecibo extends AppCompatActivity {
 
         view.draw(canvas);
 
-        String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(),returnBitmap,"IMG_",  null);
+        Date currentTime;
+        String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(),returnBitmap,"RECIBO_TASKI_VENTA-" + (currentTime = Calendar.getInstance().getTime()),  null);
 
         Uri uri = Uri.parse(bitmapPath);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("image/jpg");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.putExtra(Intent.EXTRA_TEXT, "Hola " + (nombre_cliente + "," + System.getProperty ("line.separator") + System.getProperty ("line.separator") )  + ("Aquí te dejamos una copia de tu recibo por un valor de $" + String.valueOf(nformat.format(total_factura)) + ". Compra que realizaste el " + fecha_factura)
+        intent.putExtra(Intent.EXTRA_TEXT, "Hola " + (nombre_cliente + "," + System.getProperty ("line.separator") + System.getProperty ("line.separator") )  + ("Aquí te dejamos una copia de tu recibo por un valor de " + "*$"+ String.valueOf(nformat.format(total_factura)) + "*"+ ". Compra que realizaste el " + fecha_factura +"." )
                         + System.getProperty("line.separator") + System.getProperty("line.separator") +  "Si tienes alguna duda respecto a tu compra no dudes en contactarnos!" + (System.getProperty("line.separator") + System.getProperty("line.separator")) + "Este mensaje fue enviado desde la aplicación Taski. ");
         startActivity(Intent.createChooser(intent, "Compartir Recibo..."));
 

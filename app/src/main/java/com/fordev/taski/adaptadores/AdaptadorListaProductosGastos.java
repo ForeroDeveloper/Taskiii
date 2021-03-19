@@ -38,20 +38,6 @@ public class AdaptadorListaProductosGastos extends FirebaseRecyclerAdapter<Model
         }
 
 
-        /*try {
-
-
-                            FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("items")
-                                    .child(getRef(position).getKey()).removeValue();
-                            notifyDataSetChanged();
-                            notifyItemRemoved(position);
-
-                        } catch (IndexOutOfBoundsException e) { // if fails, increment the shift and try again
-                            notifyDataSetChanged();
-                            notifyItemRemoved(position);
-                        }*/
-
-
     }
 
 

@@ -47,7 +47,9 @@ import com.skydoves.balloon.BalloonSizeSpec;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 import es.dmoral.toasty.Toasty;
@@ -57,7 +59,7 @@ public class GastosNegocio extends AppCompatActivity {
     TextInputLayout edtProducto,precioUnitario,cantidadProducto,precioFinalPorUsuario;
     TextInputEditText txtprecioUnitario,txtcantidadProducto,txtprecioFinalPorUsuario;
     RecyclerView listaDeProductos;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, databaseReferenceProv;
     FirebaseDatabase firebaseDatabase;
     AdaptadorListaProductosGastos adaptadorListaProductosGastos;
     LinearLayout cabeceraFacturas,btnAcciones,imgIlustra;
@@ -81,7 +83,7 @@ public class GastosNegocio extends AppCompatActivity {
         btnGuardarProducto = findViewById(R.id.btnGuardar);
         edtProducto = findViewById(R.id.nombreClientes);
         txtCrearVenta = findViewById(R.id.crear_venta);
-        precioUnitario = findViewById(R.id.numeroCliente);
+        precioUnitario = findViewById(R.id.valorTotalVenta);
         btnGuardarFactura = findViewById(R.id.btnGuardarFactura);
         cantidadProducto = findViewById(R.id.cantidad);
         precioFinalPorUsuario = findViewById(R.id.precioFinal);
@@ -101,7 +103,7 @@ public class GastosNegocio extends AppCompatActivity {
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        String fecha = getFechaNormal(getFechaMilisegundos());
+
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("facturas").child("gastos").child("listaDeProductosEnGastos");
         databaseReference.keepSynced(true);
@@ -133,18 +135,22 @@ public class GastosNegocio extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (precioUnitario.getEditText().getText().toString().equals("")){
-                    precioUnitario.setHint("Precio unitario (obligatorio)");
-                    txtprecioFinalPorUsuario.setText(String.valueOf(0));
-                }else if (cantidadProducto.getEditText().getText().toString().isEmpty()){
-                    String precio = precioUnitario.getEditText().getText().toString();
-                    precioFinal = Integer.parseInt(precio);
-                    txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
-                }else {
-                    int cantidad = Integer.parseInt(cantidadProducto.getEditText().getText().toString());
-                    int precioUni = Integer.parseInt(precioUnitario.getEditText().getText().toString());
-                    int res = precioUni * cantidad;
-                    txtprecioFinalPorUsuario.setText(String.valueOf(res));
+                try {
+                    if (precioUnitario.getEditText().getText().toString().equals("")){
+                        precioUnitario.setHint("Precio unitario (obligatorio)");
+                        txtprecioFinalPorUsuario.setText(String.valueOf(0));
+                    }else if (cantidadProducto.getEditText().getText().toString().isEmpty()){
+                        String precio = precioUnitario.getEditText().getText().toString();
+                        precioFinal = Integer.parseInt(precio);
+                        txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
+                    }else {
+                        int cantidad = Integer.parseInt(cantidadProducto.getEditText().getText().toString());
+                        int precioUni = Integer.parseInt(precioUnitario.getEditText().getText().toString());
+                        int res = precioUni * cantidad;
+                        txtprecioFinalPorUsuario.setText(String.valueOf(res));
+                    }
+                }catch (NumberFormatException formatException){
+
                 }
             }
 
@@ -162,25 +168,32 @@ public class GastosNegocio extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (cantidadProducto.getEditText().getText().toString().equals("")){
-                    cantidadProducto.setHint("Cantidad (obligatorio)");
-                    txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
-                }else {
-                    String cantidad = cantidadProducto.getEditText().getText().toString();
-                    int cantidadFloat = Integer.parseInt(cantidad);
-                    //operaciones
-                    int res = cantidadFloat * precioFinal;
-                    if (cantidad.isEmpty() ) {
-                        cantidadProducto.setHelperTextEnabled(true);
-                        cantidadProducto.setHelperText("Cantidad * Precio Unitario");
-                    } else if(cantidad.equals("0")){
+
+                try {
+                    if (cantidadProducto.getEditText().getText().toString().equals("")){
+                        cantidadProducto.setHint("Cantidad (obligatorio)");
                         txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
-                    }else{
-                        txtprecioFinalPorUsuario.setText(String.valueOf(res));
-                        precioFinalPorUsuario.setHelperTextEnabled(true);
-                        precioFinalPorUsuario.setHelperText("Puede Modificar el Valor");
+                    }else {
+                        String cantidad = cantidadProducto.getEditText().getText().toString();
+                        int cantidadFloat = Integer.parseInt(cantidad);
+                        //operaciones
+                        int res = cantidadFloat * precioFinal;
+                        if (cantidad.isEmpty() ) {
+                            cantidadProducto.setHelperTextEnabled(true);
+                            cantidadProducto.setHelperText("Cantidad * Precio Unitario");
+                        } else if(cantidad.equals("0")){
+                            txtprecioFinalPorUsuario.setText(String.valueOf(precioFinal));
+                        }else{
+                            txtprecioFinalPorUsuario.setText(String.valueOf(res));
+                            precioFinalPorUsuario.setHelperTextEnabled(true);
+                            precioFinalPorUsuario.setHelperText("Puede Modificar el Valor");
+                        }
                     }
+                }catch (NumberFormatException formatException){
+
                 }
+
+
             }
 
             @Override
@@ -193,63 +206,68 @@ public class GastosNegocio extends AppCompatActivity {
         btnGuardarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //condiciones para guardar el producto a la lista
-                if (edtProducto.getEditText().getText().toString().isEmpty()){
-                    edtProducto.setError("Ingrese un nombre");
-                }else if (precioUnitario.getEditText().getText().toString().isEmpty()){
-                    precioUnitario.setErrorEnabled(true);
-                    precioUnitario.setError("Ingrese un valor");
-                    edtProducto.setErrorEnabled(false);
-                }else if (cantidadProducto.getEditText().getText().toString().isEmpty()){
-                    cantidadProducto.setErrorEnabled(true);
-                    cantidadProducto.setError("ingrese un valor");
-                    precioUnitario.setErrorEnabled(false);
-                }else {
 
-                    //Obtener datos del usuario en los edit Text
-                    String nombre_producto = edtProducto.getEditText().getText().toString();
-                    int precio_producto = Integer.parseInt(precioUnitario.getEditText().getText().toString());
-                    int cantidad_producto = Integer.parseInt(cantidadProducto.getEditText().getText().toString());
-                    int precio_final_producto = Integer.parseInt(precioFinalPorUsuario.getEditText().getText().toString());
-                    String id = databaseReference.push().getKey();
+                try {
+                    //condiciones para guardar el producto a la lista
+                    if (edtProducto.getEditText().getText().toString().isEmpty()){
+                        edtProducto.setError("Ingrese un nombre");
+                    }else if (precioUnitario.getEditText().getText().toString().isEmpty()){
+                        precioUnitario.setErrorEnabled(true);
+                        precioUnitario.setError("Ingrese un valor");
+                        edtProducto.setErrorEnabled(false);
+                    }else if (cantidadProducto.getEditText().getText().toString().isEmpty()){
+                        cantidadProducto.setErrorEnabled(true);
+                        cantidadProducto.setError("ingrese un valor");
+                        precioUnitario.setErrorEnabled(false);
+                    }else {
 
-                    //Variables iniciales para el constructor del ModeloVista REqueridos o faltantes
-                    int precioTotaldeTodosLosProductos = 0;
-                    int valorTotalCalculadoAutomatico = precio_producto*cantidad_producto;
-                    ModeloGastos modeloVenta = new ModeloGastos();
-                    modeloVenta.setId(id);
-                    modeloVenta.setNombreProdcuto(nombre_producto);
-                    modeloVenta.setPrecioProducto(precio_producto);
-                    modeloVenta.setCantidadProducto(cantidad_producto);
-                    modeloVenta.setPrecioFinalPorElUsuario(precio_final_producto);
-                    modeloVenta.setValorTotalCalculadoAutomatico(valorTotalCalculadoAutomatico);
-                    modeloVenta.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
-                    modeloVenta.setTimeStamp(getFechaMilisegundos() * -1);
-                    //set precio total de todos los productos
-                    if (modeloVenta.getPrecioFinalPorElUsuario()==0){
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(valorTotalCalculadoAutomatico);
-                        sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
-                        txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
-                    }else{
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(precio_final_producto);
-                        sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
-                        modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
-                        txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
-                    }
-                    databaseReference.child(key).child(id).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            edtProducto.getEditText().setText("");
-                            precioUnitario.getEditText().setText("");
-                            cantidadProducto.getEditText().setText("");
-                            precioFinalPorUsuario.getEditText().setText("");
+                        //Obtener datos del usuario en los edit Text
+                        String nombre_producto = edtProducto.getEditText().getText().toString();
+                        int precio_producto = Integer.parseInt(precioUnitario.getEditText().getText().toString());
+                        int cantidad_producto = Integer.parseInt(cantidadProducto.getEditText().getText().toString());
+                        int precio_final_producto = Integer.parseInt(precioFinalPorUsuario.getEditText().getText().toString());
+                        String id = databaseReference.push().getKey();
+
+                        //Variables iniciales para el constructor del ModeloVista REqueridos o faltantes
+                        int precioTotaldeTodosLosProductos = 0;
+                        int valorTotalCalculadoAutomatico = precio_producto*cantidad_producto;
+                        ModeloGastos modeloVenta = new ModeloGastos();
+                        modeloVenta.setId(id);
+                        modeloVenta.setNombreProdcuto(nombre_producto);
+                        modeloVenta.setPrecioProducto(precio_producto);
+                        modeloVenta.setCantidadProducto(cantidad_producto);
+                        modeloVenta.setPrecioFinalPorElUsuario(precio_final_producto);
+                        modeloVenta.setValorTotalCalculadoAutomatico(valorTotalCalculadoAutomatico);
+                        modeloVenta.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
+                        modeloVenta.setTimeStamp(getFechaMilisegundos() * -1);
+                        //set precio total de todos los productos
+                        if (modeloVenta.getPrecioFinalPorElUsuario()==0){
+                            modeloVenta.setPrecioTotaldeTodosLosProductos(valorTotalCalculadoAutomatico);
+                            sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
+                            modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
+                            txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
+                        }else{
+                            modeloVenta.setPrecioTotaldeTodosLosProductos(precio_final_producto);
+                            sum+= modeloVenta.getPrecioTotaldeTodosLosProductos();
+                            modeloVenta.setPrecioTotaldeTodosLosProductos(sum);
+                            txtCrearVenta.setText(String.valueOf("$ " + nformat.format(sum)));
                         }
-                    });
-                    cabeceraFacturas.setVisibility(View.VISIBLE);
-                    imgIlustra.setVisibility(View.GONE);
-                    btnGuardarFactura.setVisibility(View.VISIBLE);
+                        databaseReference.child(key).child(id).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                edtProducto.getEditText().setText("");
+                                precioUnitario.getEditText().setText("");
+                                cantidadProducto.getEditText().setText("");
+                                precioFinalPorUsuario.getEditText().setText("");
+                            }
+                        });
+                        cabeceraFacturas.setVisibility(View.VISIBLE);
+                        imgIlustra.setVisibility(View.GONE);
+                        btnGuardarFactura.setVisibility(View.VISIBLE);
 
+                    }
+                }catch (NumberFormatException numberFormatException){
+                    Toasty.error(GastosNegocio.this,"Verifica lo signos que usas en los campos!",Toast.LENGTH_LONG, true).show();
                 }
 
             }
@@ -286,6 +304,35 @@ public class GastosNegocio extends AppCompatActivity {
                 ImageView selecFechaFactura = view.findViewById(R.id.ic_seleccionar_fecha);
                 //setFechaActual
                 txtFechaSelect.setText(sdf.format(Cal.getTime()));
+
+                databaseReferenceProv = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Proveedores").child("proveedor");
+
+                databaseReferenceProv.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //array lista clientes
+                        ArrayList proveedores = new ArrayList<String>();
+
+                        for (DataSnapshot childSnapshot: snapshot.getChildren()){
+                            HashMap map =(HashMap) childSnapshot.getValue();
+                            if(map!=null) {
+                                proveedores.add(map.get("nombreProveedor"));
+                            }
+                        }
+
+                        ArrayAdapter<String> adapterClientes = new ArrayAdapter<>(getApplicationContext(),
+                                R.layout.lista_items_dos,
+                                proveedores);
+                        clienteNombre.setAdapter(adapterClientes);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
                 //Variables and others
                 String[] tipoDocumento = new String[]{

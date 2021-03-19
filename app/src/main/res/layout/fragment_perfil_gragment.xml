@@ -154,7 +154,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
@@ -191,7 +191,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_toStartOf="@+id/indicadorPersonal"
                             android:fontFamily="@font/mazzard_light"
-                            android:text="100%"
+                            android:text="0%"
                             android:textColor="@color/primario"
                             android:textSize="8dp"
                             android:textStyle="bold" />
@@ -255,7 +255,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_toStartOf="@+id/progressIndicatorNegocio"
                             android:fontFamily="@font/mazzard_light"
-                            android:text="100%"
+                            android:text="0%"
                             android:textColor="@color/primario"
                             android:textSize="8dp"
                             android:textStyle="normal" />
@@ -284,71 +284,72 @@
                             android:src="@drawable/ic_arrow_rigth"
                             app:tint="@color/gris_claro" />
 
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="1dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:background="#EFF1FE" />
-
 
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/info_tarjeta"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp">
+<!--                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="#EFF1FE" />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/montserrat"
-                            android:text="Tarjeta de contacto"
-                            android:textColor="@color/primario"
-                            android:textSize="11dp"
-                            android:textStyle="normal" />
+                    <!--
+                                        <RelativeLayout
+                                            android:id="@+id/info_tarjeta"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="40dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="5dp"
-                            android:layout_toStartOf="@+id/indicador3"
-                            android:fontFamily="@font/mazzard_light"
-                            android:text="0%"
-                            android:textColor="@color/primario"
-                            android:textSize="8dp"
-                            android:textStyle="normal" />
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerVertical="true"
+                                                android:layout_marginStart="15dp"
+                                                android:fontFamily="@font/montserrat"
+                                                android:text="Tarjeta de contacto"
+                                                android:textColor="@color/primario"
+                                                android:textSize="11dp"
+                                                android:textStyle="normal" />
 
-                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/indicador3"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/totalDeuda"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="2dp"
-                            android:layout_toStartOf="@+id/felcha3"
-                            app:indicatorColor="#0CC58B"
-                            app:indicatorDirectionLinear="startToEnd"
-                            app:trackCornerRadius="10dp"
-                            app:trackThickness="4dp" />
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerVertical="true"
+                                                android:layout_marginEnd="5dp"
+                                                android:layout_toStartOf="@+id/indicador3"
+                                                android:fontFamily="@font/mazzard_light"
+                                                android:text="0%"
+                                                android:textColor="@color/primario"
+                                                android:textSize="8dp"
+                                                android:textStyle="normal" />
 
-                        <ImageView
-                            android:id="@+id/felcha3"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="15dp"
-                            android:src="@drawable/ic_arrow_rigth"
-                            app:tint="@color/gris_claro" />
+                                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:id="@+id/indicador3"
+                                                android:layout_width="50dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/totalDeuda"
+                                                android:layout_centerVertical="true"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginEnd="2dp"
+                                                android:layout_toStartOf="@+id/felcha3"
+                                                app:indicatorColor="#0CC58B"
+                                                app:indicatorDirectionLinear="startToEnd"
+                                                app:trackCornerRadius="10dp"
+                                                app:trackThickness="4dp" />
+
+                                            <ImageView
+                                                android:id="@+id/felcha3"
+                                                android:layout_width="14dp"
+                                                android:layout_height="14dp"
+                                                android:layout_alignParentEnd="true"
+                                                android:layout_centerVertical="true"
+                                                android:layout_marginEnd="15dp"
+                                                android:src="@drawable/ic_arrow_rigth"
+                                                app:tint="@color/gris_claro" />
 
 
-                    </RelativeLayout>
+                                        </RelativeLayout>
+                    -->
 
 
                 </LinearLayout>
@@ -483,7 +484,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="30dp"
                     android:fontFamily="@font/mazzard"
-                    android:text="Inventario y proveedores"
+                    android:text="Inventario"
                     android:textAllCaps="true"
                     android:textColor="@color/primario"
                     android:textSize="13dp"
@@ -501,7 +502,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
@@ -543,17 +544,9 @@
                             android:textStyle="normal" />
 
 
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="1dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:background="#EFF1FE" />
-
-
                     </RelativeLayout>
 
+<!--
                     <RelativeLayout
                         android:id="@+id/info_lista_proveedores"
                         android:layout_width="match_parent"
@@ -584,6 +577,7 @@
 
 
                     </RelativeLayout>
+-->
 
 
                 </LinearLayout>
@@ -723,7 +717,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/contacto_comunidad"
+                        android:id="@+id/terminos_condiciones"
                         android:layout_width="match_parent"
                         android:layout_height="40dp">
 

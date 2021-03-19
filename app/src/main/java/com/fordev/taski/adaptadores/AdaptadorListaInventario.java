@@ -250,7 +250,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
 
                 TextInputLayout cantidad_stock = views.findViewById(R.id.cantidad);
                 TextInputLayout nombreAEditar = views.findViewById(R.id.nombreProductoEditar);
-                TextInputLayout precioAEditar = views.findViewById(R.id.numeroCliente);
+                TextInputLayout precioAEditar = views.findViewById(R.id.valorTotalVenta);
                 TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
                 MaterialButton btn_guardar_edicion = views.findViewById(R.id.btn_guardar_edicion);
                 TextView btn_dismiss = views.findViewById(R.id.btn_cancelar);

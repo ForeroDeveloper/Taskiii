@@ -242,6 +242,71 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/venta_rapida_info"
+            android:visibility="gone"
+            android:layout_marginStart="40dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginEnd="40dp"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtProductoRecibo"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="venta"
+                android:textAlignment="textStart"
+                android:textColor="@color/negro" />
+
+            <TextView
+                android:id="@+id/txtCantidadRecibo"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/negro" />
+
+            <TextView
+                android:id="@+id/txtPrecioRecibo"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="total"
+                android:textAlignment="textEnd"
+                android:textColor="@color/negro" />
+
+            <TextView
+                android:id="@+id/txtTotalRecibo"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textAlignment="textEnd"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Valor Total"
+                android:textColor="@color/negro" />
+
+        </LinearLayout>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lista_de_productos_venta_recibo"

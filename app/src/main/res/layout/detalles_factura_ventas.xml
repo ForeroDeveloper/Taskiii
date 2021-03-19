@@ -32,7 +32,7 @@
             android:layout_toEndOf="@+id/borrar"
             android:fontFamily="@font/montserrat"
             android:text="Eliminar"
-            android:textColor="@color/negro" />
+            android:textColor="@color/gris_oscuro" />
 
 
     </RelativeLayout>
@@ -404,6 +404,22 @@
                         android:layout_below="@+id/listaItems"
                         android:layout_margin="10dp"
                         android:orientation="vertical">
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/venta_rapida_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/din"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center"
+                            android:text="La lista de items son visibles cuando\nse realiza una venta MULTIPLE"
+                            android:textColor="@color/gris_claro"
+                            android:textSize="14sp" />
 
 
                         <androidx.recyclerview.widget.RecyclerView

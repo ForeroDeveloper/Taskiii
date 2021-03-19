@@ -52,7 +52,7 @@ import es.dmoral.toasty.Toasty;
 public class DetallesFacturaVentas extends AppCompatActivity {
 
     TextView nombreCliente, totalVenta, totalPorCobrar,
-            fecha, txtMetodoDePago, txtEstadoDePago, notaIngresada, totalPorCobrarPagado, totalDeVentas;
+            fecha, txtMetodoDePago, txtEstadoDePago, notaIngresada, totalPorCobrarPagado, totalDeVentas,venta_rapida_info;
     RecyclerView lista_de_productos_venta, lista_de_productos_venta_inventario;
     DatabaseReference databaseReference, databaseReference1;
     FirebaseDatabase firebaseDatabase, firebaseDatabase1;
@@ -95,6 +95,7 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         metodo_de_pago = findViewById(R.id.metodo_de_pago);
         totalPorCobrarPagado = findViewById(R.id.totalPorCobrarPagado);
         totalDeVentas = findViewById(R.id.totalDeVentas);
+        venta_rapida_info = findViewById(R.id.venta_rapida_info);
         progressIndicator2 = findViewById(R.id.indicador2);
         icon_detalles_notas = findViewById(R.id.icon_detalles_notas);
         visibilidad_nota_interna = findViewById(R.id.visibilidad_nota_interna);
@@ -401,6 +402,21 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                 }
             }
         });
+
+        //VISIBILIDAD venta RAPIDA
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("ventaRapida").exists()){
+                    venta_rapida_info.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
         //FIREBASE

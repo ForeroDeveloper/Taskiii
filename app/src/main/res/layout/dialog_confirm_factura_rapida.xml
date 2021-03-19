@@ -6,69 +6,6 @@
     android:background="@drawable/cabecera_guardar_factura_dos"
     android:layout_height="match_parent">
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/estado"
-        android:elevation="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardBackgroundColor="#FAFBFD"
-        android:layout_height="55dp"
-        app:cardCornerRadius="30dp">
-
-        <RadioGroup
-            android:weightSum="2"
-            android:id="@+id/daily_weekly_button_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_weight="1"
-                android:id="@+id/radio0"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:checked="true"
-                android:layout_height="wrap_content"
-                android:background="@drawable/radio_flat_selector"
-                android:button="@android:color/transparent"
-                android:paddingLeft="16dp"
-                android:paddingTop="3dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="3dp"
-                android:layout_marginEnd="10dp"
-                android:text="Pagado"
-                android:textColor="@color/radio_flat_text_selector" />
-
-            <RadioButton
-                android:layout_weight="1"
-                android:id="@+id/radio1"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:background="@drawable/radio_flat_selector_dos"
-                android:button="@android:color/transparent"
-                android:paddingLeft="16dp"
-                android:paddingTop="3dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="3dp"
-                android:text="Por Cobrar"
-                android:textColor="@color/radio_flat_text_selector" />
-
-        </RadioGroup>
-
-
-
-
-    </androidx.cardview.widget.CardView>
-
-
     <ScrollView
         android:layout_below="@+id/estado"
         android:layout_width="match_parent"
@@ -94,7 +31,7 @@
                     android:fontFamily="@font/din"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:textSize="16sp"/>
+                    android:textSize="18sp"/>
 
                 <LinearLayout
                     android:id="@+id/linear"

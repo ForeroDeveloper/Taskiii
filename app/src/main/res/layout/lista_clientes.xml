@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:elevation="5dp"
-            android:layout_width="220dp"
+            android:layout_width="200dp"
             android:layout_height="35dp"
             app:cardCornerRadius="20dp">
 
@@ -47,7 +47,7 @@
                     android:descendantFocusability="afterDescendants"
                     android:queryHint="Buscar"
                     android:iconifiedByDefault="false"
-                    android:layout_width="match_parent"
+                    android:layout_width="160dp"
                     android:layout_height="30dp"
                     android:layout_margin="2dp"
                     android:searchIcon="@null"
@@ -109,7 +109,7 @@
             android:layout_marginStart="5dp"
             android:layout_width="150dp"
             android:layout_height="65dp"
-            app:cardBackgroundColor="#F7D8C9"
+            app:cardBackgroundColor="#CFD2FC"
             app:cardCornerRadius="10dp">
 
             <RelativeLayout
@@ -123,7 +123,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    app:cardBackgroundColor="#E88A5D"
+                    app:cardBackgroundColor="#5153FF"
                     app:cardCornerRadius="5dp">
 
                     <ImageView
@@ -157,7 +157,7 @@
                     android:fontFamily="@font/din"
                     android:text="0"
                     android:textSize="18dp"
-                    android:textColor="#E88A5D" />
+                    android:textColor="#5153FF" />
 
 
             </RelativeLayout>
@@ -286,7 +286,7 @@
         app:icon="@drawable/ic_add"
         app:iconTint="@color/white"
         android:textColor="@color/white"
-        app:backgroundTint="#E88A5D"
+        app:backgroundTint="#5153FF"
         app:tint="@color/white"
         android:src="@drawable/ic_add"/>
 

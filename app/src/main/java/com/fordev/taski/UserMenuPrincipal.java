@@ -3,6 +3,7 @@ package com.fordev.taski;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
@@ -44,12 +45,12 @@ public class UserMenuPrincipal extends AppCompatActivity {
     ImageView logoNegocio;
     TextView nombreNegocio;
     FloatingActionButton faq;
-    com.getbase.floatingactionbutton.FloatingActionButton faq_gastos,faq_ventas;
+    CardView venta_rapida,venta_multiple;
     Animation fromBottom,toBottom;
     RelativeLayout superior;
     int posicion= 0;
 
-    private boolean clicked = false;
+    private boolean clicked = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,9 @@ public class UserMenuPrincipal extends AppCompatActivity {
         bottomNavigationView.setBackground(null);
         //faq acciones
         faq = findViewById(R.id.faq);
-        faq_gastos = findViewById(R.id.faq_gastos);
-        faq_ventas = findViewById(R.id.faq_ventas);
+        venta_rapida = findViewById(R.id.venta_rapida);
+        venta_multiple = findViewById(R.id.venta_multiple);
+
         //animaciones
         cargarAnimaciones();
         //setDefault Fragment in UsermenuPrincipal
@@ -81,17 +83,49 @@ public class UserMenuPrincipal extends AppCompatActivity {
                     case R.id.gastos:
                         fragment = new GastosFragment();
                         posicion = 1;
+                        if (venta_rapida.getVisibility()==View.VISIBLE){
+                            venta_rapida.startAnimation(toBottom);
+                            venta_multiple.startAnimation(toBottom);
+                            venta_multiple.setVisibility(View.GONE);
+                            venta_rapida.setVisibility(View.GONE);
+                            clicked = false;
+                            animacionfaqPrincipalDos();
+                        }
                         faq.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.rosado)));
                         break;
 
                     case R.id.profile:
                         fragment = new PerfilFragment();
                         posicion = 2;
+                        if (venta_rapida.getVisibility()==View.VISIBLE){
+                            venta_rapida.startAnimation(toBottom);
+                            venta_multiple.startAnimation(toBottom);
+                            venta_multiple.setVisibility(View.GONE);
+                            venta_rapida.setVisibility(View.GONE);
+                            clicked = false;
+                            animacionfaqPrincipalDos();
+                        }
+                        break;
+
+                    case R.id.estadisticas:
+                        fragment = new EstadisticasFragment();
+                        posicion = 2;
+                        if (venta_rapida.getVisibility()==View.VISIBLE){
+                            venta_rapida.startAnimation(toBottom);
+                            venta_multiple.startAnimation(toBottom);
+                            venta_multiple.setVisibility(View.GONE);
+                            venta_rapida.setVisibility(View.GONE);
+                            clicked = false;
+                            animacionfaqPrincipalDos();
+                        }
                         break;
             }
+
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_layout
                     ,fragment).commit();
+
+
                 return true;
 
         }
@@ -109,11 +143,29 @@ public class UserMenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (posicion==0){
-                    Intent intent = new Intent(getApplicationContext(), VentasNegocio.class);
-                    startActivity(intent);
+                    opciones();
                 }else if (posicion==1){
                     startActivity(new Intent(getApplicationContext(), GastosNegocio.class));
                 }
+            }
+        });
+
+        venta_rapida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), VentaRapidaNegocio.class));
+                ocultarOpciones();
+                animacionfaqPrincipalDos();
+            }
+        });
+
+
+        venta_multiple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), VentasNegocio.class));
+                ocultarOpciones();
+                animacionfaqPrincipalDos();
             }
         });
 
@@ -156,44 +208,44 @@ public class UserMenuPrincipal extends AppCompatActivity {
 
     }
 
+    private void opciones() {
+        if (clicked){
+            animacionfaqPrincipal();
+            venta_multiple.setAnimation(fromBottom);
+            venta_rapida.setAnimation(fromBottom);
+            venta_rapida.startAnimation(fromBottom);
+            venta_multiple.startAnimation(fromBottom);
+            venta_multiple.setVisibility(View.VISIBLE);
+            venta_rapida.setVisibility(View.VISIBLE);
+            clicked = false;
+        }else {
+            animacionfaqPrincipalDos();
+            ocultarOpciones();
+        }
+    }
+
+    private void ocultarOpc() {
+        if (venta_multiple.getVisibility()== View.VISIBLE){
+            venta_multiple.setVisibility(View.GONE);
+            venta_rapida.setVisibility(View.GONE);
+        }
+    }
+
+    private void ocultarOpciones() {
+        venta_rapida.setAnimation(toBottom);
+        venta_multiple.setAnimation(toBottom);
+        venta_rapida.startAnimation(toBottom);
+        venta_multiple.startAnimation(toBottom);
+        venta_multiple.setVisibility(View.GONE);
+        venta_rapida.setVisibility(View.GONE);
+        clicked = true;
+    }
+
     private void cargarAnimaciones() {
         fromBottom = AnimationUtils.loadAnimation(this, R.anim.de_abajo_arriba);
         toBottom = AnimationUtils.loadAnimation(this, R.anim.de_arriba_abajo);
     }
 
-    private void alDarClickMetodo() {
-        clicked = !clicked;
-        setearVisibilidad(clicked);
-        setearAnimaciones(clicked);
-        cargarAnimaciones();
-        if (clicked){
-            animacionfaqPrincipal();
-        }else {
-            animacionfaqPrincipalDos();
-        }
-
-
-    }
-
-    private void setearAnimaciones(Boolean clicked) {
-        if (clicked){
-            faq_gastos.setVisibility(View.VISIBLE);
-            faq_ventas.setVisibility(View.VISIBLE);
-        }else {
-            faq_gastos.setVisibility(View.GONE);
-            faq_ventas.setVisibility(View.GONE);
-        }
-    }
-
-    private void setearVisibilidad(Boolean clicked) {
-        if (clicked){
-            faq_gastos.setAnimation(fromBottom);
-            faq_ventas.setAnimation(fromBottom);
-        }else {
-            faq_gastos.setAnimation(toBottom);
-            faq_ventas.setAnimation(toBottom);
-        }
-    }
 
     private void animacionfaqPrincipalDos() {
         OvershootInterpolator interpolator = new OvershootInterpolator();
@@ -216,4 +268,9 @@ public class UserMenuPrincipal extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cargarAnimaciones();
+    }
 }

@@ -60,6 +60,7 @@ public class AdaptadorListaProveedores extends FirebaseRecyclerAdapter<ModeloPro
                 TextInputLayout nombre_proveedor = dialog.findViewById(R.id.nombreProveedor);
                 TextInputLayout numero_proveedor = dialog.findViewById(R.id.numeroProveedor);
                 TextInputLayout desc_proveedor = dialog.findViewById(R.id.descProveedor);
+                TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
 
                 //seteo por default
                 nombre_proveedor.getEditText().setText(model.getNombreProveedor());
@@ -90,6 +91,13 @@ public class AdaptadorListaProveedores extends FirebaseRecyclerAdapter<ModeloPro
                                 });
 
                         dialogo.dismiss();
+                    }
+                });
+
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogo.dismiss();;
                     }
                 });
 
