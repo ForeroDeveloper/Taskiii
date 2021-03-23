@@ -144,7 +144,7 @@
             android:layout_gravity="start"
             android:layout_marginStart="40dp"
             android:fontFamily="serif-monospace"
-            android:text="SEÑOR(ES): CAMILO ARANGO"
+            android:text="CLIENTE: CAMILO ARANGO"
             android:textAllCaps="true"
             android:textSize="12sp"
             android:textStyle="bold" />

@@ -7,6 +7,7 @@
     tools:context=".LoginScreen">
 
     <RelativeLayout
+        android:id="@+id/superior"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_width="match_parent"
@@ -26,92 +27,103 @@
             android:layout_marginStart="10dp"
             android:textColor="@color/primario"
             android:layout_toRightOf="@+id/logo"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_below="@+id/superior"
         android:layout_margin="20dp"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:src="@drawable/phone_board"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Verifica tu número"
-            android:layout_gravity="center"
-            android:fontFamily="@font/din"
-            android:textSize="28sp"
-            android:textColor="@color/primario"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:text="Ingresa tu numero de celular\npara poder verificar que eres tú!"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/din"
-            android:textSize="14sp"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/codePicker"
+
+            <ImageView
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/phone_board"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:defaultCode="57"
-                app:showFullName="true"
-                android:padding="7dp"
-                app:showFlag="true"
-                />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edtNumero"
-                android:layout_width="match_parent"
+                android:text="Verifica tu número"
+                android:layout_gravity="center"
+                android:fontFamily="@font/din"
+                android:textSize="28sp"
+                android:textColor="@color/primario"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:text="Ingresa tu numero de celular\npara poder verificar que eres tú!"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="10dp"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/primario"
-                app:startIconDrawable="@drawable/ic_phone"
-                android:hint="Numero de teléfono">
+                android:fontFamily="@font/din"
+                android:textSize="14sp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtNumero"
-                    android:layout_width="match_parent"
-                    android:inputType="phone"
-                    android:layout_height="wrap_content"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/enviarBtn"
+            <LinearLayout
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:text="ENVIAR"
-                style="@style/Widget.MaterialComponents.Button"
-                app:cornerRadius="10dp"/>
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/codePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:defaultCode="57"
+                    app:showFullName="true"
+                    android:padding="7dp"
+                    app:showFlag="true"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edtNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="@color/primario"
+                    app:startIconDrawable="@drawable/ic_phone"
+                    android:hint="Numero de teléfono">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNumero"
+                        android:layout_width="match_parent"
+                        android:inputType="phone"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/enviarBtn"
+                    android:layout_height="65dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:text="ENVIAR"
+                    style="@style/Widget.MaterialComponents.Button"
+                    app:cornerRadius="10dp"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
 
-    </LinearLayout>
+
+    </ScrollView>
+
 
 
 </RelativeLayout>

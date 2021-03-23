@@ -3,6 +3,7 @@ package com.fordev.taski;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,15 +39,16 @@ public class PerfilFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    RelativeLayout info_personal,info_negocio,info_clientes,info_proveedores,info_inventario,contacto_whatsapp,contacto_facebook,terminos_condiciones;
-    LinearProgressIndicator progressIndicator,progressIndicatorNegocio;
-    TextView txtIndicadorInfoPersonal,txtProgressIndicatorNegocio,nombre;
+    RelativeLayout info_personal, info_negocio, info_clientes, info_proveedores, info_inventario, contacto_whatsapp, contacto_facebook, terminos_condiciones;
+    LinearProgressIndicator progressIndicator, progressIndicatorNegocio;
+    TextView txtIndicadorInfoPersonal, txtProgressIndicatorNegocio, nombre, btnPremium,premiums,usuario;
     private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference databaseReference = firebaseDatabase.getReference();
     private final DatabaseReference porcentajePersonalInfo = databaseReference.child("users")
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("PorcentajeInformacion");
     private final DatabaseReference nombreProp = databaseReference.child("users")
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+
     public PerfilFragment() {
         // Required empty public constructor
     }
@@ -97,6 +101,39 @@ public class PerfilFragment extends Fragment {
         txtIndicadorInfoPersonal = view.findViewById(R.id.txtIndicadorInfoPersonal);
         txtProgressIndicatorNegocio = view.findViewById(R.id.txtprogressIndicatorNegocio);
         nombre = view.findViewById(R.id.nombre);
+        btnPremium = view.findViewById(R.id.btnPremium);
+        premiums = view.findViewById(R.id.premiums);
+        usuario = view.findViewById(R.id.usuario);
+
+
+        btnPremium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogPlus dialog = DialogPlus.newDialog(getContext())
+                        .setContentHolder(new ViewHolder(R.layout.dialog_gold))
+                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .setExpanded(true, 1600)
+                        .setGravity(Gravity.BOTTOM)
+                        .setContentBackgroundResource(android.R.color.transparent)
+                        .create();
+
+                View views = dialog.getHolderView();
+
+                RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
+
+
+                btnAcutualizar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getContext(), PlanesMenuPrincipal.class));
+                        //comen
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
 
         info_personal.setOnClickListener(new View.OnClickListener() {
@@ -157,8 +194,27 @@ public class PerfilFragment extends Fragment {
         nombreProp.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String nomPropietario = snapshot.child("nombrePropietario").getValue().toString();
-                nombre.setText(nomPropietario+"!");
+                if (snapshot.child("nombrePropietario").exists()){
+                    String nomPropietario = snapshot.child("nombrePropietario").getValue().toString();
+                    Object premium = snapshot.child("Premium").getValue();
+                    boolean prem = Boolean.parseBoolean(String.valueOf(premium));
+
+                    if (prem){
+                        premiums.setText("GOLD");
+                        premiums.setTextColor(getResources().getColor(R.color.gold));
+                        btnPremium.setVisibility(View.GONE);
+                        usuario.setVisibility(View.VISIBLE);
+                    }
+
+                    if (nomPropietario.equals("")) {
+                        nombre.setText("Sin Especificar");
+                    } else {
+                        nombre.setText(nomPropietario + "!");
+                    }
+                }else {
+                    nombre.setText("Sin Especificar");
+                }
+
             }
 
             @Override

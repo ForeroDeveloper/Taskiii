@@ -13,6 +13,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.Country;
 import com.hbb20.CountryCodePicker;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginScreen extends AppCompatActivity {
 
     private MaterialButton btnEnviar;
@@ -33,17 +35,26 @@ public class LoginScreen extends AppCompatActivity {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String numeroCel = phoneNumber.getEditText().getText().toString().trim();
-                String fullNumber = "+"+ codePicker.getFullNumber() + "" + numeroCel;
 
-                if (numeroCel.isEmpty()){
-                    Toast.makeText(LoginScreen.this, "ingrese un número valido", Toast.LENGTH_SHORT).show();
-                }else{
+                try {
+                    String numeroCel = phoneNumber.getEditText().getText().toString().trim();
+                    String fullNumber = "+"+ codePicker.getFullNumber() + "" + numeroCel;
+                    String numeroSencillo = numeroCel;
 
-                    Intent intent = new Intent(getApplicationContext(), VerificationOTP.class);
-                    intent.putExtra("phoneNumber", fullNumber);
-                    startActivity(intent);
+                    if (numeroCel.isEmpty()){
+                        Toast.makeText(LoginScreen.this, "ingrese un número valido", Toast.LENGTH_SHORT).show();
+                    }else{
+
+                        Intent intent = new Intent(getApplicationContext(), VerificationOTP.class);
+                        intent.putExtra("phoneNumber", fullNumber);
+                        intent.putExtra("phoneNumberSencillo", numeroSencillo);
+                        startActivity(intent);
+                        finish();
+                    }
+                }catch (NumberFormatException e){
+                    Toasty.error(LoginScreen.this,"Verifica lo signos que usas en los campos!",Toast.LENGTH_LONG, true).show();
                 }
+
 
             }
         });

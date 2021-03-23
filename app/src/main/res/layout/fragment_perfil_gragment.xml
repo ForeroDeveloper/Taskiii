@@ -85,25 +85,23 @@
                     android:fontFamily="@font/mazzard"
                     android:textAllCaps="true"
                     android:layout_marginTop="4dp"
-                    android:text="BASICO"
+                    android:text="BáSICO"
                     android:textColor="#792E03"
                     android:textSize="10dp"
                     android:textStyle="bold" />
 
-                <com.airbnb.lottie.LottieAnimationView
+                <ImageView
                     android:id="@+id/activo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:scaleType="fitXY"
+                    android:src="@drawable/ic_gold_03"
                     android:layout_alignParentBottom="true"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="2dp"
                     android:layout_alignParentEnd="true"
-                    app:lottie_rawRes="@raw/premium_anim"
-                    app:lottie_loop="true"
-                    app:lottie_autoPlay="true"
                     android:textSize="12dp" />
 
                 <TextView
@@ -112,14 +110,30 @@
                     android:id="@+id/btnPremium"
                     android:background="@drawable/hazte_premium"
                     android:layout_width="170dp"
-                    android:text="Hazte Premium"
+                    android:text="Taski Gold"
                     android:fontFamily="@font/din"
                     android:layout_marginTop="13dp"
                     android:layout_centerHorizontal="true"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:layout_marginStart="20dp"
-                    android:textColor="#FDB700"
+                    android:textColor="#D79D44"
+                    android:layout_height="35dp"/>
+
+                <TextView
+                    android:layout_below="@+id/licencia"
+                    android:visibility="invisible"
+                    android:id="@+id/usuario"
+                    android:background="@drawable/hazte_premium"
+                    android:layout_width="190dp"
+                    android:text="USUARIO GOLD 1 AÑO"
+                    android:fontFamily="@font/din"
+                    android:layout_marginTop="13dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:textColor="#D79D44"
                     android:layout_height="35dp"/>
 
             </RelativeLayout>

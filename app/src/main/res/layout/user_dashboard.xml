@@ -32,20 +32,24 @@
                 android:layout_toRightOf="@+id/logo"
                 android:layout_centerVertical="true"/>
 
+            <Button
+                android:id="@+id/next_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:background="#00000000"
+                android:drawableEnd="@drawable/ic_arrow_rigth"
+                android:drawableTint="@color/black"
+                android:onClick="next"/>
+
         </RelativeLayout>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_gravity="center"
-            android:src="@drawable/taski_onboard_v3"/>
-
-        <TextView
+        <!--        <TextView
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gestionar tu negocio\nAhora es muy fácil !"
-            android:fontFamily="@font/din"
+            android:fontFamily="@font/mazzard"
             android:textSize="28sp"
             android:textColor="@color/black"/>
         <TextView
@@ -53,34 +57,91 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¡Adiós papeles! , con Taski, ahorras todas tus notas en cuadernos, y no solo eso, hacemos tus calculos contables automatizadamente!"
-            android:fontFamily="@font/din"
-            android:textSize="14sp"/>
+            android:fontFamily="@font/mazzard_light"
+            android:textSize="14sp"/>-->
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:layout_gravity="center">
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/dots"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:weightSum="2"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
+        <RelativeLayout
+            android:background="@drawable/login_celular"
+            android:layout_weight="1"
             android:onClick="LoginClick"
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:text="LOGIN"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:cornerRadius="10dp"/>
+            android:layout_height="55dp"
+            app:cornerRadius="10dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:onClick="SignUpClick"
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_phone"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"/>
+
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingresar con celular"
+                android:fontFamily="@font/din"
+                android:textSize="16sp"
+                android:textColor="@color/primario"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:onClick="googleLogin"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_google"
+            android:layout_weight="1"
+            android:id="@+id/google"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:text="SIGN UP"
-            style="@style/Widget.MaterialComponents.Button"
-            app:cornerRadius="10dp"/>
+            android:layout_height="55dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_google"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingresar con Google"
+                android:fontFamily="@font/din"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

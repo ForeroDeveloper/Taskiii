@@ -117,7 +117,7 @@ public class InventarioPerfil extends AppCompatActivity {
 
                 View dialog = dialogo.getHolderView();
 
-                MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_inventario);
+                MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_factura);
                 TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
                 TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
                 TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
@@ -140,6 +140,7 @@ public class InventarioPerfil extends AppCompatActivity {
                             String nombreProducto = nombre_Producto.getEditText().getText().toString();
                             double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
                             double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
+                            int randomQr = (int) (Math.random() * (3000 - 1000));
 
                             ModeloInventario modeloInventario = new ModeloInventario();
 
@@ -150,6 +151,7 @@ public class InventarioPerfil extends AppCompatActivity {
                             modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
                             modeloInventario.setId(id);
                             databaseReference.child(id).setValue(modeloInventario);
+                            databaseReference.child(id).child("QrCode").setValue(String.valueOf(randomQr));
                             databaseReference.keepSynced(true);
                             dialogo.dismiss();
                         }

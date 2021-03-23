@@ -340,7 +340,7 @@
                     android:text="¡Crea tu venta con tus productos de tu inventario o agregalos particularmente!"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/din"
+                    android:fontFamily="@font/brandon_grotesque_light"
                     android:textSize="18sp"/>
 
             </LinearLayout>

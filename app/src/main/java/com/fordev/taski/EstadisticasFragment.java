@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +44,7 @@ public class EstadisticasFragment extends Fragment {
     private String mParam2;
     TextView ventasTotales, gastosTotales, gastosMenosVentas, fechaActual, ventasTotalesPorCobrar, gastosTotalesPorPagar;
     ImageView ic_sumar_fecha, ic_restar_fecha;
+    CardView escalar;
 
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM");
@@ -93,6 +97,11 @@ public class EstadisticasFragment extends Fragment {
         fechaActual = view.findViewById(R.id.txtFechaSelect);
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
+        escalar = view.findViewById(R.id.escalar);
+
+/*        Animation connectingAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.scale_anim);
+        escalar.startAnimation(connectingAnimation);*/
+
 
         //zone
         sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));

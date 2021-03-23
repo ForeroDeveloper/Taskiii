@@ -33,9 +33,10 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.google.firebase:firebase-database:19.6.0'
+    implementation 'com.google.firebase:firebase-database:19.7.0'
     implementation 'com.google.firebase:firebase-storage:19.2.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -51,7 +52,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.applandeo:material-calendar-view:1.3.2'
     implementation 'com.orhanobut:dialogplus:1.11@aar'
-    implementation 'com.github.GwonHyeok:StickySwitch:0.0.16'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'com.github.dueeeke:dk-tablayout:1.0.2'
     implementation 'com.nineoldandroids:library:2.4.0'
@@ -60,8 +60,12 @@ dependencies {
     implementation 'com.shunan.circularprogressview:circular-progress-view:1.1.4'
     implementation 'com.github.abbasalim:Android-CalculatorDialog:v3.0.1'
     implementation "com.github.skydoves:balloon:1.3.0"
-    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     implementation "com.airbnb.android:lottie:3.5.0"
+    //Scanner
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0'
+
 
 
 }

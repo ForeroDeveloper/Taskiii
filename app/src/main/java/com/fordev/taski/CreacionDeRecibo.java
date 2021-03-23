@@ -171,9 +171,9 @@ public class CreacionDeRecibo extends AppCompatActivity {
                     //Nombre Cliente
                     nombre_cliente = snapshot.child("cliente").getValue().toString();
                     if (nombre_cliente.toString().isEmpty()){
-                        txt_nombre_cliente.setText("SEÑOR(ES): " + "Sin Especificar...");
+                        txt_nombre_cliente.setText("CLIENTE: " + "Sin Especificar...");
                     }else{
-                        txt_nombre_cliente.setText("SEÑOR(ES): "+ nombre_cliente);
+                        txt_nombre_cliente.setText("CLIENTE: "+ nombre_cliente);
                     }
 
                     total_factura = Integer.parseInt(String.valueOf(snapshot.child("abonado").getValue().toString()));

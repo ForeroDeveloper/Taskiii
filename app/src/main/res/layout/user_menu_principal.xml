@@ -54,8 +54,6 @@
     </FrameLayout>
 
 
-
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/inferior"
         android:layout_alignParentBottom="true"

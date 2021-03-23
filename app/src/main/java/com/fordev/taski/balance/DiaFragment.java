@@ -1,7 +1,9 @@
 package com.fordev.taski.balance;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -117,8 +122,6 @@ public class DiaFragment extends Fragment {
         //seteos
         fechaActual.setText(sdf.format(calendar.getTime()));
         sinContenido.setVisibility(View.GONE);
-
-
 
 
 
@@ -313,6 +316,35 @@ public class DiaFragment extends Fragment {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 txtTotalFacturas.setText(String.valueOf(adaptadorListaFacturas.getItemCount()));
+                if (adaptadorListaFacturas.getItemCount() == 1){
+                    SharedPreferences preferences = getContext().getSharedPreferences("TUTORIAL", Context.MODE_PRIVATE);
+                    boolean unaFactura = preferences.getBoolean("DetallesFactura" , false);
+                    if (!unaFactura){
+                        SharedPreferences.Editor editor  = preferences.edit();
+                        editor.putBoolean("DetallesFactura", true);
+                        editor.apply();
+
+                        DialogPlus dialog = DialogPlus.newDialog(getContext())
+                                .setContentHolder(new ViewHolder(R.layout.dialog_ver_detalles_factura))
+                                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                                .setGravity(Gravity.CENTER)
+                                .setContentBackgroundResource(android.R.color.transparent)
+                                .create();
+
+                        View view1 = dialog.getHolderView();
+
+                        MaterialButton btn_dismis = view1.findViewById(R.id.btn_dismiss);
+
+                        btn_dismis.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+                    }
+                }
             }
         });
         adaptadorListaFacturas.notifyDataSetChanged();

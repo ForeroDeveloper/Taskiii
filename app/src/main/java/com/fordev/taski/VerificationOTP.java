@@ -1,13 +1,13 @@
 package com.fordev.taski;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,7 +16,6 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -37,6 +36,7 @@ public class VerificationOTP extends AppCompatActivity {
     String codeBySystem;
     TextView txtNumero;
     String phoneNumber;
+    String phoneNumberSencillo;
     DatabaseReference databaseReference;
     String primerLogin;
 
@@ -51,6 +51,7 @@ public class VerificationOTP extends AppCompatActivity {
 
 
         phoneNumber = getIntent().getStringExtra("phoneNumber");
+        phoneNumberSencillo = getIntent().getStringExtra("phoneNumberSencillo");
         txtNumero.setText(phoneNumber);
 
         enviarCodigoDeVerificacion(phoneNumber);
@@ -106,7 +107,6 @@ public class VerificationOTP extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(VerificationOTP.this, "Verificacion exitosa", Toast.LENGTH_SHORT).show();
-
                             databaseReference = FirebaseDatabase.getInstance().getReference("users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
 
@@ -114,15 +114,13 @@ public class VerificationOTP extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.child("primeraVez").exists()){
-                                        primerLogin = snapshot.child("primeraVez").getValue().toString();
-                                        if (primerLogin.equals("si")){
-                                            startActivity(new Intent(getApplicationContext(),UserMenuPrincipal.class));
-                                        }else {
-                                            startActivity(new Intent(getApplicationContext(),DatosUsuarioDashboard.class));
-                                        }
+
+                                        startActivity(new Intent(getApplicationContext(),UserMenuPrincipal.class));
+
                                     }else {
                                         startActivity(new Intent(getApplicationContext(),DatosUsuarioDashboard.class));
                                     }
+
                                     finish();
                                 }
 
@@ -131,7 +129,6 @@ public class VerificationOTP extends AppCompatActivity {
 
                                 }
                             });
-
 
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -149,7 +146,7 @@ public class VerificationOTP extends AppCompatActivity {
         if (!code.isEmpty()){
             verificarCodigo(code);
         }else {
-            Toasty.custom(this, "Ingrese un código valido", getResources().getDrawable(R.drawable.logo_taski),
+            Toasty.custom(this, "Ingrese un código válido", getResources().getDrawable(R.drawable.logo_taski),
                     getResources().getColor(R.color.white),getResources().getColor(R.color.primario), Toasty.LENGTH_SHORT, true, true).show();
         }
     }

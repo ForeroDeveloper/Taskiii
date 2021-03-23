@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    tools:context=".GoldPlanFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ventajas"
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="15dp"
+            android:layout_marginTop="2dp">
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/fac_inf"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_fac_ilimitadas"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/fac_inf"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Facturas Ilimitadas, ventas y gastos"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/scan"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_scan_qr_05_05"/>
+
+                    <TextView
+                        android:id="@+id/qr"
+                        android:layout_toEndOf="@+id/scan"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Escanear productos con QR "
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <RelativeLayout
+                        android:layout_width="37dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toEndOf="@+id/qr"
+                        android:background="@drawable/gold_cabcera">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="center"
+                            android:text="Nuevo"
+                            android:textColor="@color/white"
+                            android:textSize="10dp" />
+
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ads"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_ads"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/ads"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Sin Anuncios publicitarios - ADs"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/send"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_enviar_fac"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/send"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Enviar facturas de cobro y ventas ilimitadas"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/invent"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_inv_ilimitado"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/invent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Agregar productos ilimitados al inventario"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/support"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_soporte"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/support"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Soporte Premium prioritario, sin esperas"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_below="@+id/ventajas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:background="@drawable/gold_cabcera_planes">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Validez"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:background="@drawable/gold_marco_planes"
+                android:layout_gravity="center"
+                android:layout_width="140dp"
+                android:layout_height="140dp">
+
+                <TextView
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/titu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mazzard"
+                    android:text="12"
+                    android:textSize="26dp"
+                    android:textColor="@color/negro"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/meses"
+                    android:layout_below="@+id/titu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mazzard_light"
+                    android:text="MESES"
+                    android:textSize="16dp"
+                    android:textColor="@color/negro"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_below="@+id/meses"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/precioSigno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mazzard"
+                    android:text="35"
+                    android:textSize="26dp"
+                    android:textColor="@color/negro"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_toStartOf="@+id/precioSigno"
+                    android:layout_below="@+id/meses"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mazzard"
+                    android:text="$"
+                    android:textSize="14dp"
+                    android:textColor="#B4B4B4"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_toEndOf="@+id/precioSigno"
+                    android:layout_below="@+id/meses"
+                    android:layout_marginTop="21dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mazzard"
+                    android:text=".000"
+                    android:textSize="11dp"
+                    android:textColor="#B4B4B4"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/precioSigno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mazzard_light"
+                    android:text="Ahorras 50%"
+                    android:textSize="11dp"
+                    android:textColor="#E8BC73"
+                    android:layout_centerHorizontal="true"/>
+
+
+            </RelativeLayout>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/btn_comprar_taski"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <RelativeLayout
+                    android:id="@+id/gold"
+                    android:background="@drawable/gradiente_gold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/precio"
+                        android:layout_marginTop="2dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="center"
+                        android:text="Actualizarme a Gold"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:layout_below="@+id/precio"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:gravity="center"
+                        android:text="$ 35.000 Anual"
+                        android:textColor="@color/white"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_toEndOf="@+id/send"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/brandon_grotesque_light"
+                android:text="Esta versión de suscripción, es la mejor de todas, por lo cual no tendras ningúna limitacion en todas las funciones, si requiere mas información de los beneficios , no dude en contactarnos."
+                android:textColor="#B4B4B4"
+                android:textSize="11dp"
+                android:textStyle="normal" />
+
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

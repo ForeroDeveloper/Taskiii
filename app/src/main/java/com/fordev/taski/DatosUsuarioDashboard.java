@@ -1,9 +1,5 @@
 package com.fordev.taski;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,7 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fordev.taski.otros.PorcentajesInformacion;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,11 +25,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -56,6 +53,8 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     RelativeLayout cargandoInfo,registrarInfo;
     int infoPersonal = 0;
     int infoNegocio = 0;
+    String email;
+    String phone;
 
 
 
@@ -86,6 +85,18 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
         storageReference = storage.getReference();
 
         profile_image.setImageDrawable(getResources().getDrawable(R.drawable.logo_taski));
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        email = user.getEmail();
+        phone = user.getPhoneNumber();
+
+        if (email==null){
+            email = "";
+        }
+        if (phone == null) {
+            phone = "";
+        }
 
 
         ponerFoto.setOnClickListener(new View.OnClickListener() {
@@ -138,13 +149,18 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
 
         if (!nombrePropietario.isEmpty()){
             infoPersonal += 20;
-        }else if (!numeroDocumento.isEmpty()){
+        }
+
+        if (!numeroDocumento.isEmpty()){
             infoPersonal += 20;
-        }else if (!tipoDocumento.isEmpty()){
+        }
+        if (!tipoDocumento.isEmpty()){
             infoPersonal += 20;
-        }else if (!correoElectronico.isEmpty()){
+        }
+        if (!correoElectronico.isEmpty()){
             infoPersonal += 20;
-        }else if (!txtApellidoProp.isEmpty()){
+        }
+        if (!txtApellidoProp.isEmpty()){
             infoPersonal +=20;
         }
         //negocio
@@ -152,23 +168,19 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
             infoNegocio += 20;
         }
 
-
         porcentajesMetodo();
-
 
         if(nombreNegocio.isEmpty()){
             edt_NombreNegocio.setError("Ingrese por favor un nombre");
             Toasty.custom(this, "Error al guardar!", getResources().getDrawable(R.drawable.logo_taski),
                     getResources().getColor(R.color.white),getResources().getColor(R.color.rosado), Toasty.LENGTH_SHORT, true, true).show();
         }else {
-
-            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si","","","",txtApellidoProp);
+            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si","","","",txtApellidoProp,email,"",phone,false);
             FirebaseDatabase.getInstance().getReference("users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
             Toasty.custom(this, "Guardado Correctamente!", getResources().getDrawable(R.drawable.logo_taski),
                     getResources().getColor(R.color.white),getResources().getColor(R.color.primario), Toasty.LENGTH_SHORT, true, true).show();
             startActivity(new Intent(getApplicationContext(),UserMenuPrincipal.class));
-
         }
 
     }
@@ -235,7 +247,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     }
 
     public void loHareLuego(View view) {
-        UserInfoBasica userInfoBasica = new UserInfoBasica("","","","","","","si","","","","");
+        UserInfoBasica userInfoBasica = new UserInfoBasica("","","","","","","si","","","","",email,"",phone,false);
         FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
         porcentajesMetodo();

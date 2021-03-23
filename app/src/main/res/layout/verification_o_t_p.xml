@@ -40,7 +40,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
             android:src="@drawable/phone_board_enviado"/>
 
@@ -48,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="INGRESA EL CÓDIGO"
+            android:text="Ingresa el código"
             android:layout_gravity="center"
             android:fontFamily="@font/din"
             android:textSize="28sp"
@@ -85,8 +85,8 @@
             <com.chaos.view.PinView
                 android:id="@+id/pinView"
                 app:itemCount="6"
-                app:itemWidth="50dp"
-                app:itemHeight="50dp"
+                app:itemWidth="38dp"
+                app:itemHeight="40dp"
                 app:lineWidth="1dp"
                 android:fontFamily="@font/din"
                 app:lineColor="@color/black"
@@ -107,7 +107,7 @@
                 android:id="@+id/verificar"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="65dp"
                 android:text="VERIFICAR"
                 android:onClick="verificarScreen"
                 style="@style/Widget.MaterialComponents.Button"
@@ -120,7 +120,7 @@
                 android:visibility="visible"
                 android:indeterminate="true"
                 android:layout_gravity="center"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:indeterminateTintMode="src_atop"
                 android:indeterminateTint="@color/primario"/>
         </LinearLayout>

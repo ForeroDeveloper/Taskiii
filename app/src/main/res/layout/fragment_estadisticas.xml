@@ -31,6 +31,7 @@
 
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/escalar"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="20dp"

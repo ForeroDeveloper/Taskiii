@@ -1,6 +1,9 @@
 package com.fordev.taski.adaptadores;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloInventario;
 import com.fordev.taski.modelos.ModeloVenta;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -86,7 +91,6 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
             }
         });
 
-
         holder.ic_agregar_producto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +111,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
 
                 TextInputLayout cantidad_stock = views.findViewById(R.id.cantidad);
                 TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
-                MaterialButton btn_guardar_cantidad = views.findViewById(R.id.btn_guardar_producto_inventario);
+                MaterialButton btn_guardar_cantidad = views.findViewById(R.id.btn_guardar_producto_factura);
                 TextView btn_dismiss = views.findViewById(R.id.btn_cancelar);
                 TextView txtNombreProductoSeleccionado = views.findViewById(R.id.nombreClientes);
                 TextView txtPrecioProductoSeleccionado = views.findViewById(R.id.numeroClientes);

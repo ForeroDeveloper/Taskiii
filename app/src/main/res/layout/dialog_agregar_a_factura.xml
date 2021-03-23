@@ -242,7 +242,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:layout_alignParentEnd="true"
-                android:id="@+id/btn_guardar_producto_inventario"
+                android:id="@+id/btn_guardar_producto_factura"
                 android:layout_width="140dp"
                 app:cornerRadius="30dp"
                 android:backgroundTint="#00B2EB"

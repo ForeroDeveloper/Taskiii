@@ -1,15 +1,12 @@
 package com.fordev.taski;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
-import androidx.core.view.ViewCompat;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,9 +15,19 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
 
 import com.fordev.taski.balance.BalanceFragment;
 import com.fordev.taski.gastos.GastosFragment;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +38,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class UserMenuPrincipal extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     //Firebase Instancias
@@ -40,6 +50,8 @@ public class UserMenuPrincipal extends AppCompatActivity {
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("imagen");
     private final DatabaseReference infoBasica = databaseReference.child("users")
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+    private final DatabaseReference premium = databaseReference.child("users")
+            .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     //componentes
     String urlImagen;
     ImageView logoNegocio;
@@ -49,7 +61,8 @@ public class UserMenuPrincipal extends AppCompatActivity {
     Animation fromBottom,toBottom;
     RelativeLayout superior;
     int posicion= 0;
-
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    final Calendar Cal = Calendar.getInstance();
     private boolean clicked = true;
 
     @Override
@@ -63,6 +76,44 @@ public class UserMenuPrincipal extends AppCompatActivity {
         faq = findViewById(R.id.faq);
         venta_rapida = findViewById(R.id.venta_rapida);
         venta_multiple = findViewById(R.id.venta_multiple);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("TUTORIAL", MODE_PRIVATE);
+
+        final Spannable spannable = new SpannableString("Crea ventas Multiples y rapidas");
+        spannable.setSpan(new UnderlineSpan(), spannable.length() - "TapTargetView".length(),
+                spannable.length(), 0);
+
+        final Spannable spannable2 = new SpannableString("Visualiza tus ventas totales por, dia, semana,mes y año!");
+        spannable2.setSpan(new UnderlineSpan(), spannable2.length() - "TapTargetView".length(),
+                spannable2.length(), 0);
+
+        boolean venta = sharedPreferences.getBoolean("CrearVenta" , false);
+
+        if (!venta){
+            TapTargetView.showFor(this,
+                    TapTarget.forView(findViewById(R.id.faq), "Crear Ventas", spannable)
+                            .cancelable(false)
+                            .drawShadow(true)
+                            .titleTextDimen(R.dimen.text)
+                            .tintTarget(false), new TapTargetView.Listener() {
+                        public void onTargetClick(TapTargetView view) {
+                            super.onTargetClick(view);
+                            SharedPreferences.Editor editor  = sharedPreferences.edit();
+                            editor.putBoolean("CrearVenta", true);
+                            editor.putBoolean("DetallesFactura", false);
+                            editor.putBoolean("ClickInventario", false);
+                            editor.putBoolean("ClickScanner", false);
+                            editor.apply();
+                            opciones();
+                        }
+                        public  void  onOuterCircleClick(TapTargetView view){
+                            super.onOuterCircleClick(view);
+                        }
+                    }
+            );
+
+        }
+
 
         //animaciones
         cargarAnimaciones();
@@ -96,7 +147,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
 
                     case R.id.profile:
                         fragment = new PerfilFragment();
-                        posicion = 2;
+                        posicion = 3;
                         if (venta_rapida.getVisibility()==View.VISIBLE){
                             venta_rapida.startAnimation(toBottom);
                             venta_multiple.startAnimation(toBottom);
@@ -109,7 +160,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
 
                     case R.id.estadisticas:
                         fragment = new EstadisticasFragment();
-                        posicion = 2;
+                        posicion = 4;
                         if (venta_rapida.getVisibility()==View.VISIBLE){
                             venta_rapida.startAnimation(toBottom);
                             venta_multiple.startAnimation(toBottom);
@@ -191,12 +242,19 @@ public class UserMenuPrincipal extends AppCompatActivity {
         infoBasica.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("FechaPremiumFin").exists()){
+                    //nada
+                }else {
+                    infoBasica.child("FechaPremiumFin").setValue(sdf.format(Cal.getTime()));
+                }
+
                 if (snapshot.child("nombreNegocio").exists()){
                     String nombre_Negocio = snapshot.child("nombreNegocio").getValue().toString();
                     nombreNegocio.setText(nombre_Negocio);
                 }else {
                     nombreNegocio.setText("Nombre Negocio");
                 }
+
 
             }
 
@@ -224,12 +282,6 @@ public class UserMenuPrincipal extends AppCompatActivity {
         }
     }
 
-    private void ocultarOpc() {
-        if (venta_multiple.getVisibility()== View.VISIBLE){
-            venta_multiple.setVisibility(View.GONE);
-            venta_rapida.setVisibility(View.GONE);
-        }
-    }
 
     private void ocultarOpciones() {
         venta_rapida.setAnimation(toBottom);

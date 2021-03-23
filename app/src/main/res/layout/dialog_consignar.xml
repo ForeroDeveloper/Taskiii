@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:elevation="20dp"
+    app:cardCornerRadius="20dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/titulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ic_seleccionar_fecha"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/din"
+                        android:text="Metodos de Pago"
+                        android:textColor="@color/negro"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:id="@+id/banco"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titulo"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Bancolombia"
+                        android:textColor="@color/negro"
+                        android:textSize="22dp" />
+
+
+                    <TextView
+                        android:id="@+id/cuentaa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/banco"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Cuenta Ahorros:"
+                        android:textColor="@color/negro"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/nombre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cuentaa"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Nombre de persona: Jhon Jairo Forero"
+                        android:textColor="@color/negro"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:id="@+id/nequiinfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/nombre"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/titulo"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Nequi"
+                            android:textColor="@color/negro"
+                            android:textSize="22dp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/nequi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/mazzard"
+                                android:text="Celular:"
+                                android:textColor="@color/negro"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toEndOf="@+id/nequi"
+                                android:fontFamily="@font/montserrat_alternates"
+                                android:text="320-419-7482"
+                                android:textColor="@color/negro"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/nequiinfo"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/titulo"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="DaviPlata"
+                            android:textColor="@color/negro"
+                            android:textSize="22dp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/celular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/mazzard"
+                                android:text="Celular:"
+                                android:textColor="@color/negro"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toEndOf="@+id/celular"
+                                android:fontFamily="@font/montserrat_alternates"
+                                android:text="320-419-7482"
+                                android:textColor="@color/negro"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ic_seleccionar_fecha"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/din"
+                            android:gravity="start"
+                            android:text="Total Consignar"
+                            android:textColor="@color/negro"
+                            android:textSize="26dp" />
+
+                        <TextView
+                            android:id="@+id/totalPesos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ic_seleccionar_fecha"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/mazzard"
+                            android:gravity="start"
+                            android:text="$ 35.000 COP"
+                            android:textColor="@color/negro"
+                            android:textSize="26dp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/banco"
+                            android:layout_margin="15dp"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center"
+                            android:text="Al consigar, por favor mandar una foto del comprobante de pago al numero de\nWhatsApp: 317-881-6094"
+                            android:textColor="@color/negro"
+                            android:textSize="14dp" />
+
+
+                        <ImageView
+                            android:layout_marginBottom="10dp"
+                            android:id="@+id/img_logo_taski"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/logo_taski" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titulo"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Bancolombia"
+                        android:textColor="@color/negro"
+                        android:textSize="22dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/banco"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toEndOf="@+id/cuentaa"
+                        android:fontFamily="@font/montserrat_alternates"
+                        android:text="912-080224-45"
+                        android:textColor="@color/negro"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_whatsapp"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/din"
+            android:text="WhatsApp Enviar"
+            android:textAllCaps="false"
+            android:textSize="14dp"
+            app:backgroundTint="@color/verde" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

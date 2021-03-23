@@ -56,7 +56,6 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     // User is signed in
@@ -69,8 +68,6 @@ public class SplashScreen extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
-
 
             }
         },SPLASH_TIMER);

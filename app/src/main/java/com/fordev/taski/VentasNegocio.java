@@ -1,16 +1,16 @@
 package com.fordev.taski;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +21,14 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProductos;
@@ -30,6 +36,8 @@ import com.fordev.taski.adaptadores.AdaptadorListaProductosEnInventario;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.modelos.ModeloVenta;
 import com.fordev.taski.modelos.ModeloVentaInventario;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -52,8 +60,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-
-import static ir.esfandune.calculatorlibe.CalculatorDialog.easyCalculate;
 
 import es.dmoral.toasty.Toasty;
 import ir.esfandune.calculatorlibe.CalculatorDialog;
@@ -81,6 +87,11 @@ public class VentasNegocio extends AppCompatActivity {
     DecimalFormat format = new DecimalFormat("0.#");
     String key;
     String key2;
+    boolean premium = true;
+    int total_factura = 0;
+
+    View view;
+    DialogPlus dialogPlus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,15 +121,75 @@ public class VentasNegocio extends AppCompatActivity {
         btnLimpiar.setVisibility(View.GONE);
 //        edtProducto.requestFocus();
 
+
+        //tap target
+        final Spannable spannable2 = new SpannableString("Agrega productos a tu venta directamente desde tu inventario");
+        spannable2.setSpan(new UnderlineSpan(), spannable2.length() - "TapTargetView".length(),
+                spannable2.length(), 0);
+
+        SharedPreferences preferences = this.getSharedPreferences("TUTORIAL", Context.MODE_PRIVATE);
+        boolean inventario = preferences.getBoolean("ClickInventario" , false);
+
+        if (!inventario){
+              TapTargetView.showFor(this,
+                TapTarget.forView(findViewById(R.id.btnInventario), "Selecciona desde Inventario", spannable2)
+                        .cancelable(false)
+                        .drawShadow(true)
+                        .titleTextDimen(R.dimen.text)
+                        .tintTarget(false), new TapTargetView.Listener() {
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        SharedPreferences.Editor editor  = preferences.edit();
+                        editor.putBoolean("ClickInventario", true);
+                        editor.apply();
+                    }
+                    public  void  onOuterCircleClick(TapTargetView view){
+                        super.onOuterCircleClick(view);
+                    }
+                }
+
+        );
+        }
+
+
+
+
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        String fecha = getFechaNormal(getFechaMilisegundos());
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        databaseReferenceClientes = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.keepSynced(true);
 
-//                .child("facturas").child("fechas").child("listaDeFacturas");
+
+        databaseReference.child("info").child("Premium").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Object booleanPremium = snapshot.getValue();
+                    premium = Boolean.parseBoolean(String.valueOf(booleanPremium));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        databaseReference.child("facturas").child("facturasCreadas").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    total_factura = (int) snapshot.getChildrenCount();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         //keys
         key = databaseReference.push().getKey();
@@ -302,167 +373,39 @@ public class VentasNegocio extends AppCompatActivity {
         btnGuardarFactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                final Calendar Cal = Calendar.getInstance();
-                dia = Cal.get(Calendar.DAY_OF_MONTH);
-                mes = Cal.get(Calendar.MONTH);
-                ano = Cal.get(Calendar.YEAR);
 
-                DialogPlus dialogPlus = DialogPlus.newDialog(btnGuardarFactura.getContext())
-                        .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura))
-                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
-                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1470)
-                        .setGravity(Gravity.BOTTOM)
-                        .setContentBackgroundResource(android.R.color.transparent)
-                        .create();
-                View view = dialogPlus.getHolderView();
-                //FindViewsIdes del Dialog Plus
-                AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.metodoDePago);
-                RadioButton radioButton = view.findViewById(R.id.radio0);
-                TextView txtTotalFactura = view.findViewById(R.id.txtTotalFactura);
-                TextView txtCancelarFac = view.findViewById(R.id.txtCancel);
-                TextView txtFechaSelect = view.findViewById(R.id.txtFechaSelect);
-                MaterialButton btnGuardarFac = view.findViewById(R.id.btnGuardarTodo);
-                TextInputEditText conceptoVenta = view.findViewById(R.id.txtConceptoVenta);
-                AutoCompleteTextView clienteNombre = view.findViewById(R.id.clientes);
-                AutoCompleteTextView metodoDePago = view.findViewById(R.id.metodoDePago);
-                TextInputEditText notasInternas = view.findViewById(R.id.txtNotasInternas);
-                TextInputLayout cliente = view.findViewById(R.id.edtCliente);
-                ImageView selecFechaFactura = view.findViewById(R.id.ic_seleccionar_fecha);
-                //setFechaActual
-                txtFechaSelect.setText(sdf.format(Cal.getTime()));
+                if (!premium) {
+                    if (total_factura < 20) {
+                        crearVenta(nformat);
+                    } else {
+                        DialogPlus dialog = DialogPlus.newDialog(VentasNegocio.this)
+                                .setContentHolder(new ViewHolder(R.layout.dialog_gold))
+                                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                                .setExpanded(true, 1600)
+                                .setGravity(Gravity.BOTTOM)
+                                .setContentBackgroundResource(android.R.color.transparent)
+                                .create();
 
-                databaseReference.child("Clientes").child("cliente").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //array lista clientes
-                        ArrayList clientes = new ArrayList<String>();
+                        View views = dialog.getHolderView();
 
-                        for (DataSnapshot childSnapshot: snapshot.getChildren()){
-                            HashMap map =(HashMap) childSnapshot.getValue();
-                            if(map!=null) {
-                                clientes.add(map.get("nombreCliente"));
-                            }
-                        }
-
-                        ArrayAdapter<String> adapterClientes = new ArrayAdapter<>(getApplicationContext(),
-                                R.layout.lista_items_dos,
-                                clientes);
-                        clienteNombre.setAdapter(adapterClientes);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                //Variables and others
-                String[] tipoDocumento = new String[]{
-                        "Efectivo",
-                        "Tarjeta",
-                        "Tranferencia bancaria",
-                        "Otro"
-                };
+                        RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
 
 
-
-                txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario)));
-
-                //CLick Listener and others
-                radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (!isChecked) {
-                            txtTotalFactura.setTextColor(getResources().getColor(R.color.rojo));
-                            cliente.setHelperTextEnabled(true);
-                            cliente.setHelperText("¡Importante!");
-                            cliente.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.rojo)));
-                            estadoDePago = false;
-                        } else {
-                            txtTotalFactura.setTextColor(getResources().getColor(R.color.verde));
-                            cliente.setHelperText("Recomendado");
-                            cliente.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
-                            estadoDePago = true;
-                            cliente.setHelperTextEnabled(true);
-                        }
-                    }
-                });
-
-                selecFechaFactura.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(VentasNegocio.this, new DatePickerDialog.OnDateSetListener() {
+                        btnAcutualizar.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                Cal.set(year, month, dayOfMonth);
-                                txtFechaSelect.setText(sdf.format(Cal.getTime()));
+                            public void onClick(View v) {
+                                startActivity(new Intent(VentasNegocio.this, PlanesMenuPrincipal.class));
                             }
-                        }, ano, mes, dia);
-                        datePickerDialog.show();
+                        });
+
+                        dialog.show();
                     }
-                });
-                txtCancelarFac.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogPlus.dismiss();
-                    }
-                });
-                btnGuardarFac.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Obtener Datos
-                        String datos_cliente = clienteNombre.getText().toString();
-                        String datos_concepto_venta = conceptoVenta.getText().toString();
-                        String datos_notas_internas = notasInternas.getText().toString();
-                        String datos_metodo_de_pago = metodoDePago.getText().toString();
-                        if (datos_concepto_venta.equals("")) {
-                            datos_concepto_venta = "Venta " + (int) (Math.random() * (3000 - 1000));
-                        }
 
-                        ModeloFacturaCreada modeloFacturaCreada = new ModeloFacturaCreada();
-                        modeloFacturaCreada.setId(key);
-                        modeloFacturaCreada.setIdInventario(key2);
-                        modeloFacturaCreada.setCliente(datos_cliente);
-                        modeloFacturaCreada.setConceptoDeVenta(datos_concepto_venta);
-                        modeloFacturaCreada.setNotasInternas(datos_notas_internas);
-                        modeloFacturaCreada.setEstadoDePago(estadoDePago);
-                        modeloFacturaCreada.setTotalCalculado(totalDeFactura + totalDeFacturaInventario);
-                        modeloFacturaCreada.setMetodoDePago(datos_metodo_de_pago);
-                        modeloFacturaCreada.setFechaRegistro(sdf.format(Cal.getTime()));
-                        modeloFacturaCreada.setTimeStamp(getFechaMilisegundos() * -1);
-                        modeloFacturaCreada.setYear(String.valueOf(Cal.get(Calendar.YEAR)));
-                        SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
-                        modeloFacturaCreada.setMonth(String.valueOf(sdf2.format(Cal.getTime())));
-                        modeloFacturaCreada.setDay(String.valueOf(Cal.get(Calendar.DAY_OF_MONTH)));
-                        modeloFacturaCreada.setAbonado(modeloFacturaCreada.getTotalCalculado());
-                        if (!estadoDePago) {
-                            modeloFacturaCreada.setAbonar(modeloFacturaCreada.getTotalCalculado());
-                        } else {
-                            modeloFacturaCreada.setAbonar(0);
-                        }
+                } else {
+                    crearVenta(nformat);
+                }
 
-                        databaseReference.child("facturas").child("facturasCreadas").child(key).setValue(modeloFacturaCreada);
-                        databaseReference.keepSynced(true);
-
-                        //BORRAR DATOS FACTURA ACTUAL
-                        borrarDatosDeFacturaActual();
-                        adaptadorListaProductos.notifyDataSetChanged();
-                        finish();
-
-                    }
-                });
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
-                        R.layout.lista_items_dos,
-                        tipoDocumento);
-                autoCompleteTextView.setAdapter(adapter);
-
-
-
-                dialogPlus.show();
 
             }
         });
@@ -494,6 +437,169 @@ public class VentasNegocio extends AppCompatActivity {
         lista_de_productos_venta_inventario.setAdapter(adaptadorListaProductosEnInventario);
 
     }
+
+    private void crearVenta(NumberFormat nformat) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        final Calendar Cal = Calendar.getInstance();
+        dia = Cal.get(Calendar.DAY_OF_MONTH);
+        mes = Cal.get(Calendar.MONTH);
+        ano = Cal.get(Calendar.YEAR);
+
+        DialogPlus dialogPlus = DialogPlus.newDialog(btnGuardarFactura.getContext())
+                .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura))
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setExpanded(true, 1470)
+                .setGravity(Gravity.BOTTOM)
+                .setContentBackgroundResource(android.R.color.transparent)
+                .create();
+        View view = dialogPlus.getHolderView();
+        //FindViewsIdes del Dialog Plus
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.metodoDePago);
+        RadioButton radioButton = view.findViewById(R.id.radio0);
+        TextView txtTotalFactura = view.findViewById(R.id.txtTotalFactura);
+        TextView txtCancelarFac = view.findViewById(R.id.txtCancel);
+        TextView txtFechaSelect = view.findViewById(R.id.txtFechaSelect);
+        MaterialButton btnGuardarFac = view.findViewById(R.id.btnGuardarTodo);
+        TextInputEditText conceptoVenta = view.findViewById(R.id.txtConceptoVenta);
+        AutoCompleteTextView clienteNombre = view.findViewById(R.id.clientes);
+        AutoCompleteTextView metodoDePago = view.findViewById(R.id.metodoDePago);
+        TextInputEditText notasInternas = view.findViewById(R.id.txtNotasInternas);
+        TextInputLayout cliente = view.findViewById(R.id.edtCliente);
+        ImageView selecFechaFactura = view.findViewById(R.id.ic_seleccionar_fecha);
+        //setFechaActual
+        txtFechaSelect.setText(sdf.format(Cal.getTime()));
+
+        databaseReference.child("Clientes").child("cliente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //array lista clientes
+                ArrayList clientes = new ArrayList<String>();
+
+                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                    HashMap map = (HashMap) childSnapshot.getValue();
+                    if (map != null) {
+                        clientes.add(map.get("nombreCliente"));
+                    }
+                }
+
+                ArrayAdapter<String> adapterClientes = new ArrayAdapter<>(getApplicationContext(),
+                        R.layout.lista_items_dos,
+                        clientes);
+                clienteNombre.setAdapter(adapterClientes);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //Variables and others
+        String[] tipoDocumento = new String[]{
+                "Efectivo",
+                "Tarjeta",
+                "Tranferencia bancaria",
+                "Otro"
+        };
+
+
+        txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario)));
+
+        //CLick Listener and others
+        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    txtTotalFactura.setTextColor(getResources().getColor(R.color.rojo));
+                    cliente.setHelperTextEnabled(true);
+                    cliente.setHelperText("¡Importante!");
+                    cliente.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.rojo)));
+                    estadoDePago = false;
+                } else {
+                    txtTotalFactura.setTextColor(getResources().getColor(R.color.verde));
+                    cliente.setHelperText("Recomendado");
+                    cliente.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
+                    estadoDePago = true;
+                    cliente.setHelperTextEnabled(true);
+                }
+            }
+        });
+
+        selecFechaFactura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(VentasNegocio.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Cal.set(year, month, dayOfMonth);
+                        txtFechaSelect.setText(sdf.format(Cal.getTime()));
+                    }
+                }, ano, mes, dia);
+                datePickerDialog.show();
+            }
+        });
+        txtCancelarFac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogPlus.dismiss();
+            }
+        });
+        btnGuardarFac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Obtener Datos
+                String datos_cliente = clienteNombre.getText().toString();
+                String datos_concepto_venta = conceptoVenta.getText().toString();
+                String datos_notas_internas = notasInternas.getText().toString();
+                String datos_metodo_de_pago = metodoDePago.getText().toString();
+                if (datos_concepto_venta.equals("")) {
+                    datos_concepto_venta = "Venta " + (int) (Math.random() * (3000 - 1000));
+                }
+
+                ModeloFacturaCreada modeloFacturaCreada = new ModeloFacturaCreada();
+                modeloFacturaCreada.setId(key);
+                modeloFacturaCreada.setIdInventario(key2);
+                modeloFacturaCreada.setCliente(datos_cliente);
+                modeloFacturaCreada.setConceptoDeVenta(datos_concepto_venta);
+                modeloFacturaCreada.setNotasInternas(datos_notas_internas);
+                modeloFacturaCreada.setEstadoDePago(estadoDePago);
+                modeloFacturaCreada.setTotalCalculado(totalDeFactura + totalDeFacturaInventario);
+                modeloFacturaCreada.setMetodoDePago(datos_metodo_de_pago);
+                modeloFacturaCreada.setFechaRegistro(sdf.format(Cal.getTime()));
+                modeloFacturaCreada.setTimeStamp(getFechaMilisegundos() * -1);
+                modeloFacturaCreada.setYear(String.valueOf(Cal.get(Calendar.YEAR)));
+                SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
+                modeloFacturaCreada.setMonth(String.valueOf(sdf2.format(Cal.getTime())));
+                modeloFacturaCreada.setDay(String.valueOf(Cal.get(Calendar.DAY_OF_MONTH)));
+                modeloFacturaCreada.setAbonado(modeloFacturaCreada.getTotalCalculado());
+                if (!estadoDePago) {
+                    modeloFacturaCreada.setAbonar(modeloFacturaCreada.getTotalCalculado());
+                } else {
+                    modeloFacturaCreada.setAbonar(0);
+                }
+
+                databaseReference.child("facturas").child("facturasCreadas").child(key).setValue(modeloFacturaCreada);
+                databaseReference.keepSynced(true);
+
+                //BORRAR DATOS FACTURA ACTUAL
+                borrarDatosDeFacturaActual();
+                adaptadorListaProductos.notifyDataSetChanged();
+                finish();
+
+            }
+        });
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
+                R.layout.lista_items_dos,
+                tipoDocumento);
+        autoCompleteTextView.setAdapter(adapter);
+
+
+        dialogPlus.show();
+    }
+
 
     private void eliminarFacturaActual() {
         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturas").child(key).removeValue();

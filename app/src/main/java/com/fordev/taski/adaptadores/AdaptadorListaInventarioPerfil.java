@@ -1,4 +1,5 @@
 package com.fordev.taski.adaptadores;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.GeneradorDeQr;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloInventario;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -215,6 +217,34 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
             }
         });
 
+        holder.ic_generar_qr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseDatabase2.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("Inventario").child("productos").child(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.child("QrCode").exists()){
+                            String codigoQr = snapshot.child("QrCode").getValue().toString();
+                            Intent intent = new Intent(holder.ic_generar_qr.getContext(), GeneradorDeQr.class);
+                            intent.putExtra("codeQr", codigoQr);
+                            intent.putExtra("nombreProducto", model.getNombreProdcuto());
+                            v.getContext().startActivity(intent);
+                        }else {
+                            Toast.makeText(holder.ic_generar_qr.getContext(), "No se encuentra un Codigo QR", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
+
     }
 
 
@@ -229,7 +259,7 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
 
         TextView txtProducto, txtStockCantidad,txtPrecioItem;
         CardView bajoStockView;
-        ImageView ic_editar_item_inventario;
+        ImageView ic_editar_item_inventario,ic_generar_qr;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -237,6 +267,7 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
             txtStockCantidad=(TextView)itemView.findViewById(R.id.txtStock);
             bajoStockView=(CardView) itemView.findViewById(R.id.bajo_stock_visible);
             ic_editar_item_inventario=(ImageView) itemView.findViewById(R.id.ic_editar_item_inventario);
+            ic_generar_qr=(ImageView) itemView.findViewById(R.id.ic_generar_qr);
             txtPrecioItem=(TextView) itemView.findViewById(R.id.numeroClientes);
 
         }

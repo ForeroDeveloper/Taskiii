@@ -1,14 +1,13 @@
 package com.fordev.taski;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,9 +40,6 @@ public class InformacionPersonal extends AppCompatActivity {
     int tipoDoc = 20;
     int numDoc = 20;
     int correo = 20;
-
-    int infoNegocio;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +158,13 @@ public class InformacionPersonal extends AppCompatActivity {
                 Map<String, Object> mapP = new HashMap<>();
                 mapP.put("infoPersonal", sum);
 
+                databaseReferencePorcentaje.updateChildren(mapP).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+
                 databaseReference.updateChildren(map)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -172,16 +175,10 @@ public class InformacionPersonal extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(InformacionPersonal.this, "Error al actualizar", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-                databaseReferencePorcentaje.updateChildren(mapP).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                });
+                finish();
 
             }
         });

@@ -1,13 +1,15 @@
 package com.fordev.taski;
 
 public class UserInfoBasica {
-    String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez,ubicacionNegocio,direccionNegocio,telefonoNegocio,apellidoPropietario;
+    String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez,ubicacionNegocio,direccionNegocio,telefonoNegocio,apellidoPropietario,
+            correoUsuarioLogin,fechaFinPremium,celularUsuarioLogin;
+    Boolean premium;
 
 
     public UserInfoBasica() {
     }
 
-    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio, String apellidoPropietario) {
+    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio, String apellidoPropietario, String correoUsuarioLogin, String fechaFinPremium, String celularUsuarioLogin, Boolean premium) {
         this.nombreNegocio = nombreNegocio;
         this.nitNegocio = nitNegocio;
         this.nombrePropietario = nombrePropietario;
@@ -19,6 +21,10 @@ public class UserInfoBasica {
         this.direccionNegocio = direccionNegocio;
         this.telefonoNegocio = telefonoNegocio;
         this.apellidoPropietario = apellidoPropietario;
+        this.correoUsuarioLogin = correoUsuarioLogin;
+        this.fechaFinPremium = fechaFinPremium;
+        this.celularUsuarioLogin = celularUsuarioLogin;
+        this.premium = premium;
     }
 
     public String getNombreNegocio() {
@@ -107,5 +113,37 @@ public class UserInfoBasica {
 
     public void setApellidoPropietario(String apellidoPropietario) {
         this.apellidoPropietario = apellidoPropietario;
+    }
+
+    public String getCorreoUsuarioLogin() {
+        return correoUsuarioLogin;
+    }
+
+    public void setCorreoUsuarioLogin(String correoUsuarioLogin) {
+        this.correoUsuarioLogin = correoUsuarioLogin;
+    }
+
+    public String getFechaFinPremium() {
+        return fechaFinPremium;
+    }
+
+    public void setFechaFinPremium(String fechaFinPremium) {
+        this.fechaFinPremium = fechaFinPremium;
+    }
+
+    public Boolean getPremium() {
+        return premium;
+    }
+
+    public void setPremium(Boolean premium) {
+        this.premium = premium;
+    }
+
+    public String getCelularUsuarioLogin() {
+        return celularUsuarioLogin;
+    }
+
+    public void setCelularUsuarioLogin(String celularUsuarioLogin) {
+        this.celularUsuarioLogin = celularUsuarioLogin;
     }
 }

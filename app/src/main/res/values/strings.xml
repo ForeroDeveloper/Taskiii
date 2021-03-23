@@ -5,4 +5,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="producto_que_vas_a_editar">Producto que vas a EDITAR:</string>
+    <string name="privilegios"><![CDATA[<u>10+ privilegios</u>]]></string>
+    <string name="first_slide_title">Gestionar tu negocio\nAhora es muy fácil !</string>
+    <string name="second_slide_title">Envia Recordatorios\nDe pago!</string>
+    <string name="third_slide_title">Escanear productos\nCon QR</string>
+    <string name="fourth_slide_title">Hacemos todo por ti,\nvisualiza tus ganancias y gastos</string>
+    <string name="first_slide_desc">¡Adiós papeles! , con Taski, ahorras todas tus notas en cuadernos, y no solo eso, hacemos tus calculos contables automatizadamente!</string>
+    <string name="second_slide_desc">Envia recordatorios de tus ventas en estado de deuda a tus clientes, se adjunta un mensaje y la factura correspondiente AUTOMATICAMENTE!</string>
+    <string name="third_slide_desc">Scanea tus productos con el metodo QR y aumenta la productividad de tu negocio en un 100%, ahorra tiempo y dinero !</string>
+    <string name="fourth_slide_desc">Hacemos tu vida más fácil, puedes observar todos tus calculos matemátios de tus ventas; diariamente, semanalmente, mensualmente y anualmente.</string>
+
 </resources>
