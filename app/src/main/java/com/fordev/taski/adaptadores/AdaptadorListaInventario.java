@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.GastosNegocio;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloInventario;
 import com.fordev.taski.modelos.ModeloVenta;
@@ -35,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -190,13 +192,13 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                                         databaseReference.child(put).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Toasty.success(holder.ic_agregar_producto.getContext(),"Agregado a la factura correctamente!",Toast.LENGTH_LONG, true).show();
+                                                FancyToast.makeText(holder.ic_agregar_producto.getContext(),"Agregado a la factura correctamente!",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
                                                 dialog.dismiss();
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toasty.error(holder.ic_agregar_producto.getContext(),"Ocurrio un error al agregar, verificar tu conexion!",Toast.LENGTH_LONG, true).show();
+                                                FancyToast.makeText(holder.ic_agregar_producto.getContext(),"Ocurrio un error al agregar, verificar tu conexion!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                                             }
                                         });
 
@@ -341,13 +343,13 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.success(holder.ic_agregar_producto.getContext(),"Editado Correctamente!",Toast.LENGTH_LONG, true).show();
+                                        FancyToast.makeText(holder.ic_agregar_producto.getContext(),"Editado Correctamente!",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
                                         dialogEdit.dismiss();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toasty.error(holder.ic_agregar_producto.getContext(),"Hubo un error al editar!",Toast.LENGTH_LONG, true).show();
+                                FancyToast.makeText(holder.ic_agregar_producto.getContext(),"Hubo un error al editar!!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                             }
                         });
 

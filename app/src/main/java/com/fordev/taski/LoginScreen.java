@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.Country;
 import com.hbb20.CountryCodePicker;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import es.dmoral.toasty.Toasty;
 
@@ -52,7 +53,7 @@ public class LoginScreen extends AppCompatActivity {
                         finish();
                     }
                 }catch (NumberFormatException e){
-                    Toasty.error(LoginScreen.this,"Verifica lo signos que usas en los campos!",Toast.LENGTH_LONG, true).show();
+                    FancyToast.makeText(LoginScreen.this,"Verifica lo signos que usas en los campos!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                 }
 
 

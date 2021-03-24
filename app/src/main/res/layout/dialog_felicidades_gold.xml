@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/cabecera_actualizar_a_gold">
+
+    <RelativeLayout
+        android:id="@+id/crear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_gold"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:src="@drawable/ic_gold_03" />
+
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/din"
+            android:text="Felicidades! , ahora eres"
+            android:textColor="#F4C369"
+            android:textSize="19dp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_below="@+id/nombre"
+            android:layout_width="110dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/taski"
+            android:background="@drawable/gold_cabcera">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Gold"
+                android:textColor="@color/white"
+                android:textSize="26dp" />
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/taski"
+            android:layout_below="@+id/nombre"
+            android:layout_marginTop="18dp"
+            android:layout_marginStart="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/din"
+            android:text="Usuario"
+            android:textColor="#4D4D4D"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+<!--        <ImageView
+            android:layout_alignParentEnd="true"
+            android:id="@+id/img_taski"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_taski_gold_02" />-->
+
+        <View
+            android:id="@+id/view"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_below="@+id/taski"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="#E0E0E0" />
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="12dp"
+            android:layout_below="@+id/view"
+            android:id="@+id/puede"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Tus Privilegios GOLD:"
+            android:textColor="@color/negro"
+            android:textSize="12dp"
+            android:textStyle="normal" />
+
+        <RelativeLayout
+            android:id="@+id/prem"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/puede"
+            android:background="@drawable/gold_marco"
+            android:layout_width="match_parent"
+            android:layout_height="340dp">
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/fac_inf"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_fac_ilimitadas"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/fac_inf"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Facturas Ilimitadas, ventas y gastos"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/scan"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_scan_qr_05_05"/>
+
+                    <TextView
+                        android:id="@+id/qr"
+                        android:layout_toEndOf="@+id/scan"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Escanear productos con QR "
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <RelativeLayout
+                        android:layout_width="37dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toEndOf="@+id/qr"
+                        android:background="@drawable/gold_cabcera">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="center"
+                            android:text="Nuevo"
+                            android:textColor="@color/white"
+                            android:textSize="10dp" />
+
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ads"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_ads"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/ads"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Sin Anuncios publicitarios - ADs"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/send"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_enviar_fac"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/send"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Enviar facturas de cobro y ventas ilimitadas"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/invent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_inv_ilimitado"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/invent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Agregar productos ilimitados al inventario"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/support"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_soporte"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/support"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mazzard_light"
+                        android:text="Soporte Premium prioritario, sin esperas"
+                        android:textColor="@color/negro"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtPrivilegios"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/prem"
+            android:layout_centerHorizontal="true"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textColor="#E09F44"
+            android:text=" 10+ privilegios"
+            android:textSize="12dp"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:layout_marginStart="5dp"
+            android:layout_below="@+id/prem"
+            android:layout_toEndOf="@+id/txtPrivilegios"
+            android:id="@+id/corona"
+            android:layout_marginTop="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_corona_gold"/>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_below="@+id/txtPrivilegios"
+            android:layout_width="90dp"
+            android:layout_height="1.5dp"
+            android:background="#E09F44" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginBottom="20dp"
+            android:id="@+id/btn_comprar_taski"
+            android:layout_marginTop="30dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <RelativeLayout
+                android:id="@+id/confirmar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradiente_gold">
+
+                <TextView
+                    android:id="@+id/precio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/brandon_grotesque_black"
+                    android:gravity="center"
+                    android:text="CONFIRMAR"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/precio"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/mazzard_light"
+                    android:gravity="center"
+                    android:text="¡Gracias por confiar en nosotros!"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

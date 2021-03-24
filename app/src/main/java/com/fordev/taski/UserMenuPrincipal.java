@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
@@ -36,10 +38,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserMenuPrincipal extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -54,7 +61,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     //componentes
     String urlImagen;
-    ImageView logoNegocio;
+    ImageView logoNegocio,ic_pregunta;
     TextView nombreNegocio;
     FloatingActionButton faq;
     CardView venta_rapida,venta_multiple;
@@ -64,18 +71,50 @@ public class UserMenuPrincipal extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     final Calendar Cal = Calendar.getInstance();
     private boolean clicked = true;
+    boolean premium_activado = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_menu_principal);
         bottomNavigationView = findViewById(R.id.navview);
+        ic_pregunta = findViewById(R.id.ic_pregunta);
         bottomNavigationView.getBackground();
         bottomNavigationView.setBackground(null);
         //faq acciones
         faq = findViewById(R.id.faq);
         venta_rapida = findViewById(R.id.venta_rapida);
         venta_multiple = findViewById(R.id.venta_multiple);
+
+        Cal.getTime();
+        String dato = sdf.format(Cal.getTime());
+
+
+        infoBasica.child("FechaPremiumFin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String fechaFin = snapshot.getValue().toString();
+        /*        int dato_int = Integer.parseInt(dato);
+                int fecha_fin_int = Integer.parseInt(fechaFin);*/
+
+                    if (dato.equals(fechaFin)){
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("Premium", false);
+                        firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info")
+                                .updateChildren(map);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("TUTORIAL", MODE_PRIVATE);
 
@@ -103,6 +142,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
                             editor.putBoolean("DetallesFactura", false);
                             editor.putBoolean("ClickInventario", false);
                             editor.putBoolean("ClickScanner", false);
+                            editor.putBoolean("ClickPremium", false);
                             editor.apply();
                             opciones();
                         }
@@ -147,7 +187,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
 
                     case R.id.profile:
                         fragment = new PerfilFragment();
-                        posicion = 3;
+                        posicion = 2;
                         if (venta_rapida.getVisibility()==View.VISIBLE){
                             venta_rapida.startAnimation(toBottom);
                             venta_multiple.startAnimation(toBottom);
@@ -160,7 +200,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
 
                     case R.id.estadisticas:
                         fragment = new EstadisticasFragment();
-                        posicion = 4;
+                        posicion = 3;
                         if (venta_rapida.getVisibility()==View.VISIBLE){
                             venta_rapida.startAnimation(toBottom);
                             venta_multiple.startAnimation(toBottom);
@@ -190,6 +230,13 @@ public class UserMenuPrincipal extends AppCompatActivity {
         logoNegocio = findViewById(R.id.logoNegocio);
         nombreNegocio = findViewById(R.id.nameNegocio);
 
+        ic_pregunta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserMenuPrincipal.this, ComoUsarTaski.class));
+            }
+        });
+
         faq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +244,49 @@ public class UserMenuPrincipal extends AppCompatActivity {
                     opciones();
                 }else if (posicion==1){
                     startActivity(new Intent(getApplicationContext(), GastosNegocio.class));
+                }else if (posicion==2){
+                    infoBasica.child("Premium").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Object prem = snapshot.getValue();
+                            premium_activado = Boolean.parseBoolean(String.valueOf(prem));
+                            if (!premium_activado){
+                                DialogPlus dialog = DialogPlus.newDialog(UserMenuPrincipal.this)
+                                        .setContentHolder(new ViewHolder(R.layout.dialog_gold))
+                                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                                        .setExpanded(true, 1600)
+                                        .setGravity(Gravity.BOTTOM)
+                                        .setContentBackgroundResource(android.R.color.transparent)
+                                        .create();
+
+                                View views = dialog.getHolderView();
+
+                                RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
+
+
+                                btnAcutualizar.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        startActivity(new Intent(getApplicationContext(), PlanesMenuPrincipal.class));
+                                        //comen
+                                    }
+                                });
+
+                                dialog.show();
+                            }else {
+                                FancyToast.makeText(UserMenuPrincipal.this, "Ya eres usuario GOLD!", FancyToast.LENGTH_LONG, FancyToast.INFO, R.drawable.logo_taski, false).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
+
             }
         });
 

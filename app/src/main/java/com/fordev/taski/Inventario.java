@@ -44,6 +44,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -498,13 +499,13 @@ public class Inventario extends AppCompatActivity {
                         databaseReference3.child(put).setValue(modeloVenta).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toasty.success(Inventario.this, "Agregado a la factura correctamente!", Toast.LENGTH_LONG, true).show();
+                                FancyToast.makeText(Inventario.this,"Agregado a la factura correctamente!",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
                                 dialog.dismiss();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toasty.error(Inventario.this, "Ocurrio un error al agregar, verificar tu conexion!", Toast.LENGTH_LONG, true).show();
+                                FancyToast.makeText(Inventario.this,"Ocurrio un error al agregar, verificar tu conexion!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                             }
                         });
 

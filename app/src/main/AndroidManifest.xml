@@ -4,9 +4,9 @@
     package="com.fordev.taski">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="com.android.hardware.Camera.focus" />
 
     <application
@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taski">
         <activity android:name=".GeneradorDeQr" />
+        <activity android:name=".ComoUsarTaski" />
         <activity android:name=".DetallesFacturaVentas" />
         <activity android:name=".Inventario" />
         <activity android:name=".CreacionDeRecibo" />
@@ -39,6 +40,10 @@
         <activity android:name=".InventarioPerfil" />
         <activity android:name=".VentaRapidaNegocio" />
         <activity android:name=".UserDashboard" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,14 +51,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.journeyapps.barcodescanner.CaptureActivity"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation"></activity>
+
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>

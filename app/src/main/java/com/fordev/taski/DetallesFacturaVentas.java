@@ -41,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -138,8 +139,7 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("fechas").child("listaDeFacturas").child(key).removeValue();
                         finish();
                         dialog.dismiss();
-                        Toasty.success(DetallesFacturaVentas.this,"Eliminada Correctamente!",Toast.LENGTH_LONG, true).show();
-
+                        FancyToast.makeText(DetallesFacturaVentas.this,"Eliminada Correctamente!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                     }
                 });
 

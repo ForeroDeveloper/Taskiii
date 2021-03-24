@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -190,13 +191,13 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.success(holder.ic_editar_item_inventario.getContext(),"Editado Correctamente!",Toast.LENGTH_LONG, true).show();
+                                        FancyToast.makeText(holder.ic_editar_item_inventario.getContext(),"Editado Correctamente!",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
                                         dialogEdit.dismiss();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toasty.error(holder.ic_editar_item_inventario.getContext(),"Hubo un error al editar!",Toast.LENGTH_LONG, true).show();
+                                FancyToast.makeText(holder.ic_editar_item_inventario.getContext(),"Hubo un error al editar!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                             }
                         });
 

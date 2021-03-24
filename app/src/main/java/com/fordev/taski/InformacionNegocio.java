@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -201,12 +201,18 @@ public class InformacionNegocio extends AppCompatActivity {
                 Map<String, Object> mapP = new HashMap<>();
                 mapP.put("infoNegocio", sum);
 
+                databaseReferencePorcentaje.updateChildren(mapP).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+
                 databaseReference.updateChildren(map)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toasty.custom(InformacionNegocio.this, "Guardado Correctamente!", getResources().getDrawable(R.drawable.logo_taski),
-                                        getResources().getColor(R.color.white), getResources().getColor(R.color.primario), Toasty.LENGTH_SHORT, true, true).show();
+                                FancyToast.makeText(InformacionNegocio.this, "Guardado Correctamente!", FancyToast.LENGTH_LONG, FancyToast.INFO, R.drawable.logo_taski, false).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -215,12 +221,7 @@ public class InformacionNegocio extends AppCompatActivity {
                     }
                 });
 
-                databaseReferencePorcentaje.updateChildren(mapP).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                });
+                finish();
 
             }
         });

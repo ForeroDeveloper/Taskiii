@@ -42,6 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.skydoves.balloon.ArrowConstraints;
 import com.skydoves.balloon.ArrowOrientation;
 import com.skydoves.balloon.Balloon;
@@ -306,7 +307,7 @@ public class GastosNegocio extends AppCompatActivity {
 
                     }
                 }catch (NumberFormatException numberFormatException){
-                    Toasty.error(GastosNegocio.this,"Verifica lo signos que usas en los campos!",Toast.LENGTH_LONG, true).show();
+                    FancyToast.makeText(GastosNegocio.this,"Verifica lo signos que usas en los campos!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                 }
 
             }
@@ -362,27 +363,7 @@ public class GastosNegocio extends AppCompatActivity {
         btnProveedores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Balloon balloon = new Balloon.Builder(GastosNegocio.this)
-                        .setArrowSize(10)
-                        .setArrowOrientation(ArrowOrientation.TOP)
-                        .setArrowConstraints(ArrowConstraints.ALIGN_ANCHOR)
-                        .setArrowPosition(0.5f)
-                        .setWidth(BalloonSizeSpec.WRAP)
-                        .setHeight(65)
-                        .setTextSize(15f)
-                        .setMargin(5)
-                        .setCornerRadius(6f)
-                        .setAlpha(0.9f)
-                        .setText(" En Desarrollo... :) ")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setTextIsHtml(true)
-                        .setIconDrawable(getResources().getDrawable(R.drawable.logo_taski))
-                        .setBackgroundColor(getResources().getColor(R.color.primario))
-                        .setBalloonAnimation(BalloonAnimation.FADE)
-                        .build();
-
-                balloon.showAlignBottom(btnProveedores);
+                startActivity(new Intent(GastosNegocio.this, ListaProveedores.class));
 
             }
         });

@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -169,8 +170,7 @@ public class InformacionPersonal extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toasty.custom(InformacionPersonal.this, "Guardado Correctamente!", getResources().getDrawable(R.drawable.logo_taski),
-                                        getResources().getColor(R.color.white), getResources().getColor(R.color.primario), Toasty.LENGTH_SHORT, true, true).show();
+                                FancyToast.makeText(InformacionPersonal.this, "Guardado Correctamente!", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, R.drawable.logo_taski, false).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

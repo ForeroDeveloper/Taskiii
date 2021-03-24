@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.DetallesFacturaGastos;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloProveedores;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -86,7 +88,7 @@ public class AdaptadorListaProveedores extends FirebaseRecyclerAdapter<ModeloPro
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.success(holder.ic_editar_proveedor.getContext(), "Editado Correctamente!", Toast.LENGTH_SHORT, true).show();
+                                        FancyToast.makeText(holder.ic_editar_proveedor.getContext(),"Editado Correctamente!",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
                                     }
                                 });
 

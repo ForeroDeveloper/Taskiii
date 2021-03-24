@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -83,7 +84,7 @@ public class AdaptadorListaClientes extends FirebaseRecyclerAdapter<ModeloClient
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.success(holder.ic_editar_cliente.getContext(), "Editado Correctamente!", Toast.LENGTH_SHORT, true).show();
+                                        FancyToast.makeText(holder.ic_editar_cliente.getContext(),"Editado Correctamente!",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
                                     }
                                 });
 

@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_pantallas"
+    tools:context=".ComoUsarTaski">
+
+    <RelativeLayout
+        android:id="@+id/superior"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:id="@+id/atras"
+            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:tint="@color/primario_oscuro_secundario"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_arrow_left"/>
+        <TextView
+            android:id="@+id/crear_venta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Como Usar Taski"
+            android:fontFamily="@font/din"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/primario_oscuro_secundario"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/ic_pregunta"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:padding="6dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logo_taski"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/superior"
+        android:elevation="3dp"
+        android:id="@+id/crear"
+        android:background="@drawable/cabecera_guardar_factura_venta"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tuto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#262626"
+                android:text="Video Tutoriales"
+                android:fontFamily="@font/din"
+                android:layout_marginStart="15dp"
+                android:textSize="18dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_toEndOf="@id/tuto"
+                android:id="@+id/youtube"
+                app:cardCornerRadius="20dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <RelativeLayout
+                    android:onClick="youtube"
+                    android:id="@+id/confirmar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFA3A7">
+
+                    <ImageView
+                        android:id="@+id/ic"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_youtube"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"/>
+
+                    <TextView
+                        android:layout_toEndOf="@+id/ic"
+                        android:layout_marginStart="5dp"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/precio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/brandon_grotesque_black"
+                        android:gravity="center"
+                        android:text="Ir al Canal de YouYube"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_below="@+id/crear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cabecera_actualizar_a_gold">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_tuto_balance"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/uno"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic__1"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/uno"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Significa el Valor total de las ventas que se encuentran en estado de Por Cobrar, (cuando una venta en estado Por Cobrar es abonada en su totalidad, los cambios se veran reflejados en tu total de Balance)."/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/dos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_2"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/dos"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Es el Valor Total de las ventas que se encuentran en estado de: Pagado. (no se incluye las ventas en estado de: Por Cobrar)."/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/tres"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_3"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/tres"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Es el Valor Total de las Ventas incluyendo; en estado de: Pagado Y en estado de: Por Cobrar. (Todas tus ventas totales)"/>
+
+                    </RelativeLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_tuto_time"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/cuatro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_4"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/cuatro"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Puedes desplazarte entre diferentes intervalos de tiempo. Lo que significa que puedes ver todas tus ventas Totales: Diariamente, Semanalmente, Mensualmente y Anualmente."/>
+
+                    </RelativeLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_tuto_fechas"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/cinco"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic__5"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/cinco"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Asi como el paso 4, puedes desplazarte en diferentes fechas dependiendo el intervalo elegido (Ej: Mensual), por lo cual puedes adelantar o atrasar tus fechas. De este modo veras tus estadisticas dependiendo de dicha selección."/>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_tuto_gastos"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/seis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_6"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/seis"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Apartado de Gastos"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/siete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic__7"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/siete"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Es el Total de todos tus gastos registrados, incluyendo los que aún no has pagado (Por Pagar)."/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/ocho"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic__8"/>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/ocho"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/din"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Es el Total de tus Gastos que aún nos haz pagado, ya sea a tus proveedores o algun articulo que sacaste fiado :)"/>
+
+                    </RelativeLayout>
+
+
+
+
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

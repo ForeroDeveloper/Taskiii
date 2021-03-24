@@ -51,6 +51,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -356,7 +357,7 @@ public class VentasNegocio extends AppCompatActivity {
 
                     }
                 }catch (NumberFormatException numberFormatException){
-                    Toasty.error(VentasNegocio.this,"Verifica lo signos que usas en los campos!",Toast.LENGTH_LONG, true).show();
+                    FancyToast.makeText(VentasNegocio.this,"Verifica lo signos que usas en los campos!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                 }
 
             }
@@ -766,5 +767,8 @@ public class VentasNegocio extends AppCompatActivity {
                 Toasty.info(VentasNegocio.this, "Resultado: " + result, Toast.LENGTH_LONG, true).show();
             }
         }.showDIalog();
+    }
+
+    public void irAYoutube(View view) {
     }
 }
