@@ -175,7 +175,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
             Toasty.custom(this, "Error al guardar!", getResources().getDrawable(R.drawable.logo_taski),
                     getResources().getColor(R.color.white),getResources().getColor(R.color.rosado), Toasty.LENGTH_SHORT, true, true).show();
         }else {
-            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si","","","",txtApellidoProp,email,"",phone,false);
+            UserInfoBasica userInfoBasica = new UserInfoBasica(nombreNegocio,nitNegocio,nombrePropietario,tipoDocumento,numeroDocumento,correoElectronico,"si","","","",txtApellidoProp,email,"",phone,false,false);
             FirebaseDatabase.getInstance().getReference("users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
             Toasty.custom(this, "Guardado Correctamente!", getResources().getDrawable(R.drawable.logo_taski),
@@ -247,7 +247,7 @@ public class DatosUsuarioDashboard extends AppCompatActivity {
     }
 
     public void loHareLuego(View view) {
-        UserInfoBasica userInfoBasica = new UserInfoBasica("","","","","","","si","","","","",email,"",phone,false);
+        UserInfoBasica userInfoBasica = new UserInfoBasica("","","","","","","si","","","","",email,"",phone,false,false);
         FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info").setValue(userInfoBasica);
         porcentajesMetodo();

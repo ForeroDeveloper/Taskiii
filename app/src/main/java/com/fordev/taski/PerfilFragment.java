@@ -41,6 +41,8 @@ import com.skydoves.balloon.Balloon;
 import com.skydoves.balloon.BalloonAnimation;
 import com.skydoves.balloon.BalloonSizeSpec;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -62,9 +64,10 @@ public class PerfilFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    RelativeLayout info_personal, info_negocio, info_clientes, info_proveedores, info_inventario, contacto_whatsapp, contacto_facebook, terminos_condiciones,cerrar_sesion;
+    RelativeLayout info_personal, info_negocio, info_clientes, info_proveedores, info_inventario, contacto_whatsapp, contacto_facebook, terminos_condiciones,cerrar_sesion,
+    info_pedidos;
     LinearProgressIndicator progressIndicator, progressIndicatorNegocio;
-    TextView txtIndicadorInfoPersonal, txtProgressIndicatorNegocio, nombre, btnPremium,premiums,usuario;
+    TextView txtIndicadorInfoPersonal, txtProgressIndicatorNegocio, nombre, btnPremium,premiums,usuario,usuarioPremium;
     private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference databaseReference = firebaseDatabase.getReference();
     private final DatabaseReference porcentajePersonalInfo = databaseReference.child("users")
@@ -72,10 +75,13 @@ public class PerfilFragment extends Fragment {
     private final DatabaseReference nombreProp = databaseReference.child("users")
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
 
-    ImageView info_basica,activo,info_contactos,info_inventario_icon;
+    ImageView info_basica, activo, info_contactos, info_inventario_icon;
     String codigo = null;
+    int precioGoldTaski = 0;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    NumberFormat nformat = new DecimalFormat("##,###,###.##");
+
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -115,7 +121,6 @@ public class PerfilFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_perfil_gragment, container, false);
 
-
         info_personal = view.findViewById(R.id.info_personal);
         info_negocio = view.findViewById(R.id.info_negocio);
         info_clientes = view.findViewById(R.id.info_clientes);
@@ -133,11 +138,13 @@ public class PerfilFragment extends Fragment {
         btnPremium = view.findViewById(R.id.btnPremium);
         premiums = view.findViewById(R.id.premiums);
         usuario = view.findViewById(R.id.usuario);
+        usuarioPremium = view.findViewById(R.id.usuarioPremium);
         cerrar_sesion = view.findViewById(R.id.cerrar_sesion);
         //infos
         info_basica = view.findViewById(R.id.info_basica);
         info_inventario_icon = view.findViewById(R.id.info_inventario_icon);
         activo = view.findViewById(R.id.activo);
+        info_pedidos = view.findViewById(R.id.info_pedidos);
 
         calendar.getTime();
         calendar.add(Calendar.YEAR, 1);
@@ -164,7 +171,8 @@ public class PerfilFragment extends Fragment {
                             editor.putBoolean("ClickPremium", true);
                             editor.apply();
                         }
-                        public  void  onOuterCircleClick(TapTargetView view){
+
+                        public void onOuterCircleClick(TapTargetView view) {
                             super.onOuterCircleClick(view);
                         }
                     }
@@ -174,6 +182,24 @@ public class PerfilFragment extends Fragment {
 
         Animation connectingAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.scale_anim);
         activo.startAnimation(connectingAnimation);
+
+        databaseReference.child("users").child("precioPremium").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String precio = snapshot.getValue().toString();
+                    int precioGold = Integer.parseInt(precio);
+                    precioGoldTaski = precioGold;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         activo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +223,7 @@ public class PerfilFragment extends Fragment {
 
                     }
                 });
+
 
                 DialogPlus dialog = DialogPlus.newDialog(getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialog_activar_cuenta))
@@ -230,6 +257,7 @@ public class PerfilFragment extends Fragment {
                             firebaseDatabase.getReference().child("users").updateChildren(map2);
                             dialog.dismiss();
                             FancyToast.makeText(getContext(), "Codigo Correcto!", FancyToast.LENGTH_LONG, FancyToast.INFO, R.drawable.logo_taski, false).show();
+                            v.getContext().startActivity(new Intent(getContext(),FelicidadesGold.class));
                         }else {
                             FancyToast.makeText(getContext(),"Código Incorrecto",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                         }
@@ -337,11 +365,12 @@ public class PerfilFragment extends Fragment {
         btnPremium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 DialogPlus dialog = DialogPlus.newDialog(getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialog_gold))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1600)
+                        .setExpanded(true, 1510)
                         .setGravity(Gravity.BOTTOM)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
@@ -349,6 +378,8 @@ public class PerfilFragment extends Fragment {
                 View views = dialog.getHolderView();
 
                 RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
+                TextView precio = views.findViewById(R.id.precio);
+                precio.setText("$ "+String.valueOf(nformat.format(precioGoldTaski))+".99");
 
 
                 btnAcutualizar.setOnClickListener(new View.OnClickListener() {
@@ -368,6 +399,13 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), InformacionPersonal.class));
+            }
+        });
+
+        info_pedidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ListaDePedidos.class));
             }
         });
 
@@ -424,8 +462,10 @@ public class PerfilFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("nombrePropietario").exists()){
                     String nomPropietario = snapshot.child("nombrePropietario").getValue().toString();
-                    Object premium = snapshot.child("Premium").getValue();
+                    Object premium = snapshot.child("premium").getValue();
+                    Object gold = snapshot.child("gold").getValue();
                     boolean prem = Boolean.parseBoolean(String.valueOf(premium));
+                    boolean golAc = Boolean.parseBoolean(String.valueOf(gold));
 
                     try {
                         if (prem){
@@ -433,6 +473,12 @@ public class PerfilFragment extends Fragment {
                             premiums.setTextColor(getResources().getColor(R.color.gold));
                             btnPremium.setVisibility(View.GONE);
                             usuario.setVisibility(View.VISIBLE);
+                        }
+                        if (golAc){
+                            premiums.setText("PREMIUM");
+                            premiums.setTextColor(getResources().getColor(R.color.rojo));
+                            btnPremium.setVisibility(View.GONE);
+                            usuarioPremium.setVisibility(View.VISIBLE);
                         }
                     }catch (IllegalStateException e){
                         e.printStackTrace();

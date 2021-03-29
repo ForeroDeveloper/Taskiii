@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.VentasNegocio;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
@@ -74,7 +76,7 @@ public class SemanaFragment extends Fragment {
     DatabaseReference databaseReference;
     LinearProgressIndicator progressIndicator;
     com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha, faq_sumar_fecha;
-
+    ShimmerFrameLayout shimmerFrameLayout;
     public SemanaFragment() {
         // Required empty public constructor
     }
@@ -121,6 +123,8 @@ public class SemanaFragment extends Fragment {
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer);
+        shimmerFrameLayout.startShimmerAnimation();
         //seteos
         fechaInicio.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechados.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -133,7 +137,7 @@ public class SemanaFragment extends Fragment {
         fechacinco.add(Calendar.DATE, 4);
 
         fechaActual.setText(sdf.format(fechaInicio.getTime()));
-        fechaFin.add(Calendar.DATE, 4);
+        fechaFin.add(Calendar.DATE, 7);
         txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
 
         Date dt = new Date();
@@ -299,6 +303,11 @@ public class SemanaFragment extends Fragment {
                     sinContenido.setVisibility(View.GONE);
                     sinContenidoDos.setVisibility(View.VISIBLE);
                 }
+
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                listaDeFacturas.setVisibility(View.VISIBLE);
+
 
             }
 

@@ -134,7 +134,7 @@ public class GastosNegocio extends AppCompatActivity {
         });
 
 
-        databaseReference2.child("info").child("Premium").addValueEventListener(new ValueEventListener() {
+        databaseReference2.child("info").child("premium").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -319,14 +319,14 @@ public class GastosNegocio extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!premium) {
-                    if (total_factura < 7) {
+                    if (total_factura < 15000) {
                         crearGasto();
                     } else {
                         DialogPlus dialog = DialogPlus.newDialog(GastosNegocio.this)
-                                .setContentHolder(new ViewHolder(R.layout.dialog_gold))
+                                .setContentHolder(new ViewHolder(R.layout.dialog_gold_v2))
                                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                                .setExpanded(true, 1600)
+                                .setExpanded(true, 1510)
                                 .setGravity(Gravity.BOTTOM)
                                 .setContentBackgroundResource(android.R.color.transparent)
                                 .create();

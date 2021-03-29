@@ -21,12 +21,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.VentasNegocio;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.otros.ProgressAnimation;
 import com.fordev.taski.R;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.nativead.NativeAdOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -72,7 +80,7 @@ public class DiaFragment extends Fragment {
     DatabaseReference databaseReference;
     LinearProgressIndicator progressIndicator;
     com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha,faq_sumar_fecha;
-
+    ShimmerFrameLayout shimmerFrameLayout;
     public DiaFragment() {
         // Required empty public constructor
     }
@@ -119,10 +127,11 @@ public class DiaFragment extends Fragment {
         ic_select_fecha_dialog = view.findViewById(R.id.ic_seleccionar_fecha);
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
         txtTotalFacturas = view.findViewById(R.id.todas);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer);
+        shimmerFrameLayout.startShimmerAnimation();
         //seteos
         fechaActual.setText(sdf.format(calendar.getTime()));
         sinContenido.setVisibility(View.GONE);
-
 
 
         nuevaFactura.setOnClickListener(new View.OnClickListener() {
@@ -286,6 +295,10 @@ public class DiaFragment extends Fragment {
                     sinContenido.setVisibility(View.GONE);
                     sinContenidoDos.setVisibility(View.VISIBLE);
                 }
+
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                listaDeFacturas.setVisibility(View.VISIBLE);
 
             }
 

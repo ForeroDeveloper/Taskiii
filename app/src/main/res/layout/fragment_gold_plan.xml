@@ -224,100 +224,120 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+
+            <LinearLayout
                 android:layout_gravity="center"
-                android:layout_centerHorizontal="true"
-                android:layout_width="140dp"
-                android:layout_height="30dp"
-                android:background="@drawable/gold_cabcera_planes">
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:text="Validez"
-                    android:textColor="@color/white"
-                    android:layout_centerInParent="true"/>
+                    android:orientation="vertical">
 
-            </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/validez2"
+                        android:layout_gravity="center"
+                        android:layout_width="140dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/gold_cabcera_planes">
 
-            <RelativeLayout
-                android:background="@drawable/gold_marco_planes"
-                android:layout_gravity="center"
-                android:layout_width="140dp"
-                android:layout_height="140dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Validez"
+                            android:textColor="@color/white"
+                            android:layout_centerInParent="true"/>
 
-                <TextView
-                    android:layout_marginTop="6dp"
-                    android:id="@+id/titu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mazzard"
-                    android:text="12"
-                    android:textSize="26dp"
-                    android:textColor="@color/negro"
-                    android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/meses"
-                    android:layout_below="@+id/titu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mazzard_light"
-                    android:text="MESES"
-                    android:textSize="16dp"
-                    android:textColor="@color/negro"
-                    android:layout_centerHorizontal="true"/>
+                    <RelativeLayout
+                        android:layout_below="@+id/validez2"
+                        android:background="@drawable/gold_marco_planes"
+                        android:layout_gravity="center"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp">
 
-                <TextView
-                    android:layout_below="@+id/meses"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/precioSigno"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mazzard"
-                    android:text="35"
-                    android:textSize="26dp"
-                    android:textColor="@color/negro"
-                    android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:layout_marginTop="6dp"
+                            android:id="@+id/titu2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mazzard"
+                            android:text="12"
+                            android:textSize="26dp"
+                            android:textColor="@color/negro"
+                            android:layout_centerHorizontal="true"/>
 
-                <TextView
-                    android:layout_toStartOf="@+id/precioSigno"
-                    android:layout_below="@+id/meses"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mazzard"
-                    android:text="$"
-                    android:textSize="14dp"
-                    android:textColor="#B4B4B4"
-                    android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:id="@+id/meses"
+                            android:layout_below="@+id/titu2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mazzard_light"
+                            android:text="MESES"
+                            android:textSize="16dp"
+                            android:textColor="@color/negro"
+                            android:layout_centerHorizontal="true"/>
 
-                <TextView
-                    android:layout_toEndOf="@+id/precioSigno"
-                    android:layout_below="@+id/meses"
-                    android:layout_marginTop="21dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mazzard"
-                    android:text=".000"
-                    android:textSize="11dp"
-                    android:textColor="#B4B4B4"
-                    android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:layout_below="@+id/meses"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/precioSigno"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mazzard"
+                            android:text="12"
+                            android:textSize="26dp"
+                            android:textColor="@color/negro"
+                            android:layout_centerHorizontal="true"/>
 
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/precioSigno"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mazzard_light"
-                    android:text="Ahorras 50%"
-                    android:textSize="11dp"
-                    android:textColor="#E8BC73"
-                    android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:layout_toStartOf="@+id/precioSigno"
+                            android:layout_below="@+id/meses"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mazzard"
+                            android:text="$"
+                            android:textSize="14dp"
+                            android:textColor="#B4B4B4"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_toEndOf="@+id/precioSigno"
+                            android:layout_below="@+id/meses"
+                            android:layout_marginTop="21dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mazzard"
+                            android:text=".99"
+                            android:textSize="11dp"
+                            android:textColor="#B4B4B4"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@+id/precioSigno"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mazzard_light"
+                            android:text="Ahorras 50%"
+                            android:textSize="11dp"
+                            android:textColor="#E8BC73"
+                            android:layout_centerHorizontal="true"/>
 
 
-            </RelativeLayout>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
 
 
 
@@ -352,13 +372,14 @@
                         android:textStyle="normal" />
 
                     <TextView
+                        android:id="@+id/precioCompleto"
                         android:layout_below="@+id/precio"
                         android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mazzard_light"
                         android:gravity="center"
-                        android:text="$ 35.000 Anual"
+                        android:text="$ 12.99 Anual"
                         android:textColor="@color/white"
                         android:textSize="12dp"
                         android:textStyle="normal" />

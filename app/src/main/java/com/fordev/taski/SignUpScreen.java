@@ -71,7 +71,7 @@ public class SignUpScreen extends AppCompatActivity {
             //check condition
             if (signInAccountTask.isSuccessful()) {
                 //cuando inicie en google
-                String s = "Google sign Succes";
+                String s = "Ingreso Satisfactorio!";
                 //Display toas
                 displayToast(s);
                 //Initialize sign in account
@@ -94,11 +94,8 @@ public class SignUpScreen extends AppCompatActivity {
                                         if (task2.isSuccessful()) {
                                             //redirigir a user menu principal
                                             Toast.makeText(SignUpScreen.this, "Verificacion exitosa", Toast.LENGTH_SHORT).show();
-
                                             databaseReference = FirebaseDatabase.getInstance().getReference("users")
                                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
-
-                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                                             databaseReference.addValueEventListener(new ValueEventListener() {
                                                 @Override
@@ -107,10 +104,8 @@ public class SignUpScreen extends AppCompatActivity {
                                                         startActivity(new Intent(getApplicationContext(), UserMenuPrincipal.class));
                                                     } else {
                                                         startActivity(new Intent(getApplicationContext(), DatosUsuarioDashboard.class));
-                                                       /* String emailUSer = user.getEmail();
-                                                        databaseReference.child("CorreoUsuarioLogin").setValue(emailUSer);*/
                                                     }
-                                                    finish();
+                                                    finishAffinity();
                                                 }
 
                                                 @Override

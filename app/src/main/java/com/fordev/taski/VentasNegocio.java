@@ -123,6 +123,7 @@ public class VentasNegocio extends AppCompatActivity {
 //        edtProducto.requestFocus();
 
 
+
         //tap target
         final Spannable spannable2 = new SpannableString("Agrega productos a tu venta directamente desde tu inventario");
         spannable2.setSpan(new UnderlineSpan(), spannable2.length() - "TapTargetView".length(),
@@ -376,14 +377,14 @@ public class VentasNegocio extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!premium) {
-                    if (total_factura < 20) {
+                    if (total_factura < 15000) {
                         crearVenta(nformat);
                     } else {
                         DialogPlus dialog = DialogPlus.newDialog(VentasNegocio.this)
-                                .setContentHolder(new ViewHolder(R.layout.dialog_gold))
+                                .setContentHolder(new ViewHolder(R.layout.dialog_gold_v2))
                                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                                .setExpanded(true, 1600)
+                                .setExpanded(true, 1510)
                                 .setGravity(Gravity.BOTTOM)
                                 .setContentBackgroundResource(android.R.color.transparent)
                                 .create();
@@ -573,7 +574,8 @@ public class VentasNegocio extends AppCompatActivity {
                 modeloFacturaCreada.setYear(String.valueOf(Cal.get(Calendar.YEAR)));
                 SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
                 modeloFacturaCreada.setMonth(String.valueOf(sdf2.format(Cal.getTime())));
-                modeloFacturaCreada.setDay(String.valueOf(Cal.get(Calendar.DAY_OF_MONTH)));
+                SimpleDateFormat sdfDay = new SimpleDateFormat("dd");
+                modeloFacturaCreada.setDay(String.valueOf(sdfDay.format(Cal.getTime())));
                 modeloFacturaCreada.setAbonado(modeloFacturaCreada.getTotalCalculado());
                 if (!estadoDePago) {
                     modeloFacturaCreada.setAbonar(modeloFacturaCreada.getTotalCalculado());

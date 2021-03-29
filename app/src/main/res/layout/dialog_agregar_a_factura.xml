@@ -9,7 +9,6 @@
 
     <LinearLayout
         android:layout_margin="20dp"
-        android:layout_below="@+id/superior"
         android:elevation="3dp"
         android:id="@+id/crear"
         android:backgroundTint="@color/white"

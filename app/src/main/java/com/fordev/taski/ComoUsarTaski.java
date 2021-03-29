@@ -81,4 +81,8 @@ public class ComoUsarTaski extends AppCompatActivity {
         i.setData(Uri.parse(url));
         startActivity(i);
     }
+
+    public void back(View view) {
+        onBackPressed();
+    }
 }

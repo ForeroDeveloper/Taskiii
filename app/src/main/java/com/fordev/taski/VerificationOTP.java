@@ -89,7 +89,7 @@ public class VerificationOTP extends AppCompatActivity {
 
                 @Override
                 public void onVerificationFailed(@NonNull FirebaseException e) {
-                    Toast.makeText(VerificationOTP.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerificationOTP.this, "Hubo un error al verificar, Intenta de nuevo.", Toast.LENGTH_LONG).show();
 
                 }
             };
@@ -121,7 +121,7 @@ public class VerificationOTP extends AppCompatActivity {
                                         startActivity(new Intent(getApplicationContext(),DatosUsuarioDashboard.class));
                                     }
 
-                                    finish();
+                                    finishAffinity();
                                 }
 
                                 @Override
@@ -134,7 +134,7 @@ public class VerificationOTP extends AppCompatActivity {
                             // Sign in failed, display a message and update the UI
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(VerificationOTP.this, "Verificacion error", Toast.LENGTH_LONG).show();
+                                Toast.makeText(VerificationOTP.this, "Verificación error", Toast.LENGTH_LONG).show();
                             }
                         }
                     }

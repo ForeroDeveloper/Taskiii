@@ -1,9 +1,6 @@
 package com.fordev.taski.adaptadores;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.fordev.taski.GastosNegocio;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloInventario;
 import com.fordev.taski.modelos.ModeloVenta;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -45,8 +39,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-
-import es.dmoral.toasty.Toasty;
 
 public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInventario, AdaptadorListaInventario.myViewHolder>
 {
@@ -392,7 +384,7 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
             txtStockCantidad=(TextView)itemView.findViewById(R.id.txtStock);
             bajoStockView=(CardView) itemView.findViewById(R.id.bajo_stock_visible);
             ic_agregar_producto=(ImageView) itemView.findViewById(R.id.ic_agregar_producto);
-            ic_editar_item_inventario=(ImageView) itemView.findViewById(R.id.ic_editar_item_inventario);
+            ic_editar_item_inventario=(ImageView) itemView.findViewById(R.id.ic_borrar);
             txtPrecioItem=(TextView) itemView.findViewById(R.id.numeroClientes);
 
         }

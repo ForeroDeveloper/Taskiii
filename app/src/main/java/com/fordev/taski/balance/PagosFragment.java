@@ -7,24 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.fordev.taski.R;
 import com.fordev.taski.UserMenuPrincipal;
-import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.TimeZone;
 
 /**
@@ -109,6 +104,9 @@ public class PagosFragment extends Fragment {
                         tab.setText("Básico");
                         break;
                     case 1:
+                        tab.setText("Premium");
+                        break;
+                    case 2:
                         tab.setText("Gold");
                         break;
                 }
@@ -122,7 +120,7 @@ public class PagosFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab){
                 int position = tab.getPosition();
 
-                switch (position){
+                switch (position) {
                     case 0:
                         gradiente.setAnimation(animation);
                         gradiente.startAnimation(animation);
@@ -131,8 +129,14 @@ public class PagosFragment extends Fragment {
                     case 1:
                         gradiente.setAnimation(animation);
                         gradiente.startAnimation(animation);
+                        gradiente.setBackground(getResources().getDrawable(R.drawable.gradiente_premium));
+                        break;
+                    case 2:
+                        gradiente.setAnimation(animation);
+                        gradiente.startAnimation(animation);
                         gradiente.setBackground(getResources().getDrawable(R.drawable.gradiente_gold));
                         break;
+
                 }
             }
             @Override

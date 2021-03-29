@@ -3,13 +3,13 @@ package com.fordev.taski;
 public class UserInfoBasica {
     String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez,ubicacionNegocio,direccionNegocio,telefonoNegocio,apellidoPropietario,
             correoUsuarioLogin,fechaFinPremium,celularUsuarioLogin;
-    Boolean premium;
+    Boolean premium, gold;
 
 
     public UserInfoBasica() {
     }
 
-    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio, String apellidoPropietario, String correoUsuarioLogin, String fechaFinPremium, String celularUsuarioLogin, Boolean premium) {
+    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio, String apellidoPropietario, String correoUsuarioLogin, String fechaFinPremium, String celularUsuarioLogin, Boolean premium, Boolean gold) {
         this.nombreNegocio = nombreNegocio;
         this.nitNegocio = nitNegocio;
         this.nombrePropietario = nombrePropietario;
@@ -25,6 +25,7 @@ public class UserInfoBasica {
         this.fechaFinPremium = fechaFinPremium;
         this.celularUsuarioLogin = celularUsuarioLogin;
         this.premium = premium;
+        this.gold = gold;
     }
 
     public String getNombreNegocio() {
@@ -145,5 +146,13 @@ public class UserInfoBasica {
 
     public void setCelularUsuarioLogin(String celularUsuarioLogin) {
         this.celularUsuarioLogin = celularUsuarioLogin;
+    }
+
+    public Boolean getGold() {
+        return gold;
+    }
+
+    public void setGold(Boolean gold) {
+        this.gold = gold;
     }
 }

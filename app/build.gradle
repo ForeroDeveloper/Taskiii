@@ -13,7 +13,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -56,19 +55,19 @@ dependencies {
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'com.github.dueeeke:dk-tablayout:1.0.2'
     implementation 'com.nineoldandroids:library:2.4.0'
-    implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
-    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     implementation 'com.shunan.circularprogressview:circular-progress-view:1.1.4'
     implementation 'com.github.abbasalim:Android-CalculatorDialog:v3.0.1'
     implementation "com.github.skydoves:balloon:1.3.0"
-    implementation "com.airbnb.android:lottie:3.5.0"
     //Scanner
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0'
     implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.8'
-
-
-
+    //Ads
+    implementation 'com.google.android.gms:play-services-ads:19.8.0'
+    implementation project(':nativetemplates')
+    //Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
 
 }

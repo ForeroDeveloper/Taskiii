@@ -6,14 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.fordev.taski.DetallesFacturaGastos;
 import com.fordev.taski.R;
 import com.fordev.taski.modelos.ModeloProveedores;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,8 +25,6 @@ import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import es.dmoral.toasty.Toasty;
 
 public class AdaptadorListaProveedores extends FirebaseRecyclerAdapter<ModeloProveedores, AdaptadorListaProveedores.myViewHolder>
 {
@@ -58,7 +54,7 @@ public class AdaptadorListaProveedores extends FirebaseRecyclerAdapter<ModeloPro
 
                 View dialog = dialogo.getHolderView();
 
-                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_proveedor);
+                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_pedido);
                 TextInputLayout nombre_proveedor = dialog.findViewById(R.id.nombreProveedor);
                 TextInputLayout numero_proveedor = dialog.findViewById(R.id.numeroProveedor);
                 TextInputLayout desc_proveedor = dialog.findViewById(R.id.descProveedor);

@@ -39,8 +39,8 @@ public class ListaClientes extends AppCompatActivity {
         setContentView(R.layout.lista_clientes);
 
         listaDeProductos = findViewById(R.id.lista_clientes);
-        faq_add = findViewById(R.id.faq_inventario);
-        totalProductos = findViewById(R.id.txtTotalProductos);
+        faq_add = findViewById(R.id.faq_nuevo_pedido);
+        totalProductos = findViewById(R.id.txtTotalPedidos);
         txtTotalStock = findViewById(R.id.txtTotalStock);
         searchView = findViewById(R.id.search_view);
         sinContenidoInventario = findViewById(R.id.ilustracion);
@@ -67,7 +67,7 @@ public class ListaClientes extends AppCompatActivity {
 
                 View dialog = dialogo.getHolderView();
 
-                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_proveedor);
+                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_pedido);
                 TextInputLayout nombre_Cliente = dialog.findViewById(R.id.nombreClientes);
                 TextInputLayout numero_cliente = dialog.findViewById(R.id.valorTotalVenta);
                 TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);

@@ -7,9 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="com.android.hardware.Camera.focus" />
 
     <application
+        android:hardwareAccelerated="true"
         android:name=".Persistencia"
         android:allowBackup="true"
         android:forceDarkAllowed="false"
@@ -18,6 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Taski">
+        <activity android:name=".FelicidadesGold"/>
+        <activity android:name=".ListaDePedidos"/>
         <activity android:name=".GeneradorDeQr" />
         <activity android:name=".ComoUsarTaski" />
         <activity android:name=".DetallesFacturaVentas" />
@@ -52,7 +56,6 @@
             </intent-filter>
         </activity>
 
-
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
@@ -64,11 +67,12 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7744216827949349~5053156528"/>
     </application>
 
 </manifest>

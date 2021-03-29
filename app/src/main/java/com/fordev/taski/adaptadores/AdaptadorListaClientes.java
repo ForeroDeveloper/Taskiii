@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +25,6 @@ import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import es.dmoral.toasty.Toasty;
 
 public class AdaptadorListaClientes extends FirebaseRecyclerAdapter<ModeloClientes, AdaptadorListaClientes.myViewHolder>
 {
@@ -57,7 +54,7 @@ public class AdaptadorListaClientes extends FirebaseRecyclerAdapter<ModeloClient
 
                 View dialog = dialogo.getHolderView();
 
-                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_proveedor);
+                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_pedido);
                 TextInputLayout nombre_Cliente = dialog.findViewById(R.id.nombreClientes);
                 TextInputLayout numero_cliente = dialog.findViewById(R.id.valorTotalVenta);
                 TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);

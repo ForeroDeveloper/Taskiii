@@ -173,7 +173,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:layout_toStartOf="@+id/btnInventario"
                 android:hint="Editar Nombre producto"
                 app:boxBackgroundColor="#EBF9FD"
                 app:boxCornerRadiusBottomEnd="30dp"

@@ -6,8 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".GeneradorDeQr">
 
+    <RelativeLayout
+        android:id="@+id/superior"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:onClick="back"
+            android:id="@+id/atras"
+            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:tint="@color/primario_oscuro_secundario"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_arrow_left"/>
+        <TextView
+            android:id="@+id/crear_venta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tu Codigo QR"
+            android:fontFamily="@font/din"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/primario_oscuro_secundario"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/ic_pregunta"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:padding="6dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logo_taski"/>
+
+    </RelativeLayout>
+
+
 
     <TextView
+        android:layout_below="@+id/superior"
         android:id="@+id/titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,22 +56,8 @@
         android:layout_margin="20dp"
         android:fontFamily="@font/mazzard"
         android:gravity="center"
-        android:text="Imprime y pega este codigo QR en tus productos"
+        android:text="Imprime y pega este codigo QR en tu producto"
         android:textSize="18dp" />
-
-
-    <!--    <TextView
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titulo"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="serif-monospace"
-            android:text="Recomendaciones: Envia por Whatsapp los codigos de cada producto, luego inicia en tu Whatsapp Web y descarga todos tus codigos QR generados, adjuntalos en una hoja de Word, e Imprime.\nRecorta y pega en tus productos.\nY listo!, puedes escanear tus productos en cualquier ocasión!"
-            android:textColor="@color/negro"
-            android:textSize="13sp"
-            android:textStyle="bold" />-->
 
 
     <RelativeLayout
@@ -61,8 +88,8 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/logo_taski" />

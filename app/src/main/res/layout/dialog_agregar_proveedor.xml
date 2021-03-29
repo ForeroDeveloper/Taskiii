@@ -10,7 +10,6 @@
         android:id="@+id/crear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/superior"
         android:layout_margin="20dp"
         android:backgroundTint="@color/white"
         android:elevation="3dp"
@@ -54,7 +53,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:layout_toStartOf="@+id/btnInventario"
                 app:boxBackgroundColor="#FFE8E9"
                 app:boxCornerRadiusBottomEnd="30dp"
                 app:boxCornerRadiusBottomStart="30dp"
@@ -196,7 +194,7 @@
                 android:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_guardar_proveedor"
+                android:id="@+id/btn_guardar_pedido"
                 android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"

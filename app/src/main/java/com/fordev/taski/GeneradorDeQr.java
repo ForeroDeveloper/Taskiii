@@ -109,4 +109,8 @@ public class GeneradorDeQr extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
+    public void back(View view) {
+        onBackPressed();
+    }
 }

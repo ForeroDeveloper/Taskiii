@@ -1,12 +1,5 @@
 package com.fordev.taski;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -21,12 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProductos;
 import com.fordev.taski.adaptadores.AdaptadorListaProductosEnInventario;
 import com.fordev.taski.modelos.ModeloVenta;
 import com.fordev.taski.modelos.ModeloVentaInventario;
-import com.fordev.taski.otros.ProgressAnimation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -47,8 +45,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import es.dmoral.toasty.Toasty;
 
 public class DetallesFacturaVentas extends AppCompatActivity {
 
@@ -76,6 +72,8 @@ public class DetallesFacturaVentas extends AppCompatActivity {
     String key2 = null;
     boolean click = false;
     boolean estadoDePago;
+    boolean abonoPorAbono = false;
+    int total_factura = 0;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
 
     @Override
@@ -109,10 +107,24 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         key2 = bundle.getString("keyIV");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase1 = FirebaseDatabase.getInstance();
+        databaseReference1 = firebaseDatabase.getReference();
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("facturas").child("facturasCreadas").child(key);
         databaseReference.keepSynced(true);
+
+        databaseReference1.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").child("facturasCreadas").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    total_factura = (int) snapshot.getChildrenCount();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         eliminar_factura.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,6 +274,7 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         faq_abonar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                abonoPorAbono = true;
                 NumberFormat nformat = new DecimalFormat("##,###,###.##");
                 DialogPlus dialog = DialogPlus.newDialog(DetallesFacturaVentas.this)
                         .setContentHolder(new ViewHolder(R.layout.dialog_abonar_cantidad))
@@ -329,36 +342,42 @@ public class DetallesFacturaVentas extends AppCompatActivity {
                 guardar_abono.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!cantidad_abonar.getEditText().getText().toString().isEmpty()) {
-                            int cantidadIngresaGuardar = Integer.parseInt(cantidad_abonar.getEditText().getText().toString());
-                            saberSiEsCero = totalAbonadoGlobal - cantidadIngresaGuardar;
 
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("abonar", totalAbonadoGlobal - cantidadIngresaGuardar);
-                            map.put("totalCalculado", totalAbonadoGlobal - cantidadIngresaGuardar);
-                            if (saberSiEsCero == 0) {
-                                map.put("estadoDePago", true);
-                                map.put("totalCalculado", totalVentaGlobal);
-                                fondoPrincipal.setBackgroundColor(getResources().getColor(R.color.verde_fondos));
-                                nombreCliente.setTextColor(getResources().getColor(R.color.verde_complemento));
-                                metodo_de_pago.setCardBackgroundColor(getResources().getColor(R.color.verde_fondos));
-                                txtEstadoDePago.setTextColor(getResources().getColor(R.color.verde_complemento));
+                        if (abonoPorAbono) {
+                            if (!cantidad_abonar.getEditText().getText().toString().isEmpty()) {
+                                abonoPorAbono = false;
+                                int cantidadIngresaGuardar = Integer.parseInt(cantidad_abonar.getEditText().getText().toString());
+                                saberSiEsCero = totalAbonadoGlobal - cantidadIngresaGuardar;
+
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("abonar", totalAbonadoGlobal - cantidadIngresaGuardar);
+                                map.put("totalCalculado", totalAbonadoGlobal - cantidadIngresaGuardar);
+                                if (saberSiEsCero == 0) {
+                                    map.put("estadoDePago", true);
+                                    map.put("totalCalculado", totalVentaGlobal);
+                                    fondoPrincipal.setBackgroundColor(getResources().getColor(R.color.verde_fondos));
+                                    nombreCliente.setTextColor(getResources().getColor(R.color.verde_complemento));
+                                    metodo_de_pago.setCardBackgroundColor(getResources().getColor(R.color.verde_fondos));
+                                    txtEstadoDePago.setTextColor(getResources().getColor(R.color.verde_complemento));
+                                }
+
+                                firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .child("facturas").child("facturasCreadas").child(key).updateChildren(map)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(DetallesFacturaVentas.this, "Error al abonar", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
 
-                            firebaseDatabase1.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .child("facturas").child("facturasCreadas").child(key).updateChildren(map)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(DetallesFacturaVentas.this, "Error al abonar", Toast.LENGTH_SHORT).show();
-                                }
-                            });
                         }
+
                         dialog.dismiss();
                     }
                 });
@@ -389,16 +408,27 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         faq_enviar_factura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (estadoDePago) {
-                    Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeRecibo.class);
-                    intent.putExtra("key", key);
-                    intent.putExtra("key2", key2);
-                    startActivity(intent);
+                    if (total_factura < 20){
+                        Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeRecibo.class);
+                        intent.putExtra("key", key);
+                        intent.putExtra("key2", key2);
+                        startActivity(intent);
+                    }else {
+                        actualizarGold();
+                    }
+
                 } else {
-                    Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeReciboCobrar.class);
-                    intent.putExtra("key", key);
-                    intent.putExtra("key2", key2);
-                    startActivity(intent);
+                    if (total_factura < 20){
+                        Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeReciboCobrar.class);
+                        intent.putExtra("key", key);
+                        intent.putExtra("key2", key2);
+                        startActivity(intent);
+                    }else {
+                        actualizarGold();
+                    }
+
                 }
             }
         });
@@ -437,6 +467,31 @@ public class DetallesFacturaVentas extends AppCompatActivity {
         adaptadorListaProductosEnInventario = new AdaptadorListaProductosEnInventario(options2);
         lista_de_productos_venta_inventario.setAdapter(adaptadorListaProductosEnInventario);
 
+    }
+
+    private void actualizarGold() {
+        DialogPlus dialog = DialogPlus.newDialog(DetallesFacturaVentas.this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_gold_v2))
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setExpanded(true, 1510)
+                .setGravity(Gravity.BOTTOM)
+                .setContentBackgroundResource(android.R.color.transparent)
+                .create();
+
+        View views = dialog.getHolderView();
+
+        RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
+
+
+        btnAcutualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DetallesFacturaVentas.this, PlanesMenuPrincipal.class));
+            }
+        });
+
+        dialog.show();
     }
 
     @Override

@@ -147,7 +147,7 @@
 
 
                 <TextView
-                    android:id="@+id/txtTotalProductos"
+                    android:id="@+id/txtTotalPedidos"
                     android:layout_below="@+id/card22"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -273,7 +273,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/faq_inventario"
+        android:id="@+id/faq_nuevo_pedido"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:fontFamily="@font/din"

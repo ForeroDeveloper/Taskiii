@@ -56,7 +56,7 @@
                     android:layout_marginTop="27dp"
                     android:layout_toEndOf="@id/hola"
                     android:fontFamily="@font/mazzard_light"
-                    android:text="Jeferson!"
+                    android:text="Nombre!"
                     android:textColor="@color/primario"
                     android:textSize="24dp"
                     android:textStyle="bold" />
@@ -108,7 +108,7 @@
                     android:layout_below="@+id/licencia"
                     android:visibility="visible"
                     android:id="@+id/btnPremium"
-                    android:background="@drawable/hazte_premium"
+                    android:background="@drawable/hazte_gold"
                     android:layout_width="170dp"
                     android:text="Obtener Taski Gold"
                     android:fontFamily="@font/din"
@@ -124,7 +124,7 @@
                     android:layout_below="@+id/licencia"
                     android:visibility="invisible"
                     android:id="@+id/usuario"
-                    android:background="@drawable/hazte_premium"
+                    android:background="@drawable/hazte_gold"
                     android:layout_width="190dp"
                     android:text="USUARIO GOLD 1 AÑO"
                     android:fontFamily="@font/din"
@@ -134,6 +134,22 @@
                     android:gravity="center"
                     android:layout_marginStart="20dp"
                     android:textColor="#D79D44"
+                    android:layout_height="35dp"/>
+
+                <TextView
+                    android:layout_below="@+id/licencia"
+                    android:visibility="invisible"
+                    android:id="@+id/usuarioPremium"
+                    android:background="@drawable/hazte_premium"
+                    android:layout_width="190dp"
+                    android:text="USUARIO PREMIUM 1 MES"
+                    android:fontFamily="@font/din"
+                    android:layout_marginTop="13dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:textColor="#FF6947"
                     android:layout_height="35dp"/>
 
             </RelativeLayout>
@@ -217,7 +233,6 @@
                             android:id="@+id/indicadorPersonal"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/totalDeuda"
                             android:layout_centerVertical="true"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="2dp"
@@ -281,7 +296,6 @@
                             android:id="@+id/progressIndicatorNegocio"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/totalDeuda"
                             android:layout_centerVertical="true"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="2dp"
@@ -566,12 +580,17 @@
                             android:textSize="8dp"
                             android:textStyle="normal" />
 
-
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="#EFF1FE" />
                     </RelativeLayout>
 
-<!--
                     <RelativeLayout
-                        android:id="@+id/info_lista_proveedores"
+                        android:id="@+id/info_pedidos"
                         android:layout_width="match_parent"
                         android:layout_height="40dp">
 
@@ -581,7 +600,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             android:fontFamily="@font/montserrat"
-                            android:text="Items Proveedores"
+                            android:text="Lista de Pedidos"
                             android:textColor="@color/primario"
                             android:textSize="11dp"
                             android:textStyle="normal" />
@@ -593,14 +612,56 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="15dp"
                             android:fontFamily="@font/mazzard"
-                            android:text="Productos: 10"
+                            android:text="Encargos"
                             android:textColor="@color/primario"
                             android:textSize="8dp"
                             android:textStyle="normal" />
 
 
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="#EFF1FE" />
+
+
                     </RelativeLayout>
--->
+
+
+                    <!--
+                                        <RelativeLayout
+                                            android:id="@+id/info_lista_proveedores"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="40dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerVertical="true"
+                                                android:layout_marginStart="15dp"
+                                                android:fontFamily="@font/montserrat"
+                                                android:text="Items Proveedores"
+                                                android:textColor="@color/primario"
+                                                android:textSize="11dp"
+                                                android:textStyle="normal" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_alignParentEnd="true"
+                                                android:layout_centerVertical="true"
+                                                android:layout_marginEnd="15dp"
+                                                android:fontFamily="@font/mazzard"
+                                                android:text="Productos: 10"
+                                                android:textColor="@color/primario"
+                                                android:textSize="8dp"
+                                                android:textStyle="normal" />
+
+
+                                        </RelativeLayout>
+                    -->
 
 
                 </LinearLayout>

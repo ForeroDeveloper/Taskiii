@@ -135,7 +135,7 @@ public class SemanaFragmentGastos extends Fragment {
         fechacinco.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechacinco.add(Calendar.DATE, 4);
         fechaActual.setText(sdf.format(fechaInicio.getTime()));
-        fechaFin.add(Calendar.DATE, 4);
+        fechaFin.add(Calendar.DATE, 7);
         txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
 
         cargarDatosSegunFecha(fechaInicio, fechaFin, fechados, fechatres, fechacuatro, fechacinco);

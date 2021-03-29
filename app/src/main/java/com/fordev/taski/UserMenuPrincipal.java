@@ -100,7 +100,7 @@ public class UserMenuPrincipal extends AppCompatActivity {
 
                     if (dato.equals(fechaFin)){
                         Map<String, Object> map = new HashMap<>();
-                        map.put("Premium", false);
+                        map.put("premium", false);
                         firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info")
                                 .updateChildren(map);
                     }
@@ -245,46 +245,9 @@ public class UserMenuPrincipal extends AppCompatActivity {
                 }else if (posicion==1){
                     startActivity(new Intent(getApplicationContext(), GastosNegocio.class));
                 }else if (posicion==2){
-                    infoBasica.child("Premium").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Object prem = snapshot.getValue();
-                            premium_activado = Boolean.parseBoolean(String.valueOf(prem));
-                            if (!premium_activado){
-                                DialogPlus dialog = DialogPlus.newDialog(UserMenuPrincipal.this)
-                                        .setContentHolder(new ViewHolder(R.layout.dialog_gold))
-                                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
-                                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                                        .setExpanded(true, 1600)
-                                        .setGravity(Gravity.BOTTOM)
-                                        .setContentBackgroundResource(android.R.color.transparent)
-                                        .create();
-
-                                View views = dialog.getHolderView();
-
-                                RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
-
-
-                                btnAcutualizar.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        startActivity(new Intent(getApplicationContext(), PlanesMenuPrincipal.class));
-                                        //comen
-                                    }
-                                });
-
-                                dialog.show();
-                            }else {
-                                FancyToast.makeText(UserMenuPrincipal.this, "Ya eres usuario GOLD!", FancyToast.LENGTH_LONG, FancyToast.INFO, R.drawable.logo_taski, false).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
+                    FancyToast.makeText(UserMenuPrincipal.this, "Ve a tu apartado de Balance, para agregar Ventas!", FancyToast.LENGTH_LONG, FancyToast.INFO, R.drawable.logo_taski, false).show();
+                }else if (posicion==3){
+                    FancyToast.makeText(UserMenuPrincipal.this, "Ve a tu apartado de Balance, para agregar Ventas!", FancyToast.LENGTH_LONG, FancyToast.INFO, R.drawable.logo_taski, false).show();
                 }
 
             }

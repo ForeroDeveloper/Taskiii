@@ -371,16 +371,50 @@
                     </RelativeLayout>
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_below="@+id/titulos"
+                    <LinearLayout
+                        android:id="@+id/ads"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="75dp"
-                        android:id="@+id/lista_de_facturas_dia"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titulos"
+                        android:orientation="vertical">
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <include layout="@layout/design_card_shimmer" />
+                                <include layout="@layout/design_card_shimmer" />
+                                <include layout="@layout/design_card_shimmer" />
+                                <include layout="@layout/design_card_shimmer" />
+                                <include layout="@layout/design_card_shimmer" />
+
+
+                            </LinearLayout>
+
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:visibility="gone"
+                            android:id="@+id/lista_de_facturas_dia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
 
                 </RelativeLayout>
 

@@ -241,7 +241,7 @@
                 android:fontFamily="@font/din"
                 android:layout_height="55dp"
                 android:text="Guardar datos"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
         </LinearLayout>
 

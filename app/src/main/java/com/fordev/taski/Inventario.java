@@ -9,8 +9,10 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,8 +56,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import es.dmoral.toasty.Toasty;
-
 public class Inventario extends AppCompatActivity {
     DatabaseReference databaseReference, databaseReference2, databaseReference3;
     FirebaseDatabase firebaseDatabase, firebaseDatabase2, firebaseDatabase3;
@@ -77,15 +77,15 @@ public class Inventario extends AppCompatActivity {
     double cantidadProducto = 0;
     int precioProducto = 0;
     double cantidad_a_restar_stock = 0;
-
+    int total_factura = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inventario);
 
         listaDeProductos = findViewById(R.id.lista_de_productos_inventario);
-        faq_add = findViewById(R.id.faq_inventario);
-        totalProductos = findViewById(R.id.txtTotalProductos);
+        faq_add = findViewById(R.id.faq_nuevo_pedido);
+        totalProductos = findViewById(R.id.txtTotalPedidos);
         txtTotalStock = findViewById(R.id.txtTotalStock);
         searchView = findViewById(R.id.search_view);
         sinContenidoInventario = findViewById(R.id.ilustracion);
@@ -136,7 +136,8 @@ public class Inventario extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 double sum = 0;
                 if (snapshot.exists()){
-                    for (DataSnapshot ds : snapshot.getChildren()){
+                    total_factura = (int) snapshot.getChildrenCount();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
 
                         try {
                             Map<String, Object> map = (Map<String, Object>) ds.getValue();
@@ -145,11 +146,9 @@ public class Inventario extends AppCompatActivity {
                             sum += pValue;
                             txtTotalStock.setText(String.valueOf(format.format(sum)));
                             sinContenidoInventario.setVisibility(View.GONE);
-                        }catch (ClassCastException e){
+                        } catch (ClassCastException e) {
                             e.printStackTrace();
                         }
-
-
 
                     }
 
@@ -170,67 +169,93 @@ public class Inventario extends AppCompatActivity {
         faq_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //key
-                String id = databaseReference.push().getKey();
-                DialogPlus dialogo = DialogPlus.newDialog(faq_add.getContext())
-                        .setContentHolder(new ViewHolder(R.layout.dialog_agregar_inventario))
-                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
-                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1100)
-                        .setContentBackgroundResource(android.R.color.transparent)
-                        .create();
+                if (total_factura < 10){
+                    //key
+                    String id = databaseReference.push().getKey();
+                    DialogPlus dialogo = DialogPlus.newDialog(faq_add.getContext())
+                            .setContentHolder(new ViewHolder(R.layout.dialog_agregar_inventario))
+                            .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                            .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                            .setExpanded(true, 1100)
+                            .setContentBackgroundResource(android.R.color.transparent)
+                            .create();
 
-                View dialog = dialogo.getHolderView();
+                    View dialog = dialogo.getHolderView();
 
-                MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_factura);
-                TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
-                TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
-                TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
-                TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
+                    MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_factura);
+                    TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
+                    TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
+                    TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
+                    TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
 
-                btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        if (nombre_Producto.getEditText().getText().toString().isEmpty()) {
-                            nombre_Producto.setError("Ingrese un nombre");
-                        } else if (precio_unitario.getEditText().getText().toString().isEmpty()) {
-                            precio_unitario.setError("Ingrese un valor");
-                            nombre_Producto.setErrorEnabled(false);
-                        } else if (cantidad_stock.getEditText().getText().toString().isEmpty()) {
-                            cantidad_stock.setError("Ingrese un valor");
-                            precio_unitario.setErrorEnabled(false);
-                        } else {
+                            if (nombre_Producto.getEditText().getText().toString().isEmpty()) {
+                                nombre_Producto.setError("Ingrese un nombre");
+                            } else if (precio_unitario.getEditText().getText().toString().isEmpty()) {
+                                precio_unitario.setError("Ingrese un valor");
+                                nombre_Producto.setErrorEnabled(false);
+                            } else if (cantidad_stock.getEditText().getText().toString().isEmpty()) {
+                                cantidad_stock.setError("Ingrese un valor");
+                                precio_unitario.setErrorEnabled(false);
+                            } else {
 
-                            String nombreProducto = nombre_Producto.getEditText().getText().toString();
-                            double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
-                            double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
-                            int randomQr = (int) (Math.random() * (3000 - 1000));
+                                String nombreProducto = nombre_Producto.getEditText().getText().toString();
+                                double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
+                                double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
+                                int randomQr = (int) (Math.random() * (3000 - 1000));
 
-                            ModeloInventario modeloInventario = new ModeloInventario();
+                                ModeloInventario modeloInventario = new ModeloInventario();
 
-                            modeloInventario.setNombreProdcuto(nombreProducto);
-                            modeloInventario.setPrecioProducto(precioUnitario);
-                            modeloInventario.setCantidadProducto(cantidadStock);
-                            modeloInventario.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
-                            modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
-                            modeloInventario.setId(id);
-                            databaseReference.child(id).setValue(modeloInventario);
-                            databaseReference.child(id).child("QrCode").setValue(String.valueOf(randomQr));
-                            databaseReference.keepSynced(true);
-                            dialogo.dismiss();
+                                modeloInventario.setNombreProdcuto(nombreProducto);
+                                modeloInventario.setPrecioProducto(precioUnitario);
+                                modeloInventario.setCantidadProducto(cantidadStock);
+                                modeloInventario.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
+                                modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
+                                modeloInventario.setId(id);
+                                databaseReference.child(id).setValue(modeloInventario);
+                                databaseReference.child(id).child("QrCode").setValue(String.valueOf(randomQr));
+                                databaseReference.keepSynced(true);
+                                dialogo.dismiss();
+                            }
                         }
-                    }
-                });
+                    });
 
-                btn_cancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogo.dismiss();;
-                    }
-                });
+                    btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialogo.dismiss();;
+                        }
+                    });
 
-                dialogo.show();
+                    dialogo.show();
+                }else {
+                    DialogPlus dialog = DialogPlus.newDialog(Inventario.this)
+                            .setContentHolder(new ViewHolder(R.layout.dialog_gold_v2))
+                            .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                            .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                            .setExpanded(true, 1510)
+                            .setGravity(Gravity.BOTTOM)
+                            .setContentBackgroundResource(android.R.color.transparent)
+                            .create();
+
+                    View views = dialog.getHolderView();
+
+                    RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
+
+
+                    btnAcutualizar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Inventario.this, PlanesMenuPrincipal.class));
+                        }
+                    });
+
+                    dialog.show();
+                }
+
             }
         });
 
@@ -267,7 +292,6 @@ public class Inventario extends AppCompatActivity {
                 intentIntegrator.setBarcodeImageEnabled(true);
                 intentIntegrator.initiateScan();
                 facturaActualKey();
-
             }
         });
 
@@ -422,8 +446,9 @@ public class Inventario extends AppCompatActivity {
                                 bajo_stock_visible.setVisibility(View.INVISIBLE);
                             }
 
+                            dialog.show();
+
                         }else {
-                            dialog.dismiss();
                         }
 
                     }
@@ -542,10 +567,6 @@ public class Inventario extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-
-            dialog.show();
-
-
         }
         super.onActivityResult(requestCode, resultCode, data);
 

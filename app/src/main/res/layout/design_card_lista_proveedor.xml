@@ -91,7 +91,6 @@
 
             <ImageView
                 android:id="@+id/ic_editar_proveedor"
-                android:layout_toStartOf="@+id/ic_agregar_producto"
                 android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
                 android:padding="1dp"

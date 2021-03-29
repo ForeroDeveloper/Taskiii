@@ -271,7 +271,7 @@
                 android:id="@+id/btnGuardarFactura"
                 android:background="@drawable/finalizar_gasto_design"
                 android:layout_width="140dp"
-                android:text="Finalizar Venta"
+                android:text="Finalizar Gasto"
                 android:gravity="center"
                 android:fontFamily="@font/din"
                 android:layout_marginTop="8dp"

@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mazzard_light"
-                        android:text="20 | Facturas - Recibos de cobro - inventario"
+                        android:text="15.000 Facturas , ventas y gastos Anuales"
                         android:textColor="@color/negro"
                         android:textSize="12dp"
                         android:textStyle="normal" />
@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mazzard_light"
-                        android:text="Escanear productos con QR en 20 Facturas"
+                        android:text="Enviar 20 Recibos de cobro y ventas."
                         android:textColor="@color/negro"
                         android:textSize="12dp"
                         android:textStyle="normal" />
@@ -93,8 +93,8 @@
                         android:layout_height="25dp"
                         android:scaleType="centerCrop"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_no_disponible"
-                        app:tint="#DEDEDE" />
+                        android:src="@drawable/ic_disponible"
+                        app:tint="#262626" />
 
                     <TextView
                         android:layout_toEndOf="@+id/ads"
@@ -103,8 +103,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mazzard_light"
-                        android:text="Sin Anuncios publicitarios - ADs"
-                        android:textColor="#B4B4B4"
+                        android:text="Agregar hasta 10 Productos al Inventario."
+                        android:textColor="@color/negro"
                         android:textSize="12dp"
                         android:textStyle="normal" />
 
@@ -317,7 +317,6 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:layout_below="@+id/precio"
                         android:layout_centerInParent="true"
                         android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"

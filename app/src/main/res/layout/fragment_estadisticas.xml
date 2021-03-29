@@ -39,7 +39,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_toEndOf="@+id/fecha"
                         app:cardBackgroundColor="#F5F5F6"
                         app:cardCornerRadius="30dp">
 
@@ -177,7 +176,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="5dp"
-                        android:elevation="2dp"
+                        app:cardElevation="2dp"
                         app:cardCornerRadius="20dp">
 
                         <RelativeLayout
@@ -229,7 +228,7 @@
                         app:cardBackgroundColor="#ffebee"
                         android:layout_marginEnd="35dp"
                         android:layout_marginBottom="5dp"
-                        android:elevation="4dp"
+                        app:cardElevation="2dp"
                         app:cardCornerRadius="40dp">
 
                         <RelativeLayout
@@ -244,7 +243,7 @@
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/mazzard_light"
                                 android:text="Ventas Por Cobrar"
-                                android:textColor="@color/rojo"
+                                android:textColor="@color/rosado"
                                 android:textSize="10dp"
                                 android:textStyle="bold" />
 
@@ -257,7 +256,7 @@
                                 android:layout_marginStart="20dp"
                                 android:fontFamily="@font/mazzard"
                                 android:text="$ 2,580,890"
-                                android:textColor="@color/rojo"
+                                android:textColor="@color/rosado"
                                 android:textSize="14dp" />
 
                             <ImageView
@@ -312,11 +311,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        app:cardBackgroundColor="#ffebee"
+                        app:cardBackgroundColor="#F3EEFE"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="5dp"
-                        android:elevation="2dp"
+                        app:cardElevation="2dp"
                         app:cardCornerRadius="20dp">
 
                         <RelativeLayout
@@ -331,7 +330,7 @@
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/mazzard_light"
                                 android:text="Gastos Totales"
-                                android:textColor="@color/rojo"
+                                android:textColor="@color/primario"
                                 android:textSize="14dp"
                                 android:textStyle="bold" />
 
@@ -343,17 +342,17 @@
                                 android:layout_marginStart="20dp"
                                 android:fontFamily="@font/mazzard"
                                 android:text="$ 2,580,890"
-                                android:textColor="@color/rojo"
+                                android:textColor="@color/primario"
                                 android:textSize="22dp" />
 
                             <ImageView
                                 android:layout_width="45dp"
                                 android:layout_height="45dp"
-                                android:layout_marginEnd="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_alignParentEnd="true"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="19dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_gastos" />
+                                android:src="@drawable/ic_gastos_totales" />
 
 
                         </RelativeLayout>
@@ -365,10 +364,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="35dp"
                         android:layout_marginTop="85dp"
-                        app:cardBackgroundColor="#E8E8FF"
+                        app:cardBackgroundColor="#ffebee"
                         android:layout_marginEnd="35dp"
                         android:layout_marginBottom="5dp"
-                        android:elevation="4dp"
+                        app:cardElevation="2dp"
                         app:cardCornerRadius="40dp">
 
                         <RelativeLayout
@@ -383,7 +382,7 @@
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/mazzard_light"
                                 android:text="Gastos Por Pagar"
-                                android:textColor="@color/azul"
+                                android:textColor="@color/rosado"
                                 android:textSize="10dp"
                                 android:textStyle="bold" />
 
@@ -396,7 +395,7 @@
                                 android:layout_marginStart="20dp"
                                 android:fontFamily="@font/mazzard"
                                 android:text="$ 2,580,890"
-                                android:textColor="@color/azul"
+                                android:textColor="@color/rosado"
                                 android:textSize="14dp" />
 
                             <ImageView
@@ -449,7 +448,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="5dp"
-                    android:elevation="2dp"
+                    app:cardElevation="1dp"
                     app:cardCornerRadius="20dp">
 
                     <RelativeLayout
@@ -486,7 +485,7 @@
                             android:layout_marginTop="15dp"
                             android:layout_alignParentEnd="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_premium" />
+                            android:src="@drawable/ic_estadisticas" />
 
 
                     </RelativeLayout>

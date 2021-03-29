@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaProveedores;
-import com.fordev.taski.modelos.ModeloClientes;
 import com.fordev.taski.modelos.ModeloProveedores;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,8 +39,8 @@ public class ListaProveedores extends AppCompatActivity {
         setContentView(R.layout.lista_proveedores);
 
         listaDeProductos = findViewById(R.id.lista_clientes);
-        faq_add = findViewById(R.id.faq_inventario);
-        totalProductos = findViewById(R.id.txtTotalProductos);
+        faq_add = findViewById(R.id.faq_nuevo_pedido);
+        totalProductos = findViewById(R.id.txtTotalPedidos);
         txtTotalStock = findViewById(R.id.txtTotalStock);
         searchView = findViewById(R.id.search_view);
         sinContenidoInventario = findViewById(R.id.ilustracion);
@@ -68,7 +67,7 @@ public class ListaProveedores extends AppCompatActivity {
 
                 View dialog = dialogo.getHolderView();
 
-                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_proveedor);
+                MaterialButton btn_guardar_cliente = dialog.findViewById(R.id.btn_guardar_pedido);
                 TextInputLayout nombre_proveedor = dialog.findViewById(R.id.nombreProveedor);
                 TextInputLayout numero_proveedor = dialog.findViewById(R.id.numeroProveedor);
                 TextInputLayout desc_proveedor = dialog.findViewById(R.id.descProveedor);

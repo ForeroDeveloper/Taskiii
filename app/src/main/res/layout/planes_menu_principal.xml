@@ -7,13 +7,9 @@
     tools:context=".PlanesMenuPrincipal">
 
     <FrameLayout
-        android:layout_below="@+id/superior"
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
     </FrameLayout>
-
 
 </RelativeLayout>

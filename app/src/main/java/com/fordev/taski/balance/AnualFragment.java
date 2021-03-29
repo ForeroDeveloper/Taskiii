@@ -1,5 +1,6 @@
 package com.fordev.taski.balance;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.VentasNegocio;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
@@ -67,6 +69,9 @@ public class AnualFragment extends Fragment {
     DatabaseReference databaseReference;
     LinearProgressIndicator progressIndicator;
     com.getbase.floatingactionbutton.FloatingActionButton faq_restar_fecha,faq_sumar_fecha;
+    ShimmerFrameLayout shimmerFrameLayout;
+    boolean carga = false;
+
     public AnualFragment() {
         // Required empty public constructor
     }
@@ -114,8 +119,9 @@ public class AnualFragment extends Fragment {
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         nuevaFactura = view.findViewById(R.id.nuevaFactura);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer);
+        shimmerFrameLayout.startShimmerAnimation();
         //seteos
-
 
         calendar.get(Calendar.YEAR);
         fechaActual.setText(sdf.format(calendar.getTime()));
@@ -175,7 +181,8 @@ public class AnualFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
                 child("facturasCreadas");
         databaseReference.keepSynced(true);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int balanceGeneral = 0;
@@ -252,7 +259,13 @@ public class AnualFragment extends Fragment {
                     sinContenidoDos.setVisibility(View.VISIBLE);
                 }
 
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                listaDeFacturas.setVisibility(View.VISIBLE);
+
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

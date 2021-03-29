@@ -41,8 +41,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import es.dmoral.toasty.Toasty;
-
 public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<ModeloInventario, AdaptadorListaInventarioPerfil.myViewHolder>
 {
     double cantidad_a_restar_stock;
@@ -267,7 +265,7 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
             txtProducto=(TextView)itemView.findViewById(R.id.nombreClientes);
             txtStockCantidad=(TextView)itemView.findViewById(R.id.txtStock);
             bajoStockView=(CardView) itemView.findViewById(R.id.bajo_stock_visible);
-            ic_editar_item_inventario=(ImageView) itemView.findViewById(R.id.ic_editar_item_inventario);
+            ic_editar_item_inventario=(ImageView) itemView.findViewById(R.id.ic_borrar);
             ic_generar_qr=(ImageView) itemView.findViewById(R.id.ic_generar_qr);
             txtPrecioItem=(TextView) itemView.findViewById(R.id.numeroClientes);
 

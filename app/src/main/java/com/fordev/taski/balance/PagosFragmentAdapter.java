@@ -21,6 +21,8 @@ public class PagosFragmentAdapter extends FragmentStateAdapter {
         switch (position){
             case 0:
                 return new BasicoPlanFragment();
+            case  1:
+                return  new PremiumPlanFragment();
             default:
                 return new GoldPlanFragment();
         }
@@ -28,6 +30,6 @@ public class PagosFragmentAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }
