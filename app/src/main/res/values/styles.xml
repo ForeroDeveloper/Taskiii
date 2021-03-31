@@ -3,4 +3,10 @@
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView" >
         <item name="android:textSize">12dp</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat" >
+        <item name="colorControlNormal">#DEDEDE</item>
+        <item name="colorControlActivated">#FDB700</item>
+    </style>
+
 </resources>

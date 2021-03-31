@@ -1,5 +1,6 @@
 package com.fordev.taski;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -73,7 +74,7 @@ public class UserMenuPrincipal extends AppCompatActivity implements BillingProce
     private static final String TAG = "PremiumActividad";
     BillingProcessor bp;
     TransactionDetails transactionDetails = null;
-
+    long totalFacturasUser = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +94,35 @@ public class UserMenuPrincipal extends AppCompatActivity implements BillingProce
         bp = new BillingProcessor(this, getResources().getString(R.string.play_console_licence), this);
         bp.initialize();
         hasSuscription();
+
+        final DatabaseReference totalFacturasCreadas = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("facturas").child("facturasCreadas");
+        totalFacturasCreadas.keepSynced(true);
+
+        totalFacturasCreadas.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    totalFacturasUser = (snapshot.getChildrenCount());
+                    if (totalFacturasUser==12){
+                        SharedPreferences preferences = getApplicationContext().getSharedPreferences("TUTORIAL", Context.MODE_PRIVATE);
+                        boolean calificado = preferences.getBoolean("ClickCalificar", false);
+                        if (!calificado) {
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("ClickCalificar", true);
+                            editor.apply();
+                            startActivity(new Intent(getApplicationContext(), CalificarAppTaski.class));
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         infoBasica.child("FechaPremiumFin").addValueEventListener(new ValueEventListener() {
             @Override
@@ -142,6 +172,7 @@ public class UserMenuPrincipal extends AppCompatActivity implements BillingProce
                             editor.putBoolean("ClickInventario", false);
                             editor.putBoolean("ClickScanner", false);
                             editor.putBoolean("ClickPremium", false);
+                            editor.putBoolean("ClickCalificar", false);
                             editor.apply();
                             opciones();
                         }

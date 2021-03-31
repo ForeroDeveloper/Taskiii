@@ -5,13 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +14,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.CalificarAppTaski;
+import com.fordev.taski.R;
 import com.fordev.taski.VentasNegocio;
 import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
 import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.fordev.taski.otros.ProgressAnimation;
-import com.fordev.taski.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -325,6 +325,7 @@ public class DiaFragment extends Fragment {
                 if (adaptadorListaFacturas.getItemCount() == 1){
                     SharedPreferences preferences = getContext().getSharedPreferences("TUTORIAL", Context.MODE_PRIVATE);
                     boolean unaFactura = preferences.getBoolean("DetallesFactura" , false);
+
                     if (!unaFactura){
                         SharedPreferences.Editor editor  = preferences.edit();
                         editor.putBoolean("DetallesFactura", true);
@@ -351,6 +352,7 @@ public class DiaFragment extends Fragment {
                         dialog.show();
                     }
                 }
+
             }
         });
         adaptadorListaFacturas.notifyDataSetChanged();

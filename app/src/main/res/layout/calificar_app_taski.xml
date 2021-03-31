@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradiente_morado"
+    tools:context=".CalificarAppTaski">
+
+    <ImageView
+        android:id="@+id/charPlace"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_above="@+id/card"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_rate_bueno"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        app:cardBackgroundColor="@color/white"
+        android:layout_alignBottom="@+id/calificar_btn"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="70dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:text="Califica nuestro Servicio"
+                android:textColor="#848484"
+                android:textSize="18dp" />
+
+            <RatingBar
+                android:id="@+id/rateStars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:numStars="5"
+                android:rating="3"
+                android:stepSize="1"
+                android:theme="@style/RatingBar" />
+
+            <TextView
+                android:id="@+id/resultRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/brandon_grotesque_black"
+                android:gravity="center"
+                android:text="Muy Bueno"
+                android:textColor="#848484"
+                android:textSize="22dp" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:id="@+id/calificar_btn"
+        android:text="Calificar App"
+        android:textAllCaps="false"
+        android:fontFamily="@font/mazzard"
+        android:textSize="16dp"
+        app:backgroundTint="#F8BF1C"
+        app:cornerRadius="8dp"
+        android:textColor="#8E7324"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"/>
+
+
+
+</RelativeLayout>
