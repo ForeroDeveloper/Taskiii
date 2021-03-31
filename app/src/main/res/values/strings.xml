@@ -4,6 +4,8 @@
     <string name="taski">taski</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="suscripcion">test_suscripcion</string>
+    <string name="play_console_licence">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAndWMTU8sjaqZmdHoIYIRklu0fKdjuL97GaxMbpm7wTsCNJxm97wHG9z/WAm1zG7IZaxnPVoIwRDwm68KOEgeutHpx/fkdnA1PwcDpKKgU1L/Ni9XtfYTn3owmthR2tuEf4CAke0p7NcxVFq53fl2tFARGAdNBsmEcrqXho8k92TH/zHkmBCNoWZXp/HG4iIeACKxwNPa6IfMVw1ameYPkXOxtwJNmab0Mx45Sd4mDk3yx8CCmJKAMl7tVp9jvtuRZyQeaF0ko+9PUf1vg4kOdh4ehFZuVq+rEzwIthRtfElL9lM3YI1CRy6GIrADfaoEzYwclDrbpLCwmQCjQ3bMjwIDAQAB</string>
     <string name="producto_que_vas_a_editar">Producto que vas a EDITAR:</string>
     <string name="privilegios"><![CDATA[<u>10+ privilegios</u>]]></string>
     <string name="first_slide_title">Gestionar tu negocio\nAhora es muy fácil !</string>

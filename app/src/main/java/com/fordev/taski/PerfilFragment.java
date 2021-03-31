@@ -246,7 +246,7 @@ public class PerfilFragment extends Fragment {
 
                         if (codigo_introducido.equals(codigo)){
                             Map<String, Object> map = new HashMap<>();
-                            map.put("Premium", true);
+                            map.put("gold", true);
                             map.put("FechaPremiumFin", dato);
                             firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info")
                                     .updateChildren(map);
@@ -386,6 +386,7 @@ public class PerfilFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(getContext(), PlanesMenuPrincipal.class));
+                        dialog.dismiss();
                         //comen
                     }
                 });
@@ -469,16 +470,16 @@ public class PerfilFragment extends Fragment {
 
                     try {
                         if (prem){
-                            premiums.setText("GOLD");
-                            premiums.setTextColor(getResources().getColor(R.color.gold));
-                            btnPremium.setVisibility(View.GONE);
-                            usuario.setVisibility(View.VISIBLE);
-                        }
-                        if (golAc){
                             premiums.setText("PREMIUM");
                             premiums.setTextColor(getResources().getColor(R.color.rojo));
                             btnPremium.setVisibility(View.GONE);
                             usuarioPremium.setVisibility(View.VISIBLE);
+                        }
+                        if (golAc){
+                            premiums.setText("GOLD");
+                            premiums.setTextColor(getResources().getColor(R.color.gold));
+                            btnPremium.setVisibility(View.GONE);
+                            usuario.setVisibility(View.VISIBLE);
                         }
                     }catch (IllegalStateException e){
                         e.printStackTrace();

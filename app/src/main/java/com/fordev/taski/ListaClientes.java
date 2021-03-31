@@ -126,8 +126,6 @@ public class ListaClientes extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<ModeloClientes>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Clientes").child("cliente"), ModeloClientes.class)
                         .build();
-
-
         adaptadorListaClientes = new AdaptadorListaClientes(options);
         listaDeProductos.setAdapter(adaptadorListaClientes);
         adaptadorListaClientes.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -138,7 +136,6 @@ public class ListaClientes extends AppCompatActivity {
 
             }
         });
-
 
     }
 
@@ -162,7 +159,6 @@ public class ListaClientes extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     protected void onStart() {

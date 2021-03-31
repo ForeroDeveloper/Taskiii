@@ -600,12 +600,13 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             android:fontFamily="@font/montserrat"
-                            android:text="Lista de Pedidos"
+                            android:text="Lista de pedidos"
                             android:textColor="@color/primario"
                             android:textSize="11dp"
                             android:textStyle="normal" />
 
                         <TextView
+                            android:id="@+id/encargos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -628,40 +629,6 @@
 
 
                     </RelativeLayout>
-
-
-                    <!--
-                                        <RelativeLayout
-                                            android:id="@+id/info_lista_proveedores"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="40dp">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginStart="15dp"
-                                                android:fontFamily="@font/montserrat"
-                                                android:text="Items Proveedores"
-                                                android:textColor="@color/primario"
-                                                android:textSize="11dp"
-                                                android:textStyle="normal" />
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentEnd="true"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginEnd="15dp"
-                                                android:fontFamily="@font/mazzard"
-                                                android:text="Productos: 10"
-                                                android:textColor="@color/primario"
-                                                android:textSize="8dp"
-                                                android:textStyle="normal" />
-
-
-                                        </RelativeLayout>
-                    -->
 
 
                 </LinearLayout>

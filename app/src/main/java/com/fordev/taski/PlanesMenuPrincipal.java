@@ -32,25 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class PlanesMenuPrincipal extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
-    //Firebase Instancias
-    private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private final DatabaseReference databaseReference = firebaseDatabase.getReference();
-    private final DatabaseReference info = databaseReference.child("users")
-            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("imagen");
-    private final DatabaseReference infoBasica = databaseReference.child("users")
-            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
-    //componentes
-    String urlImagen;
-    ImageView logoNegocio;
-    TextView nombreNegocio;
-    FloatingActionButton faq;
-    CardView venta_rapida,venta_multiple;
-    Animation fromBottom,toBottom;
-    RelativeLayout superior;
-    int posicion= 0;
-
-    private boolean clicked = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +43,9 @@ public class PlanesMenuPrincipal extends AppCompatActivity {
                 .replace(R.id.fragment_layout, new PagosFragment()).commit();
 
     }
+
+
+    
+
 
 }

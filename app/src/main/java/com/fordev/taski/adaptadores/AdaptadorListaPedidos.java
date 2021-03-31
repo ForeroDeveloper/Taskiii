@@ -53,7 +53,6 @@ public class AdaptadorListaPedidos extends FirebaseRecyclerAdapter<ModeloListaPe
                             .setGravity(Gravity.CENTER)
                             .setContentBackgroundResource(android.R.color.transparent)
                             .create();
-
                     View view1 = dialog.getHolderView();
 
                     TextView btn_dismis = view1.findViewById(R.id.btn_cancel);
@@ -62,9 +61,8 @@ public class AdaptadorListaPedidos extends FirebaseRecyclerAdapter<ModeloListaPe
                     btn_delete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Pedidos").child("pedido").child(getRef(position).getKey()).removeValue();
-                            notifyDataSetChanged();
-                            notifyItemRemoved(position);
+                            String postKey = getRef(holder.getAdapterPosition()).getKey();
+                            FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Pedidos").child("pedido").child(postKey).removeValue();
                             dialog.dismiss();
                         }
                     });
@@ -78,8 +76,6 @@ public class AdaptadorListaPedidos extends FirebaseRecyclerAdapter<ModeloListaPe
                     dialog.show();
 
                 } catch (IndexOutOfBoundsException e) { // if fails, increment the shift and try again
-                    notifyDataSetChanged();
-                    notifyItemRemoved(position);
                 }
             }
         });

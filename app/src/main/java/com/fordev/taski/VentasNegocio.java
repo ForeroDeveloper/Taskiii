@@ -89,6 +89,7 @@ public class VentasNegocio extends AppCompatActivity {
     String key;
     String key2;
     boolean premium = true;
+    boolean gold = true;
     int total_factura = 0;
 
     View view;
@@ -163,12 +164,14 @@ public class VentasNegocio extends AppCompatActivity {
         databaseReference.keepSynced(true);
 
 
-        databaseReference.child("info").child("Premium").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Object booleanPremium = snapshot.getValue();
+                    Object booleanPremium = snapshot.child("premium").getValue();
+                    Object booleanGold = snapshot.child("gold").getValue();
                     premium = Boolean.parseBoolean(String.valueOf(booleanPremium));
+                    gold = Boolean.parseBoolean(String.valueOf(booleanGold));
                 }
             }
 
@@ -404,7 +407,7 @@ public class VentasNegocio extends AppCompatActivity {
                         dialog.show();
                     }
 
-                } else {
+                } else if (premium || gold){
                     crearVenta(nformat);
                 }
 

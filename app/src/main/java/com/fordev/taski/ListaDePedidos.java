@@ -61,7 +61,7 @@ public class ListaDePedidos extends AppCompatActivity {
                         .setContentHolder(new ViewHolder(R.layout.dialog_agregar_pedido))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1600)
+                        .setExpanded(true, 1480)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
 

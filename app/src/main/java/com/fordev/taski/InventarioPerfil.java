@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class InventarioPerfil extends AppCompatActivity {
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReference2;
     FirebaseDatabase firebaseDatabase;
     RecyclerView listaDeProductos;
     AdaptadorListaInventarioPerfil adaptadorListaInventarioPerfil;
@@ -48,6 +48,8 @@ public class InventarioPerfil extends AppCompatActivity {
     CardView sinContenidoInventario;
     ImageView prueba;
     public String keyy;
+    boolean premium = true;
+    boolean gold = true;
     int sum = 0;
     DecimalFormat format = new DecimalFormat("0.#");
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
@@ -75,6 +77,24 @@ public class InventarioPerfil extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("Inventario").child("productos");
+
+        databaseReference2 = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference2.child("info").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Object booleanPremium = snapshot.child("premium").getValue();
+                    Object booleanGold = snapshot.child("gold").getValue();
+                    premium = Boolean.parseBoolean(String.valueOf(booleanPremium));
+                    gold = Boolean.parseBoolean(String.valueOf(booleanGold));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -109,93 +129,15 @@ public class InventarioPerfil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (total_factura < 10) {
-                    String id = databaseReference.push().getKey();
-                    DialogPlus dialogo = DialogPlus.newDialog(faq_add.getContext())
-                            .setContentHolder(new ViewHolder(R.layout.dialog_agregar_inventario))
-                            .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
-                            .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                            .setExpanded(true, 1100)
-                            .setContentBackgroundResource(android.R.color.transparent)
-                            .create();
-
-                    View dialog = dialogo.getHolderView();
-
-                    MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_factura);
-                    TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
-                    TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
-                    TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
-                    TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
-
-                    btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (nombre_Producto.getEditText().getText().toString().isEmpty()) {
-                                nombre_Producto.setError("Ingrese un nombre");
-                            } else if (precio_unitario.getEditText().getText().toString().isEmpty()) {
-                                precio_unitario.setError("Ingrese un valor");
-                                nombre_Producto.setErrorEnabled(false);
-                            } else if (cantidad_stock.getEditText().getText().toString().isEmpty()) {
-                                cantidad_stock.setError("Ingrese un valor");
-                                precio_unitario.setErrorEnabled(false);
-                            } else {
-
-                                String nombreProducto = nombre_Producto.getEditText().getText().toString();
-                                double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
-                                double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
-                                int randomQr = (int) (Math.random() * (3000 - 1000));
-
-                                ModeloInventario modeloInventario = new ModeloInventario();
-
-                                modeloInventario.setNombreProdcuto(nombreProducto);
-                                modeloInventario.setPrecioProducto(precioUnitario);
-                                modeloInventario.setCantidadProducto(cantidadStock);
-                                modeloInventario.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
-                                modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
-                                modeloInventario.setId(id);
-                                databaseReference.child(id).setValue(modeloInventario);
-                                databaseReference.child(id).child("QrCode").setValue(String.valueOf(randomQr));
-                                databaseReference.keepSynced(true);
-                                dialogo.dismiss();
-                            }
-                        }
-                    });
-
-                    btn_cancelar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialogo.dismiss();
-                            ;
-                        }
-                    });
-
-                    dialogo.show();
-                } else {
-                    DialogPlus dialog = DialogPlus.newDialog(InventarioPerfil.this)
-                            .setContentHolder(new ViewHolder(R.layout.dialog_gold_v2))
-                            .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
-                            .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                            .setExpanded(true, 1510)
-                            .setGravity(Gravity.BOTTOM)
-                            .setContentBackgroundResource(android.R.color.transparent)
-                            .create();
-
-                    View views = dialog.getHolderView();
-
-                    RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
-
-
-                    btnAcutualizar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(InventarioPerfil.this, PlanesMenuPrincipal.class));
-                        }
-                    });
-
-                    dialog.show();
+                if (premium || gold){
+                    crearProducto();
+                }else {
+                    if (total_factura < 10){
+                        crearProducto();
+                    }else {
+                        serGoldDialog();
+                    }
                 }
-                //key
 
             }
         });
@@ -236,6 +178,95 @@ public class InventarioPerfil extends AppCompatActivity {
         });
 
 
+    }
+
+    private void serGoldDialog() {
+        DialogPlus dialog = DialogPlus.newDialog(InventarioPerfil.this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_gold_v2))
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setExpanded(true, 1510)
+                .setGravity(Gravity.BOTTOM)
+                .setContentBackgroundResource(android.R.color.transparent)
+                .create();
+
+        View views = dialog.getHolderView();
+
+        RelativeLayout btnAcutualizar = views.findViewById(R.id.actualizar);
+
+
+        btnAcutualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InventarioPerfil.this, PlanesMenuPrincipal.class));
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void crearProducto() {
+        String id = databaseReference.push().getKey();
+        DialogPlus dialogo = DialogPlus.newDialog(faq_add.getContext())
+                .setContentHolder(new ViewHolder(R.layout.dialog_agregar_inventario))
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setExpanded(true, 1100)
+                .setContentBackgroundResource(android.R.color.transparent)
+                .create();
+
+        View dialog = dialogo.getHolderView();
+
+        MaterialButton btn_guardar_producto_inventario = dialog.findViewById(R.id.btn_guardar_producto_factura);
+        TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
+        TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
+        TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
+        TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
+
+        btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (nombre_Producto.getEditText().getText().toString().isEmpty()) {
+                    nombre_Producto.setError("Ingrese un nombre");
+                } else if (precio_unitario.getEditText().getText().toString().isEmpty()) {
+                    precio_unitario.setError("Ingrese un valor");
+                    nombre_Producto.setErrorEnabled(false);
+                } else if (cantidad_stock.getEditText().getText().toString().isEmpty()) {
+                    cantidad_stock.setError("Ingrese un valor");
+                    precio_unitario.setErrorEnabled(false);
+                } else {
+
+                    String nombreProducto = nombre_Producto.getEditText().getText().toString();
+                    double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
+                    double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
+                    int randomQr = (int) (Math.random() * (3000 - 1000));
+
+                    ModeloInventario modeloInventario = new ModeloInventario();
+
+                    modeloInventario.setNombreProdcuto(nombreProducto);
+                    modeloInventario.setPrecioProducto(precioUnitario);
+                    modeloInventario.setCantidadProducto(cantidadStock);
+                    modeloInventario.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
+                    modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
+                    modeloInventario.setId(id);
+                    databaseReference.child(id).setValue(modeloInventario);
+                    databaseReference.child(id).child("QrCode").setValue(String.valueOf(randomQr));
+                    databaseReference.keepSynced(true);
+                    dialogo.dismiss();
+                }
+            }
+        });
+
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogo.dismiss();
+                ;
+            }
+        });
+
+        dialogo.show();
     }
 
     private void procesobuscar(String s) {
@@ -279,7 +310,7 @@ public class InventarioPerfil extends AppCompatActivity {
                     Object precioProductoObject = map.get("precioProducto");
                     Object cantidadProductoObject = map.get("cantidadProducto");
                     int totalPrecio = Integer.parseInt(String.valueOf(precioProductoObject));
-                    int totalCantidad = Integer.parseInt(String.valueOf(cantidadProductoObject));
+                    double totalCantidad = Double.parseDouble(String.valueOf(cantidadProductoObject));
                     totalInventario += totalPrecio*totalCantidad;
                 }
                 txtTotalInventario.setText(String.valueOf("$ " + nformat.format(totalInventario)));

@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/transparent"
-    tools:context=".GoldPlanFragment">
+    tools:context=".PremiumActividad">
 
     <RelativeLayout
+        android:id="@+id/inicio"
+        android:background="@drawable/gradiente_premium"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <ImageView
+            android:onClick="atras"
+            android:id="@+id/close"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="3dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:id="@+id/cambiar"
+            android:text="VAS A PAGAR TASKI PREMIUM"
+            android:textColor="@color/white"
+            android:fontFamily="@font/din"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:textSize="18dp"
+            android:layout_marginBottom="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="110dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -307,8 +339,8 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/comprar_premium"
                 android:layout_marginBottom="5dp"
-                android:id="@+id/btn_comprar_taski"
                 android:layout_marginTop="30dp"
                 app:cardCornerRadius="20dp"
                 android:layout_marginStart="10dp"
@@ -318,7 +350,6 @@
                 android:layout_height="45dp">
 
                 <RelativeLayout
-                    android:id="@+id/comprar_premium"
                     android:background="@drawable/gradiente_premium"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -347,7 +378,9 @@
                         android:textSize="12dp"
                         android:textStyle="normal" />
 
+
                 </RelativeLayout>
+
 
             </androidx.cardview.widget.CardView>
 
@@ -360,7 +393,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:fontFamily="@font/brandon_grotesque_light"
-                android:text="Esta versión de suscripción, se cobrará mes a mes, no tendra ningun tipo de limitaciones, siempre y cuando se cumplan con los respectivos pagos. para más información sobre esta suscripción no dude en ponerse en contacto."
+                android:text="Podrás cancelar la suscripcion cuando lo desees desde tu tienda de aplicaciones."
                 android:textColor="#B4B4B4"
                 android:textSize="11dp"
                 android:textStyle="normal" />
@@ -369,6 +402,9 @@
         </LinearLayout>
 
 
+
+
     </RelativeLayout>
 
-</FrameLayout>
+
+</RelativeLayout>

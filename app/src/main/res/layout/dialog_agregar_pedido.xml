@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/cabecera_guardar_factura_dos">
 
-
     <LinearLayout
         android:id="@+id/crear"
         android:layout_width="match_parent"
@@ -66,7 +65,6 @@
                     app:boxStrokeWidth="0dp"
                     app:hintEnabled="false"
                     app:helperTextEnabled="true"
-                    app:prefixText="$ "
                     app:helperText="Ej: Blusa XL"
                     android:hint="$ 1.500">
 
@@ -165,7 +163,7 @@
                     app:boxCornerRadiusTopStart="30dp"
                     app:boxStrokeColor="@color/azul"
                     app:boxStrokeWidth="0dp"
-                    app:helperText="Opcional"
+                    app:helperText="Nombre al que se anotará el pedido"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText

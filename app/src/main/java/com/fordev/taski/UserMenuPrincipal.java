@@ -7,17 +7,15 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,10 +23,11 @@ import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.fordev.taski.balance.BalanceFragment;
 import com.fordev.taski.gastos.GastosFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,8 +37,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +45,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserMenuPrincipal extends AppCompatActivity {
+public class UserMenuPrincipal extends AppCompatActivity implements BillingProcessor.IBillingHandler {
     BottomNavigationView bottomNavigationView;
     //Firebase Instancias
     private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -64,14 +61,18 @@ public class UserMenuPrincipal extends AppCompatActivity {
     ImageView logoNegocio,ic_pregunta;
     TextView nombreNegocio;
     FloatingActionButton faq;
-    CardView venta_rapida,venta_multiple;
-    Animation fromBottom,toBottom;
+    CardView venta_rapida, venta_multiple;
+    Animation fromBottom, toBottom;
     RelativeLayout superior;
-    int posicion= 0;
+    int posicion = 0;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     final Calendar Cal = Calendar.getInstance();
     private boolean clicked = true;
     boolean premium_activado = false;
+    //Transacciones
+    private static final String TAG = "PremiumActividad";
+    BillingProcessor bp;
+    TransactionDetails transactionDetails = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +90,14 @@ public class UserMenuPrincipal extends AppCompatActivity {
         Cal.getTime();
         String dato = sdf.format(Cal.getTime());
 
+        bp = new BillingProcessor(this, getResources().getString(R.string.play_console_licence), this);
+        bp.initialize();
+        hasSuscription();
 
         infoBasica.child("FechaPremiumFin").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     String fechaFin = snapshot.getValue().toString();
         /*        int dato_int = Integer.parseInt(dato);
                 int fecha_fin_int = Integer.parseInt(fechaFin);*/
@@ -115,16 +119,11 @@ public class UserMenuPrincipal extends AppCompatActivity {
             }
         });
 
-
         SharedPreferences sharedPreferences = getSharedPreferences("TUTORIAL", MODE_PRIVATE);
 
         final Spannable spannable = new SpannableString("Crea ventas Multiples y rapidas");
         spannable.setSpan(new UnderlineSpan(), spannable.length() - "TapTargetView".length(),
                 spannable.length(), 0);
-
-        final Spannable spannable2 = new SpannableString("Visualiza tus ventas totales por, dia, semana,mes y año!");
-        spannable2.setSpan(new UnderlineSpan(), spannable2.length() - "TapTargetView".length(),
-                spannable2.length(), 0);
 
         boolean venta = sharedPreferences.getBoolean("CrearVenta" , false);
 
@@ -371,10 +370,80 @@ public class UserMenuPrincipal extends AppCompatActivity {
                 start();
     }
 
+    private boolean hasSuscription() {
+        if (transactionDetails != null){
+            return  transactionDetails.purchaseInfo != null;
+        }else {
+            return false;
+        }
+
+    }
+
+
+    @Override
+    public void onBillingInitialized() {
+        String productID = getResources().getString(R.string.suscripcion);
+        transactionDetails = bp.getSubscriptionTransactionDetails(productID);
+        bp.loadOwnedPurchasesFromGoogle();
+
+        if (bp.isSubscriptionUpdateSupported()) {
+            Log.d(TAG, "onBillingInitialized: si soporta");
+        }else {
+            Log.d(TAG, "onClick: no soporta ");
+        }
+
+        if (hasSuscription()){
+            //Poner Premium en True
+
+        }else {
+            //Poner Premium en False
+            Map<String, Object> map = new HashMap<>();
+            map.put("premium", false);
+            firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info")
+                    .updateChildren(map);
+
+            Log.d(TAG, "Se puso en false la suscripcion");
+
+        }
+
+    }
+
+
+    @Override
+    public void onProductPurchased(String productId, TransactionDetails details) {
+
+    }
+
+    @Override
+    public void onPurchaseHistoryRestored() {
+
+    }
+
+    @Override
+    public void onBillingError(int errorCode, Throwable error) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!bp.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         cargarAnimaciones();
     }
+
+
+    @Override
+    public void onDestroy() {
+        if (bp != null) {
+            bp.release();
+        }
+        super.onDestroy();
+    }
+
 }

@@ -3,47 +3,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fordev.taski">
 
+
+    <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature android:name="com.android.hardware.Camera.focus" />
-
     <application
-        android:hardwareAccelerated="true"
         android:name=".Persistencia"
         android:allowBackup="true"
         android:forceDarkAllowed="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Taski">
-        <activity android:name=".FelicidadesGold"/>
-        <activity android:name=".ListaDePedidos"/>
-        <activity android:name=".GeneradorDeQr" />
-        <activity android:name=".ComoUsarTaski" />
-        <activity android:name=".DetallesFacturaVentas" />
-        <activity android:name=".Inventario" />
-        <activity android:name=".CreacionDeRecibo" />
-        <activity android:name=".GastosNegocio" />
-        <activity android:name=".DetallesFacturaGastos" />
-        <activity android:name=".VentasNegocio" />
-        <activity android:name=".UserMenuPrincipal" />
-        <activity android:name=".DatosUsuarioDashboard" />
-        <activity android:name=".VerificationOTP" />
-        <activity android:name=".SignUpScreen" />
-        <activity android:name=".LoginScreen" />
-        <activity android:name=".CreacionDeReciboCobrar" />
-        <activity android:name=".InformacionPersonal" />
-        <activity android:name=".ListaClientes" />
-        <activity android:name=".InformacionNegocio" />
-        <activity android:name=".PlanesMenuPrincipal" />
-        <activity android:name=".ListaProveedores" />
-        <activity android:name=".InventarioPerfil" />
-        <activity android:name=".VentaRapidaNegocio" />
-        <activity android:name=".UserDashboard" />
+        <activity
+            android:name=".PremiumActividad"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FelicidadesPremium"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FelicidadesGold"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaDePedidos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GeneradorDeQr"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ComoUsarTaski"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DetallesFacturaVentas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Inventario"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreacionDeRecibo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GastosNegocio"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DetallesFacturaGastos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VentasNegocio"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserMenuPrincipal"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DatosUsuarioDashboard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VerificationOTP"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignUpScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreacionDeReciboCobrar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".InformacionPersonal"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaClientes"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".InformacionNegocio"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PlanesMenuPrincipal"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaProveedores"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".InventarioPerfil"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VentaRapidaNegocio"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserDashboard"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
@@ -72,7 +126,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7744216827949349~5053156528"/>
+            android:value="ca-app-pub-7744216827949349~5053156528" />
     </application>
 
 </manifest>

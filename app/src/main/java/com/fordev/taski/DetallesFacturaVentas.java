@@ -72,6 +72,8 @@ public class DetallesFacturaVentas extends AppCompatActivity {
     String key2 = null;
     boolean click = false;
     boolean estadoDePago;
+    boolean premium = true;
+    boolean gold = true;
     boolean abonoPorAbono = false;
     int total_factura = 0;
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
@@ -409,24 +411,42 @@ public class DetallesFacturaVentas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 if (estadoDePago) {
-                    if (total_factura < 20){
+
+                    if (premium || gold){
                         Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeRecibo.class);
                         intent.putExtra("key", key);
                         intent.putExtra("key2", key2);
                         startActivity(intent);
                     }else {
-                        actualizarGold();
+                        if (total_factura < 20 ){
+                            Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeRecibo.class);
+                            intent.putExtra("key", key);
+                            intent.putExtra("key2", key2);
+                            startActivity(intent);
+                        }else {
+                            actualizarGold();
+                        }
                     }
 
+
                 } else {
-                    if (total_factura < 20){
+
+                    if (premium || gold){
                         Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeReciboCobrar.class);
                         intent.putExtra("key", key);
                         intent.putExtra("key2", key2);
                         startActivity(intent);
                     }else {
-                        actualizarGold();
+                        if (total_factura < 20 ){
+                            Intent intent = new Intent(DetallesFacturaVentas.this, CreacionDeReciboCobrar.class);
+                            intent.putExtra("key", key);
+                            intent.putExtra("key2", key2);
+                            startActivity(intent);
+                        }else {
+                            actualizarGold();
+                        }
                     }
 
                 }

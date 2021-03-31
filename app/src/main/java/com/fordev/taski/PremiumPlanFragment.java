@@ -1,11 +1,22 @@
 package com.fordev.taski;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +33,11 @@ public class PremiumPlanFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    RelativeLayout comprar_premium;
+    private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference databaseReference = firebaseDatabase.getReference();
+    int precioGoldTaski = 0;
+    TextView precioSignoTres,precioCompleto;
 
     public PremiumPlanFragment() {
         // Required empty public constructor
@@ -60,9 +76,40 @@ public class PremiumPlanFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_premium_plan, container, false);
 
+        comprar_premium = view.findViewById(R.id.comprar_premium);
+        precioSignoTres = view.findViewById(R.id.precioSignoTres);
+        precioCompleto = view.findViewById(R.id.precioCompleto);
 
+        databaseReference.child("users").child("precioPremium").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String precio = snapshot.getValue().toString();
+                    int precioGold = Integer.parseInt(precio);
+                    precioGoldTaski = precioGold;
+                    precioSignoTres.setText(String.valueOf(precioGoldTaski));
+                    precioCompleto.setText("$ " + String.valueOf(precioGoldTaski) + ".99 " + "Por Mes");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        comprar_premium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), PremiumActividad.class));
+            }
+        });
 
 
         return  view;
     }
+
 }
