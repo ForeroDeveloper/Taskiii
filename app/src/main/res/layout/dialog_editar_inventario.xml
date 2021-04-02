@@ -5,6 +5,9 @@
     android:background="@drawable/cabecera_guardar_factura_dos"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_margin="20dp"
@@ -12,7 +15,7 @@
         android:id="@+id/crear"
         android:backgroundTint="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -318,6 +321,55 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:fontFamily="@font/nunito_black"
+                android:layout_width="wrap_content"
+                android:textColor="#00B2EB"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Codigo de Barras"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/codigoDeBarras"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:hint="Ej: Se usa para escanear tu producto con la camara"
+                app:boxBackgroundColor="#EBF9FD"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeColor="#08B36D"
+                app:boxStrokeWidth="0dp"
+                app:helperText="Edita tu codigo de Barras o QR!"
+                app:helperTextEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCodigoDeBarras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/din"
+                    android:inputType="textCapWords" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        </LinearLayout>
+
+
         <RelativeLayout
             android:id="@+id/add"
             android:layout_marginTop="20dp"
@@ -358,7 +410,6 @@
 
     </LinearLayout>
 
-
-
+    </ScrollView>
 
 </RelativeLayout>

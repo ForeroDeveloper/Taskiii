@@ -95,7 +95,7 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                         .setContentHolder(new ViewHolder(R.layout.dialog_editar_inventario))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1450)
+                        .setExpanded(true, 1690)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
                 View views = dialogEdit.getHolderView();
@@ -103,6 +103,7 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                 TextInputLayout cantidad_stock = views.findViewById(R.id.cantidad);
                 TextInputLayout nombreAEditar = views.findViewById(R.id.nombreProductoEditar);
                 TextInputLayout precioAEditar = views.findViewById(R.id.valorTotalVenta);
+                TextInputLayout codigoDeBarras = views.findViewById(R.id.codigoDeBarras);
                 TextInputEditText cantidad_stock_txt = views.findViewById(R.id.txtcantidad);
                 MaterialButton btn_guardar_edicion = views.findViewById(R.id.btn_guardar_edicion);
                 TextView btn_dismiss = views.findViewById(R.id.btn_cancelar);
@@ -112,11 +113,14 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                 ImageView icon_de_incrementos = views.findViewById(R.id.icon_de_incrementos);
 
                 //Seteos por DEfecto de la base de Datos
+                if (!model.getCodigoDeBarras().isEmpty()) {
+                    codigoDeBarras.getEditText().setText(model.getCodigoDeBarras());
+                }
                 nombreAEditar.getEditText().setText(model.getNombreProdcuto());
                 precioAEditar.getEditText().setText(String.valueOf(format.format(model.getPrecioProducto())));
-                if (model.getCantidadProducto()<0){
+                if (model.getCantidadProducto() < 0) {
                     cantidad_stock.getEditText().setText(String.valueOf(0));
-                }else {
+                } else {
                     cantidad_stock.getEditText().setText(String.valueOf(format.format(model.getCantidadProducto())));
                 }
 
@@ -176,23 +180,25 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                             cantidad_stock.setError("Ingrese una cantidad");
                         } else {
                             String nombreEditado = nombreAEditar.getEditText().getText().toString();
+                            String codeBarras = codigoDeBarras.getEditText().getText().toString();
                             double precioEditado = Double.parseDouble(precioAEditar.getEditText().getText().toString());
                             double cantidadEditado = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
-                        //GUARDAR Y ACTUALIZAR DATOS
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("nombreProdcuto",nombreEditado);
-                        map.put("precioProducto",precioEditado);
-                        map.put("cantidadProducto",cantidadEditado);
+                            //GUARDAR Y ACTUALIZAR DATOS
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("nombreProdcuto", nombreEditado);
+                            map.put("precioProducto", precioEditado);
+                            map.put("cantidadProducto", cantidadEditado);
+                            map.put("codigoDeBarras", codeBarras);
 
-                        firebaseDatabase2.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .child("Inventario").child("productos").child(getRef(position).getKey()).updateChildren(map)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        FancyToast.makeText(holder.ic_editar_item_inventario.getContext(),"Editado Correctamente!",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
-                                        dialogEdit.dismiss();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
+                            firebaseDatabase2.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child("Inventario").child("productos").child(getRef(position).getKey()).updateChildren(map)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            FancyToast.makeText(holder.ic_editar_item_inventario.getContext(), "Editado Correctamente!", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+                                            dialogEdit.dismiss();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 FancyToast.makeText(holder.ic_editar_item_inventario.getContext(),"Hubo un error al editar!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
@@ -223,13 +229,13 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                         .child("Inventario").child("productos").child(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.child("QrCode").exists()){
-                            String codigoQr = snapshot.child("QrCode").getValue().toString();
+                        if (snapshot.child("codigoDeBarras").exists()) {
+                            String codigoQr = snapshot.child("codigoDeBarras").getValue().toString();
                             Intent intent = new Intent(holder.ic_generar_qr.getContext(), GeneradorDeQr.class);
                             intent.putExtra("codeQr", codigoQr);
                             intent.putExtra("nombreProducto", model.getNombreProdcuto());
                             v.getContext().startActivity(intent);
-                        }else {
+                        } else {
                             Toast.makeText(holder.ic_generar_qr.getContext(), "No se encuentra un Codigo QR", Toast.LENGTH_SHORT).show();
                         }
 

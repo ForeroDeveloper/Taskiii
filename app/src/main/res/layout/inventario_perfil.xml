@@ -390,6 +390,33 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/scannerQr"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="80dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#E8E8FF"
+        android:layout_marginEnd="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_qr"/>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/faq_nuevo_pedido"
         android:layout_width="match_parent"

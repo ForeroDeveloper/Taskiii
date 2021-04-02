@@ -19,7 +19,6 @@
             android:background="@color/white"
             android:padding="8dp">
 
-
             <RelativeLayout
                 android:id="@+id/icon_estado_de_pago"
                 android:layout_width="55dp"
@@ -40,7 +39,7 @@
 
             <TextView
                 android:id="@+id/nombreProductoPedido"
-                android:layout_width="wrap_content"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
@@ -111,8 +110,8 @@
                 android:layout_toStartOf="@+id/ic_confirmar_llegada"
                 android:layout_marginEnd="30dp"
                 android:padding="1dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_llamar"/>
 

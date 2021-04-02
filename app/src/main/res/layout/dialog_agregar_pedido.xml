@@ -65,8 +65,7 @@
                     app:boxStrokeWidth="0dp"
                     app:hintEnabled="false"
                     app:helperTextEnabled="true"
-                    app:helperText="Ej: Blusa XL"
-                    android:hint="$ 1.500">
+                    app:helperText="Ej: Blusa XL">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtNombreProducto"
@@ -144,6 +143,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -176,6 +176,8 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"

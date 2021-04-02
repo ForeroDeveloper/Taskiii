@@ -1,17 +1,18 @@
 package com.fordev.taski.modelos;
 
 public class ModeloInventario {
-    String nombreProdcuto,fechaRegistro,id;
+    String nombreProdcuto,fechaRegistro,id, codigoDeBarras;
     Long timeStamp;
     double precioProducto, cantidadProducto;
 
     public ModeloInventario() {
     }
 
-    public ModeloInventario(String nombreProdcuto, String fechaRegistro, String id, Long timeStamp, double precioProducto, double cantidadProducto) {
+    public ModeloInventario(String nombreProdcuto, String fechaRegistro, String id, String codigoDeBarras, Long timeStamp, double precioProducto, double cantidadProducto) {
         this.nombreProdcuto = nombreProdcuto;
         this.fechaRegistro = fechaRegistro;
         this.id = id;
+        this.codigoDeBarras = codigoDeBarras;
         this.timeStamp = timeStamp;
         this.precioProducto = precioProducto;
         this.cantidadProducto = cantidadProducto;
@@ -63,5 +64,13 @@ public class ModeloInventario {
 
     public void setCantidadProducto(double cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+
+    public String getCodigoDeBarras() {
+        return codigoDeBarras;
+    }
+
+    public void setCodigoDeBarras(String codigoDeBarras) {
+        this.codigoDeBarras = codigoDeBarras;
     }
 }

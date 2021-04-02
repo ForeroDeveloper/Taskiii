@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class ListaDePedidos extends AppCompatActivity {
     DatabaseReference databaseReference;
@@ -44,7 +45,6 @@ public class ListaDePedidos extends AppCompatActivity {
         txtTotalStock = findViewById(R.id.txtTotalStock);
         searchView = findViewById(R.id.search_view);
         sinContenidoInventario = findViewById(R.id.ilustracion);
-
 
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
@@ -78,23 +78,30 @@ public class ListaDePedidos extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        if (nombreProducto.getEditText().getText().toString().isEmpty()) {
-                            nombreProducto.setError("Ingrese un nombre");
-                        } else {
-                            String nombreCliente = nombre_Cliente.getEditText().getText().toString().trim();
-                            String numeroCliente = numero_cliente.getEditText().getText().toString().trim();
-                            String pedido = nombreProducto.getEditText().getText().toString().trim();
-                            int cantidadPedido = Integer.parseInt(cantidad.getEditText().getText().toString().trim());
+                        try {
+                            if (nombreProducto.getEditText().getText().toString().isEmpty()) {
+                                nombreProducto.setError("Ingrese un nombre");
+                            } else if (cantidad.getEditText().getText().toString().isEmpty()) {
+                                cantidad.setError("Ingrese un valor");
+                            } else {
+                                String nombreCliente = nombre_Cliente.getEditText().getText().toString().trim();
+                                String numeroCliente = numero_cliente.getEditText().getText().toString().trim();
+                                String pedido = nombreProducto.getEditText().getText().toString().trim();
+                                int cantidadPedido = Integer.parseInt(cantidad.getEditText().getText().toString().trim());
 
-                            ModeloListaPedidos modeloPedido = new ModeloListaPedidos();
-                            modeloPedido.setNombreCliente(nombreCliente);
-                            modeloPedido.setNumeroCliente(numeroCliente);
-                            modeloPedido.setCantidadPedido(cantidadPedido);
-                            modeloPedido.setNombrePedido(pedido);
-                            databaseReference.child(modeloPedido.getNombrePedido()).setValue(modeloPedido);
-                            databaseReference.keepSynced(true);
-                            dialogo.dismiss();
+                                ModeloListaPedidos modeloPedido = new ModeloListaPedidos();
+                                modeloPedido.setNombreCliente(nombreCliente);
+                                modeloPedido.setNumeroCliente(numeroCliente);
+                                modeloPedido.setCantidadPedido(cantidadPedido);
+                                modeloPedido.setNombrePedido(pedido);
+                                databaseReference.child(modeloPedido.getNombrePedido()).setValue(modeloPedido);
+                                databaseReference.keepSynced(true);
+                                dialogo.dismiss();
 
+                            }
+                        } catch (NumberFormatException numberFormatException) {
+
+                            FancyToast.makeText(ListaDePedidos.this, "Verifica lo signos que usas en los campos!", FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                         }
                     }
                 });

@@ -70,12 +70,12 @@ public class VentasNegocio extends AppCompatActivity {
     TextInputLayout edtProducto, precioUnitario, cantidadProducto, precioFinalPorUsuario;
     TextInputEditText txtprecioUnitario, txtcantidadProducto, txtprecioFinalPorUsuario;
     RecyclerView listaDeProductos, lista_de_productos_venta_inventario;
-    DatabaseReference databaseReference,databaseReferenceClientes;
+    DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     AdaptadorListaProductos adaptadorListaProductos;
     AdaptadorListaProductosEnInventario adaptadorListaProductosEnInventario;
     LinearLayout cabeceraFacturas, imgIlustra;
-    MaterialButton btnLimpiar, btnGuardarProducto, btnInventario;
+    MaterialButton btnLimpiar, btnGuardarProducto, btnInventario,btnDescuento;
     TextView txtCrearVenta, btnGuardarFactura;
     ImageView atras;
     private int dia, mes, ano;
@@ -91,9 +91,9 @@ public class VentasNegocio extends AppCompatActivity {
     boolean premium = true;
     boolean gold = true;
     int total_factura = 0;
-
-    View view;
-    DialogPlus dialogPlus;
+    int descuento = 0;
+    int descuentoIngresado = 0;
+    int total = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +111,7 @@ public class VentasNegocio extends AppCompatActivity {
         listaDeProductos = findViewById(R.id.lista_de_productos_venta);
         lista_de_productos_venta_inventario = findViewById(R.id.lista_de_productos_venta_inventario);
         atras = findViewById(R.id.atras);
+        btnDescuento = findViewById(R.id.descuento);
         //Edit Text Material Text
         txtprecioUnitario = findViewById(R.id.txtprecioUnitario);
         txtcantidadProducto = findViewById(R.id.txtcantidad);
@@ -422,6 +423,80 @@ public class VentasNegocio extends AppCompatActivity {
             }
         });
 
+        btnDescuento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogPlus dialog = DialogPlus.newDialog(VentasNegocio.this)
+                        .setContentHolder(new ViewHolder(R.layout.dialog_agregar_descuento))
+                        .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                        .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .setGravity(Gravity.CENTER)
+                        .setContentBackgroundResource(android.R.color.transparent)
+                        .create();
+
+                View view1 = dialog.getHolderView();
+
+                TextView btn_dismis = view1.findViewById(R.id.btn_cancel);
+                MaterialButton btn_aceptar = view1.findViewById(R.id.btn_aceptar);
+                TextInputEditText valor_descuento = view1.findViewById(R.id.txtDescuento);
+                TextView totalVenta = view1.findViewById(R.id.totalVenta);
+
+                //Setear el valor de la factura
+                total = totalDeFactura + totalDeFacturaInventario;
+                totalVenta.setText("$ "+String.valueOf(nformat.format(total)));
+
+                valor_descuento.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (valor_descuento.getText().toString().isEmpty()){
+                            totalVenta.setText(String.valueOf(total));
+
+                        }else {
+                            int valorIngresado = Integer.parseInt(valor_descuento.getText().toString());
+                            totalVenta.setText("$ "+String.valueOf(nformat.format(total)));
+                        }
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                btn_aceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!valor_descuento.getText().toString().isEmpty()){
+                            int valorIngresado = Integer.parseInt(valor_descuento.getText().toString());
+                            databaseReference.child("facturas").child("facturasCreadas").child(key).child("descuento").setValue(valorIngresado);
+                            descuentoIngresado = valorIngresado;
+                            hacerSumaTotalDeProductos();
+                            hacerSumaTotalDeProductosInventario();
+                            dialog.dismiss();
+                        }else {
+                            FancyToast.makeText(VentasNegocio.this,"Ingrese un valor!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+                        }
+
+                    }
+                });
+
+
+                btn_dismis.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
         //FIREBASE
         listaDeProductos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -510,7 +585,7 @@ public class VentasNegocio extends AppCompatActivity {
         };
 
 
-        txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario)));
+        txtTotalFactura.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario - descuento)));
 
         //CLick Listener and others
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -563,6 +638,8 @@ public class VentasNegocio extends AppCompatActivity {
                     datos_concepto_venta = "Venta " + (int) (Math.random() * (3000 - 1000));
                 }
 
+                int descuento_mas_total_calculado = totalDeFactura + totalDeFacturaInventario - descuento;
+
                 ModeloFacturaCreada modeloFacturaCreada = new ModeloFacturaCreada();
                 modeloFacturaCreada.setId(key);
                 modeloFacturaCreada.setIdInventario(key2);
@@ -570,7 +647,7 @@ public class VentasNegocio extends AppCompatActivity {
                 modeloFacturaCreada.setConceptoDeVenta(datos_concepto_venta);
                 modeloFacturaCreada.setNotasInternas(datos_notas_internas);
                 modeloFacturaCreada.setEstadoDePago(estadoDePago);
-                modeloFacturaCreada.setTotalCalculado(totalDeFactura + totalDeFacturaInventario);
+                modeloFacturaCreada.setTotalCalculado(descuento_mas_total_calculado);
                 modeloFacturaCreada.setMetodoDePago(datos_metodo_de_pago);
                 modeloFacturaCreada.setFechaRegistro(sdf.format(Cal.getTime()));
                 modeloFacturaCreada.setTimeStamp(getFechaMilisegundos() * -1);
@@ -587,6 +664,7 @@ public class VentasNegocio extends AppCompatActivity {
                 }
 
                 databaseReference.child("facturas").child("facturasCreadas").child(key).setValue(modeloFacturaCreada);
+                databaseReference.child("facturas").child("facturasCreadas").child(key).child("descuento").setValue(descuentoIngresado);
                 databaseReference.keepSynced(true);
 
                 //BORRAR DATOS FACTURA ACTUAL
@@ -632,6 +710,24 @@ public class VentasNegocio extends AppCompatActivity {
     }
 
     private void hacerSumaTotalDeProductos() {
+        databaseReference.child("facturas").child("facturasCreadas").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int descuentoFctura = 0;
+                    if (snapshot.child("descuento").exists()){
+                        Object desc = snapshot.child("descuento").getValue();
+                        String descontar = String.valueOf(desc);
+                        descuentoFctura = Integer.parseInt(descontar);
+                        descuento = descuentoFctura;
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         databaseReference.child("facturas").child("fechas").child("listaDeFacturas").child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -643,8 +739,7 @@ public class VentasNegocio extends AppCompatActivity {
                     int total = Integer.parseInt(String.valueOf(suma));
                     sum += total;
                     totalDeFactura = sum;
-                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario)));
-
+                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario - descuento)));
                 }
 
 
@@ -659,12 +754,25 @@ public class VentasNegocio extends AppCompatActivity {
 
     private void hacerSumaTotalDeProductosInventario() {
 
-        FirebaseDatabase firebaseDatabase1;
+        databaseReference.child("facturas").child("facturasCreadas").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int descuentoFctura = 0;
+                if (snapshot.child("descuento").exists()){
+                    Object desc = snapshot.child("descuento").getValue();
+                    String descontar = String.valueOf(desc);
+                    descuentoFctura = Integer.parseInt(descontar);
+                    descuento = descuentoFctura;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         DatabaseReference databaseReference1;
-
-        firebaseDatabase1 = FirebaseDatabase.getInstance();
-
-        databaseReference1 = firebaseDatabase1.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        databaseReference1 = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("facturas").child("fechas").child("listaDeFacturasIV");
 
         databaseReference1.child(key2).addValueEventListener(new ValueEventListener() {
@@ -678,7 +786,7 @@ public class VentasNegocio extends AppCompatActivity {
                     int total = Integer.parseInt(String.valueOf(suma));
                     sum += total;
                     totalDeFacturaInventario = sum;
-                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario)));
+                    txtCrearVenta.setText(String.valueOf("$ " + nformat.format(totalDeFactura + totalDeFacturaInventario - descuento)));
                 }
 
 
@@ -701,7 +809,6 @@ public class VentasNegocio extends AppCompatActivity {
         hacerSumaDeItems2();
         adaptadorListaProductos.startListening();
         adaptadorListaProductosEnInventario.startListening();
-        adaptadorListaProductos.notifyDataSetChanged();
     }
 
 

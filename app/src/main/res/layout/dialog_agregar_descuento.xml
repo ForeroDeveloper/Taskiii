@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="270dp"
+    android:layout_height="220dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:elevation="20dp"
+    app:cardCornerRadius="20dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ic_seleccionar_fecha"
+            android:layout_marginStart="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_factura"
+            app:tint="@color/rojo" />
+
+        <TextView
+            android:id="@+id/totalVenta"
+            android:layout_toEndOf="@+id/ic_seleccionar_fecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:layout_marginTop="14dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/din"
+            android:textSize="20dp"
+            android:text="$ 185,000"
+            android:textColor="@color/negro" />
+
+        <TextView
+            android:id="@+id/agregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ic_seleccionar_fecha"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/din"
+            android:text="Agrega el valor del descuento."
+            android:textColor="@color/negro" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/codigo"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/agregar"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="#AA1C19"
+            app:boxCornerRadiusBottomStart="30dp"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxCornerRadiusBottomEnd="30dp"
+            app:boxCornerRadiusTopEnd="30dp"
+            app:boxBackgroundColor="#F5E5E5"
+            app:boxStrokeWidth="0dp"
+            app:hintEnabled="false"
+            android:hint="500">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtDescuento"
+                android:layout_width="match_parent"
+                android:inputType="numberDecimal|phone"
+                android:gravity="center"
+                android:fontFamily="@font/din"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_aceptar"
+            android:layout_width="89dp"
+            android:fontFamily="@font/din"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="20dp"
+            android:textSize="14dp"
+            android:layout_marginBottom="5dp"
+            android:text="Aceptar"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/rojo" />
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toStartOf="@+id/btn_aceptar"
+            android:fontFamily="@font/din"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/gris_oscuro"
+            android:textSize="16sp"
+            app:backgroundTint="@android:color/transparent" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

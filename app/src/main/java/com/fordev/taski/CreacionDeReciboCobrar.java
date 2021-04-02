@@ -36,11 +36,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -77,19 +74,9 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
     int total_factura;
     String fecha_factura;
 
-    String imageaUri;
-    String path;
-    Bitmap bitmap;
-
     int abonar;
     int abonado;
     int abonadoMenosAbonar;
-    Date date;
-
-    public static final int READ_PHONE = 110;
-    String file_name = "Screenshot";
-    File myPath;
-
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,9 +278,6 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
             }
         });
 
-
-
-
         //FIREBASE
         lista_de_productos_venta_recibo.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         FirebaseRecyclerOptions<ModeloVenta> options =
@@ -335,9 +319,9 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("image/jpg");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.putExtra(Intent.EXTRA_TEXT, "Hola " + (nombre_cliente + "," + System.getProperty ("line.separator") + System.getProperty ("line.separator") )  + ("Te recordamos que aún tienes una deuda pendiente por un valor de $" + String.valueOf(nformat.format(abonar)) + ". Compra que realizaste el " + fecha_factura +
-                ". *Actualmente has abonado un total de* $ " + String.valueOf(nformat.format(abonadoMenosAbonar)))+"."
-                        + System.getProperty("line.separator") + System.getProperty("line.separator") +  "Recuerda hacer los pagos correspondientes lo antes posible" + (System.getProperty("line.separator") + System.getProperty("line.separator")) + "Este mensaje fue enviado desde la aplicación Taski. ");
+        intent.putExtra(Intent.EXTRA_TEXT, "Hola " + (nombre_cliente + "," + System.getProperty("line.separator") + System.getProperty("line.separator")) + ("Te recordamos que aún tienes una deuda pendiente por un valor de $" + String.valueOf(nformat.format(abonar)) + ". Compra que realizaste el " + fecha_factura +
+                ". *Actualmente has abonado un total de* $ " + String.valueOf(nformat.format(abonadoMenosAbonar))) + "."
+                + System.getProperty("line.separator") + System.getProperty("line.separator") + "Recuerda hacer los pagos correspondientes lo antes posible" + (System.getProperty("line.separator") + System.getProperty("line.separator")) + "Este mensaje fue enviado desde la aplicación Taski.  " + "https://bit.ly/3u7ahgm");
         startActivity(Intent.createChooser(intent, "Compartir Recibo..."));
 
         return  returnBitmap;
@@ -355,7 +339,5 @@ public class CreacionDeReciboCobrar extends AppCompatActivity {
         super.onStart();
         adaptadorListaProductosRecibo.startListening();
         adaptadorListaProductosInventarioRecibo.startListening();
-        adaptadorListaProductosRecibo.notifyDataSetChanged();
-        adaptadorListaProductosInventarioRecibo.notifyDataSetChanged();
     }
 }

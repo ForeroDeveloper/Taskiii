@@ -95,8 +95,13 @@ public class VerificationOTP extends AppCompatActivity {
             };
 
     private void verificarCodigo(String code) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeBySystem,code);
-        signInWithPhoneAuthCredential(credential);
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeBySystem,code);
+            signInWithPhoneAuthCredential(credential);
+        }catch (IllegalArgumentException illegalArgumentException){
+            Toast.makeText(getApplicationContext(), "Error, ingresa de nuevo", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {

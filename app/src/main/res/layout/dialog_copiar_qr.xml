@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="270dp"
+    android:layout_height="190dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:elevation="20dp"
+    app:cardCornerRadius="20dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/totalVenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:layout_marginTop="14dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/din"
+            android:textSize="18dp"
+            android:text="Copiar el numero de tu BarCode o QR"
+            android:textColor="@color/negro" />
+
+        <TextView
+            android:id="@+id/codigoQR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/totalVenta"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/din"
+            android:text="708246891"
+            android:textColor="@color/negro" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/codigoQR"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/brandon_grotesque_light"
+            android:text="Esto se usa para que se copie el código de barras o QR de forma correcta y sin errores"
+            android:textColor="#B4B4B4"
+            android:textSize="11dp"
+            android:textStyle="normal" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_copiar"
+            android:layout_width="89dp"
+            android:fontFamily="@font/din"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="20dp"
+            android:textSize="14dp"
+            android:layout_marginBottom="5dp"
+            android:text="Copiar"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/azul" />
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toStartOf="@+id/btn_copiar"
+            android:fontFamily="@font/din"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/gris_oscuro"
+            android:textSize="16sp"
+            app:backgroundTint="@android:color/transparent" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

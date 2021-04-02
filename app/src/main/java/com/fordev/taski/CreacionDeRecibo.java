@@ -74,10 +74,10 @@ public class CreacionDeRecibo extends AppCompatActivity {
     AdaptadorListaProductosInventarioRecibo adaptadorListaProductosInventarioRecibo;
     ImageView img_logo_negocio_recibo;
     TextView txtNombreNegocioRecibo,txtNitNegocioRecibo,txt_fecha_factura_cliente,txtNombreVendedorRecibo,txt_nombre_cliente,txt_numero_factura_cliente,txtUbicacionNegocioRecibo
-            ,txtDireccionNegocioRecibo,txtTelefonoNegocio,txt_total_factura_cliente,txtProductoRecibo,txtPrecioRecibo,txtTotalRecibo;
+            ,txtDireccionNegocioRecibo,txtTelefonoNegocio,txt_total_factura_cliente,txtProductoRecibo,txtPrecioRecibo,txtTotalRecibo,txt_sub_total,txt_descuento;
     MaterialButton enviarRecibo;
     NestedScrollView contenidoLayout;
-    RelativeLayout marcaDeAgua;
+    RelativeLayout marcaDeAgua,descuento,subtotal;
     LinearLayout venta_rapida_info;
 
     String key = null;
@@ -88,6 +88,7 @@ public class CreacionDeRecibo extends AppCompatActivity {
     String nombre_cliente;
     int total_factura;
     String fecha_factura;
+    int descuentoRestar = 0;
 
 
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
@@ -101,6 +102,10 @@ public class CreacionDeRecibo extends AppCompatActivity {
         txtProductoRecibo = findViewById(R.id.txtProductoRecibo);
         txtPrecioRecibo = findViewById(R.id.txtPrecioRecibo);
         txtTotalRecibo = findViewById(R.id.txtTotalRecibo);
+        descuento = findViewById(R.id.descuento);
+        subtotal = findViewById(R.id.subtotal);
+        txt_sub_total = findViewById(R.id.txt_sub_total);
+        txt_descuento = findViewById(R.id.txt_descuento);
         //Logo Negocio
         img_logo_negocio_recibo = findViewById(R.id.img_logo_negocio_recibo);
         //Nombre Negocio
@@ -177,7 +182,23 @@ public class CreacionDeRecibo extends AppCompatActivity {
                     }
 
                     total_factura = Integer.parseInt(String.valueOf(snapshot.child("abonado").getValue().toString()));
-                    txt_total_factura_cliente.setText("$ " + String.valueOf(nformat.format(total_factura)));
+
+                    if (snapshot.child("descuento").exists()){
+                        int saberSiEsCero = Integer.parseInt(String.valueOf(snapshot.child("descuento").getValue().toString()));
+                        if (saberSiEsCero != 0){
+                            descuento.setVisibility(View.VISIBLE);
+                            subtotal.setVisibility(View.VISIBLE);
+                            descuentoRestar = saberSiEsCero;
+                            txt_sub_total.setText("$ "+String.valueOf(nformat.format(total_factura + descuentoRestar)));
+                            txt_descuento.setText("$ "+String.valueOf(nformat.format(saberSiEsCero)));
+                            txt_total_factura_cliente.setText("$ " + String.valueOf(nformat.format(total_factura)));
+                        }else {
+                            txt_total_factura_cliente.setText("$ " + String.valueOf(nformat.format(total_factura)));
+                        }
+                    }else {
+                        txt_total_factura_cliente.setText("$ " + String.valueOf(nformat.format(total_factura)));
+                    }
+
                 }
 
             }
@@ -330,7 +351,7 @@ public class CreacionDeRecibo extends AppCompatActivity {
         intent.setType("image/jpg");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         intent.putExtra(Intent.EXTRA_TEXT, "Hola " + (nombre_cliente + "," + System.getProperty ("line.separator") + System.getProperty ("line.separator") )  + ("Aquí te dejamos una copia de tu recibo por un valor de " + "*$"+ String.valueOf(nformat.format(total_factura)) + "*"+ ". Compra que realizaste el " + fecha_factura +"." )
-                        + System.getProperty("line.separator") + System.getProperty("line.separator") +  "Si tienes alguna duda respecto a tu compra no dudes en contactarnos!" + (System.getProperty("line.separator") + System.getProperty("line.separator")) + "Este mensaje fue enviado desde la aplicación Taski. ");
+                        + System.getProperty("line.separator") + System.getProperty("line.separator") +  "Si tienes alguna duda respecto a tu compra no dudes en contactarnos!" + (System.getProperty("line.separator") + System.getProperty("line.separator")) + "Este mensaje fue enviado desde la aplicación Taski.  " + "https://bit.ly/3u7ahgm");
         startActivity(Intent.createChooser(intent, "Compartir Recibo..."));
 
         return  returnBitmap;

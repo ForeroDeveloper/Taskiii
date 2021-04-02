@@ -65,6 +65,7 @@ public class Inventario extends AppCompatActivity {
     TextView totalProductos, txtTotalStock, txtTotalInventario;
     CardView sinContenidoInventario, scannerQr;
     String idIngrsesar;
+    String codigoProducto = "";
     public String keyy;
     int sum = 0;
     DecimalFormat format = new DecimalFormat("0.#");
@@ -80,6 +81,7 @@ public class Inventario extends AppCompatActivity {
     int total_factura = 0;
     boolean premium = true;
     boolean gold = true;
+    String codigoAgregar = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -230,7 +232,7 @@ public class Inventario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 IntentIntegrator intentIntegrator = new IntentIntegrator(Inventario.this);
-                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
                 intentIntegrator.setCameraId(0);
                 intentIntegrator.setOrientationLocked(false);
                 intentIntegrator.setPrompt("Sube el Volumen + , y activa el Flash");
@@ -294,7 +296,7 @@ public class Inventario extends AppCompatActivity {
                 .setContentHolder(new ViewHolder(R.layout.dialog_agregar_inventario))
                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setExpanded(true, 1100)
+                .setExpanded(true, 1350)
                 .setContentBackgroundResource(android.R.color.transparent)
                 .create();
 
@@ -304,8 +306,8 @@ public class Inventario extends AppCompatActivity {
         TextInputLayout nombre_Producto = dialog.findViewById(R.id.nombreClientes);
         TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
         TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
+        TextInputLayout codigoDeBarras = dialog.findViewById(R.id.codigoDeBarras);
         TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
-
         btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,22 +321,26 @@ public class Inventario extends AppCompatActivity {
                     cantidad_stock.setError("Ingrese un valor");
                     precio_unitario.setErrorEnabled(false);
                 } else {
-
                     String nombreProducto = nombre_Producto.getEditText().getText().toString();
                     double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
                     double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
-                    int randomQr = (int) (Math.random() * (3000 - 1000));
+                    String codeDeBarras = codigoDeBarras.getEditText().getText().toString();
+                    if (codeDeBarras.isEmpty() || codeDeBarras.equals("")){
+                        int randomQr = (int) (Math.random() * (3000 - 1000));
+                        codigoProducto = String.valueOf(randomQr);
+                    }else {
+                        codigoProducto = codeDeBarras;
+                    }
 
                     ModeloInventario modeloInventario = new ModeloInventario();
-
                     modeloInventario.setNombreProdcuto(nombreProducto);
                     modeloInventario.setPrecioProducto(precioUnitario);
                     modeloInventario.setCantidadProducto(cantidadStock);
                     modeloInventario.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
                     modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
                     modeloInventario.setId(id);
+                    modeloInventario.setCodigoDeBarras(codigoProducto);
                     databaseReference.child(id).setValue(modeloInventario);
-                    databaseReference.child(id).child("QrCode").setValue(String.valueOf(randomQr));
                     databaseReference.keepSynced(true);
                     dialogo.dismiss();
                 }
@@ -460,7 +466,7 @@ public class Inventario extends AppCompatActivity {
                     //Ciclo para ventas en deuda
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                        Object codigo = map.get("QrCode");
+                        Object codigo = map.get("codigoDeBarras");
                         String qr_code = String.valueOf(codigo);
                         if (qr_code.equals(result.getContents())) {
                             Object nomProdcuto = map.get("nombreProdcuto");

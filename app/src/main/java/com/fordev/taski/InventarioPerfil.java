@@ -1,7 +1,11 @@
 package com.fordev.taski;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +13,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.DialogCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fordev.taski.adaptadores.AdaptadorListaInventarioPerfil;
 import com.fordev.taski.modelos.ModeloInventario;
+import com.fordev.taski.modelos.ModeloVenta;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,13 +39,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -45,12 +60,10 @@ public class InventarioPerfil extends AppCompatActivity {
     AdaptadorListaInventarioPerfil adaptadorListaInventarioPerfil;
     MaterialButton faq_add,regresar;
     TextView totalProductos, txtTotalStock,txtTotalInventario;
-    CardView sinContenidoInventario;
-    ImageView prueba;
-    public String keyy;
+    CardView sinContenidoInventario,scannerQr;
     boolean premium = true;
     boolean gold = true;
-    int sum = 0;
+    String codigoProducto = "";
     DecimalFormat format = new DecimalFormat("0.#");
     NumberFormat nformat = new DecimalFormat("##,###,###.##");
     SearchView searchView;
@@ -67,7 +80,7 @@ public class InventarioPerfil extends AppCompatActivity {
         searchView = findViewById(R.id.search_view);
         sinContenidoInventario = findViewById(R.id.ilustracion);
         txtTotalInventario = findViewById(R.id.txtTotalInventario);
-        /*txtTotalInventario = findViewById(R.id.txtTotalInventario);*/
+        scannerQr = findViewById(R.id.scannerQr);
         regresar = findViewById(R.id.regresar);
 
 
@@ -157,6 +170,20 @@ public class InventarioPerfil extends AppCompatActivity {
             }
         });
 
+        scannerQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(InventarioPerfil.this);
+                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+                intentIntegrator.setCameraId(0);
+                intentIntegrator.setOrientationLocked(false);
+                intentIntegrator.setPrompt("Sube el Volumen + , y activa el Flash");
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setBarcodeImageEnabled(true);
+                intentIntegrator.initiateScan();
+            }
+        });
+
 
         listaDeProductos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         FirebaseRecyclerOptions<ModeloInventario> options =
@@ -211,7 +238,7 @@ public class InventarioPerfil extends AppCompatActivity {
                 .setContentHolder(new ViewHolder(R.layout.dialog_agregar_inventario))
                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setExpanded(true, 1100)
+                .setExpanded(true, 1350)
                 .setContentBackgroundResource(android.R.color.transparent)
                 .create();
 
@@ -222,6 +249,7 @@ public class InventarioPerfil extends AppCompatActivity {
         TextInputLayout precio_unitario = dialog.findViewById(R.id.valorTotalVenta);
         TextInputLayout cantidad_stock = dialog.findViewById(R.id.cantidad);
         TextView btn_cancelar = dialog.findViewById(R.id.btn_cancelar);
+        TextInputLayout codigoDeBarras = dialog.findViewById(R.id.codigoDeBarras);
 
         btn_guardar_producto_inventario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,7 +268,13 @@ public class InventarioPerfil extends AppCompatActivity {
                     String nombreProducto = nombre_Producto.getEditText().getText().toString();
                     double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
                     double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
-                    int randomQr = (int) (Math.random() * (3000 - 1000));
+                    String codeDeBarras = codigoDeBarras.getEditText().getText().toString();
+                    if (codeDeBarras.isEmpty() || codeDeBarras.equals("")){
+                        int randomQr = (int) (Math.random() * (3000 - 1000));
+                        codigoProducto = String.valueOf(randomQr);
+                    }else {
+                        codigoProducto = codeDeBarras;
+                    }
 
                     ModeloInventario modeloInventario = new ModeloInventario();
 
@@ -250,8 +284,8 @@ public class InventarioPerfil extends AppCompatActivity {
                     modeloInventario.setFechaRegistro(getFechaNormal(getFechaMilisegundos()));
                     modeloInventario.setTimeStamp(getFechaMilisegundos() * -1);
                     modeloInventario.setId(id);
+                    modeloInventario.setCodigoDeBarras(codigoProducto);
                     databaseReference.child(id).setValue(modeloInventario);
-                    databaseReference.child(id).child("QrCode").setValue(String.valueOf(randomQr));
                     databaseReference.keepSynced(true);
                     dialogo.dismiss();
                 }
@@ -354,5 +388,60 @@ public class InventarioPerfil extends AppCompatActivity {
         super.onStop();
         adaptadorListaInventarioPerfil.stopListening();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null && result.getContents() != null) {
+
+            DialogPlus dialog = DialogPlus.newDialog(InventarioPerfil.this)
+                    .setContentHolder(new ViewHolder(R.layout.dialog_copiar_qr))
+                    .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                    .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .setGravity(Gravity.CENTER)
+                    .setContentBackgroundResource(android.R.color.transparent)
+                    .create();
+
+            View view = dialog.getHolderView();
+
+            TextView codigoQR = view.findViewById(R.id.codigoQR);
+            MaterialButton btn_copiar = view.findViewById(R.id.btn_copiar);
+            TextView btn_cancel = view.findViewById(R.id.btn_cancel);
+
+            codigoQR.setText(result.getContents());
+
+            btn_copiar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setClipboard(InventarioPerfil.this, codigoQR.getText().toString());
+                    FancyToast.makeText(InventarioPerfil.this, "Copiado correctamente!", FancyToast.LENGTH_SHORT, FancyToast.INFO, R.drawable.logo_taski, false).show();
+                    dialog.dismiss();
+                }
+            });
+
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+    private void setClipboard(Context context, String text) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+            clipboard.setPrimaryClip(clip);
+        }
+    }
+
 
 }
