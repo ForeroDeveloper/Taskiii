@@ -17,11 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.zxing.BarcodeFormat;
+/*import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.journeyapps.barcodescanner.BarcodeEncoder;*/
 
 import java.util.Calendar;
 import java.util.Date;
@@ -92,13 +92,13 @@ public class GeneradorDeQr extends AppCompatActivity {
         super.onStart();
         if (key!=null){
             try {
-                MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+              /*  MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 BitMatrix bitMatrix = multiFormatWriter.encode(key, BarcodeFormat.QR_CODE, 500,500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                 Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                img_qr_code.setImageBitmap(bitmap);
+                img_qr_code.setImageBitmap(bitmap);*/
 
-            }catch (WriterException e){
+            }catch (IllegalArgumentException e){
                 e.printStackTrace();
             }
         }
