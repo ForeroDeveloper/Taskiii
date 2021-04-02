@@ -9,8 +9,10 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
@@ -31,6 +33,7 @@ import com.fordev.taski.gastos.GastosFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +41,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
@@ -477,4 +482,34 @@ public class UserMenuPrincipal extends AppCompatActivity implements BillingProce
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        DialogPlus dialog = DialogPlus.newDialog(UserMenuPrincipal.this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_confirm_cerrar_app))
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setGravity(Gravity.CENTER)
+                .setContentBackgroundResource(android.R.color.transparent)
+                .create();
+
+        View views = dialog.getHolderView();
+        MaterialButton btn_salir = views.findViewById(R.id.btn_salir);
+        TextView cancel = views.findViewById(R.id.btn_cancel);
+
+        btn_salir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserMenuPrincipal.super.onBackPressed();
+                onBackPressed();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }

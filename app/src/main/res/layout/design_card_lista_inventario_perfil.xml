@@ -80,11 +80,11 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/bajo_stock_visible"
                 android:layout_marginTop="7dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/nombreClientes"
                 app:cardBackgroundColor="#FFECDD"
                 android:layout_width="55dp"
-                android:elevation="0dp"
+                app:cardElevation="1dp"
                 android:layout_height="15dp"
                 app:cardCornerRadius="5dp">
 

@@ -113,8 +113,8 @@
                         android:layout_height="15dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="6dp"
+                        app:cardElevation="1dp"
                         android:layout_toEndOf="@+id/nombreClientes"
-                        android:elevation="0dp"
                         app:cardBackgroundColor="#FFECDD"
                         app:cardCornerRadius="5dp">
 

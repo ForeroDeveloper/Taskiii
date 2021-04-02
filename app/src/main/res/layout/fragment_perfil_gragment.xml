@@ -518,7 +518,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="30dp"
                     android:fontFamily="@font/mazzard"
-                    android:text="Inventario"
+                    android:text="Inventario &amp; Pedidos"
                     android:textAllCaps="true"
                     android:textColor="@color/primario"
                     android:textSize="13dp"

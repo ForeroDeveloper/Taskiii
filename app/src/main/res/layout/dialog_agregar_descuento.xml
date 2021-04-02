@@ -66,6 +66,8 @@
             app:boxBackgroundColor="#F5E5E5"
             app:boxStrokeWidth="0dp"
             app:hintEnabled="false"
+            app:prefixText="$"
+            app:helperTextEnabled="true"
             android:hint="500">
 
             <com.google.android.material.textfield.TextInputEditText

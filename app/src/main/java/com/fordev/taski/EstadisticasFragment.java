@@ -19,6 +19,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.skydoves.balloon.ArrowConstraints;
+import com.skydoves.balloon.ArrowOrientation;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
+import com.skydoves.balloon.BalloonSizeSpec;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -43,7 +48,7 @@ public class EstadisticasFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     TextView ventasTotales, gastosTotales, gastosMenosVentas, fechaActual, ventasTotalesPorCobrar, gastosTotalesPorPagar;
-    ImageView ic_sumar_fecha, ic_restar_fecha;
+    ImageView ic_sumar_fecha, ic_restar_fecha, info_ganancias_totales,info_gastos_totales,info_balance_neto;
     CardView escalar;
 
     Calendar calendar = Calendar.getInstance();
@@ -98,6 +103,9 @@ public class EstadisticasFragment extends Fragment {
         ic_sumar_fecha = view.findViewById(R.id.ic_sumar_fecha);
         ic_restar_fecha = view.findViewById(R.id.ic_restar_fehca);
         escalar = view.findViewById(R.id.escalar);
+        info_ganancias_totales = view.findViewById(R.id.info_ganancias_totales);
+        info_gastos_totales = view.findViewById(R.id.info_gastos_totales);
+        info_balance_neto = view.findViewById(R.id.info_balance_neto);
 
 /*        Animation connectingAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.scale_anim);
         escalar.startAnimation(connectingAnimation);*/
@@ -107,6 +115,83 @@ public class EstadisticasFragment extends Fragment {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
         calendar.get(Calendar.MONTH);
         fechaActual.setText(sdf.format(calendar.getTime()));
+
+        info_ganancias_totales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Balloon balloon = new Balloon.Builder(getContext())
+                        .setArrowSize(10)
+                        .setArrowOrientation(ArrowOrientation.TOP)
+                        .setArrowConstraints(ArrowConstraints.ALIGN_ANCHOR)
+                        .setArrowPosition(0.5f)
+                        .setWidth(BalloonSizeSpec.WRAP)
+                        .setHeight(110)
+                        .setTextSize(15f)
+                        .setMargin(5)
+                        .setCornerRadius(6f)
+                        .setAlpha(0.9f)
+                        .setText("Son las ganancias totales de todas tus ventas ¡incluyendo las que no te han pagado!")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setTextIsHtml(true)
+                        .setBackgroundColor(getResources().getColor(R.color.primario))
+                        .setBalloonAnimation(BalloonAnimation.FADE)
+                        .build();
+
+                balloon.showAlignBottom(info_ganancias_totales);
+            }
+        });
+
+        info_gastos_totales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Balloon balloon = new Balloon.Builder(getContext())
+                        .setArrowSize(10)
+                        .setArrowOrientation(ArrowOrientation.TOP)
+                        .setArrowConstraints(ArrowConstraints.ALIGN_ANCHOR)
+                        .setArrowPosition(0.5f)
+                        .setWidth(BalloonSizeSpec.WRAP)
+                        .setHeight(110)
+                        .setTextSize(15f)
+                        .setMargin(5)
+                        .setCornerRadius(6f)
+                        .setAlpha(0.9f)
+                        .setText("Son los gastos totales en el mes ¡incluyendo los que no has pagado!")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setTextIsHtml(true)
+                        .setBackgroundColor(getResources().getColor(R.color.primario))
+                        .setBalloonAnimation(BalloonAnimation.FADE)
+                        .build();
+
+                balloon.showAlignBottom(info_gastos_totales);
+            }
+        });
+
+        info_balance_neto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Balloon balloon = new Balloon.Builder(getContext())
+                        .setArrowSize(10)
+                        .setArrowOrientation(ArrowOrientation.TOP)
+                        .setArrowConstraints(ArrowConstraints.ALIGN_ANCHOR)
+                        .setArrowPosition(0.5f)
+                        .setWidth(BalloonSizeSpec.WRAP)
+                        .setHeight(110)
+                        .setTextSize(15f)
+                        .setMargin(5)
+                        .setCornerRadius(6f)
+                        .setAlpha(0.9f)
+                        .setText("Es el valor total el cual se compone de la operación matemática que resta tus ganancias totales a tus gastos totales del mes!")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setTextIsHtml(true)
+                        .setBackgroundColor(getResources().getColor(R.color.primario))
+                        .setBalloonAnimation(BalloonAnimation.FADE)
+                        .build();
+
+                balloon.showAlignBottom(info_balance_neto);
+            }
+        });
+
+
 
         ic_sumar_fecha.setOnClickListener(new View.OnClickListener() {
             @Override

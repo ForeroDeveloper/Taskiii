@@ -124,8 +124,6 @@ public class VentasNegocio extends AppCompatActivity {
         btnLimpiar.setVisibility(View.GONE);
 //        edtProducto.requestFocus();
 
-
-
         //tap target
         final Spannable spannable2 = new SpannableString("Agrega productos a tu venta directamente desde tu inventario");
         spannable2.setSpan(new UnderlineSpan(), spannable2.length() - "TapTargetView".length(),
@@ -155,15 +153,11 @@ public class VentasNegocio extends AppCompatActivity {
         );
         }
 
-
-
-
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.keepSynced(true);
-
 
         databaseReference.child("info").addValueEventListener(new ValueEventListener() {
             @Override
@@ -439,6 +433,7 @@ public class VentasNegocio extends AppCompatActivity {
                 TextView btn_dismis = view1.findViewById(R.id.btn_cancel);
                 MaterialButton btn_aceptar = view1.findViewById(R.id.btn_aceptar);
                 TextInputEditText valor_descuento = view1.findViewById(R.id.txtDescuento);
+                TextInputLayout codigo = view1.findViewById(R.id.codigo);
                 TextView totalVenta = view1.findViewById(R.id.totalVenta);
 
                 //Setear el valor de la factura
@@ -455,10 +450,11 @@ public class VentasNegocio extends AppCompatActivity {
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         if (valor_descuento.getText().toString().isEmpty()){
                             totalVenta.setText(String.valueOf(total));
-
                         }else {
                             int valorIngresado = Integer.parseInt(valor_descuento.getText().toString());
-                            totalVenta.setText("$ "+String.valueOf(nformat.format(total)));
+                            codigo.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(R.color.rojo)));
+                            codigo.setHelperText("$ " + String.valueOf(nformat.format(valorIngresado)));
+                            totalVenta.setText("$ " + String.valueOf(nformat.format(total - valorIngresado)));
                         }
 
                     }

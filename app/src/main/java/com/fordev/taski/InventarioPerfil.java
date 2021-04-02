@@ -265,10 +265,10 @@ public class InventarioPerfil extends AppCompatActivity {
                     precio_unitario.setErrorEnabled(false);
                 } else {
 
-                    String nombreProducto = nombre_Producto.getEditText().getText().toString();
-                    double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
-                    double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
-                    String codeDeBarras = codigoDeBarras.getEditText().getText().toString();
+                    String nombreProducto = nombre_Producto.getEditText().getText().toString().trim();
+                    double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString().trim());
+                    double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString().trim());
+                    String codeDeBarras = codigoDeBarras.getEditText().getText().toString().trim();
                     if (codeDeBarras.isEmpty() || codeDeBarras.equals("")){
                         int randomQr = (int) (Math.random() * (3000 - 1000));
                         codigoProducto = String.valueOf(randomQr);

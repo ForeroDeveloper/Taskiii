@@ -466,7 +466,7 @@
 
         <RelativeLayout
             android:gravity="center"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:id="@+id/marcaDeAgua"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"

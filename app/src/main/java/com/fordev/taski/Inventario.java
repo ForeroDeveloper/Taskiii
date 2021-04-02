@@ -62,16 +62,14 @@ public class Inventario extends AppCompatActivity {
     RecyclerView listaDeProductos;
     AdaptadorListaInventario adaptadorListaInventario;
     MaterialButton faq_add, regresar;
-    TextView totalProductos, txtTotalStock, txtTotalInventario;
+    TextView totalProductos, txtTotalStock;
     CardView sinContenidoInventario, scannerQr;
     String idIngrsesar;
     String codigoProducto = "";
     public String keyy;
     int sum = 0;
     DecimalFormat format = new DecimalFormat("0.#");
-    NumberFormat nformat = new DecimalFormat("##,###,###.##");
     SearchView searchView;
-
     //Datos producto
     String nombreProducto = "";
     String idProducto = "";
@@ -81,7 +79,6 @@ public class Inventario extends AppCompatActivity {
     int total_factura = 0;
     boolean premium = true;
     boolean gold = true;
-    String codigoAgregar = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -321,14 +318,14 @@ public class Inventario extends AppCompatActivity {
                     cantidad_stock.setError("Ingrese un valor");
                     precio_unitario.setErrorEnabled(false);
                 } else {
-                    String nombreProducto = nombre_Producto.getEditText().getText().toString();
-                    double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString());
-                    double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString());
-                    String codeDeBarras = codigoDeBarras.getEditText().getText().toString();
-                    if (codeDeBarras.isEmpty() || codeDeBarras.equals("")){
+                    String nombreProducto = nombre_Producto.getEditText().getText().toString().trim();
+                    double precioUnitario = Double.parseDouble(precio_unitario.getEditText().getText().toString().trim());
+                    double cantidadStock = Double.parseDouble(cantidad_stock.getEditText().getText().toString().trim());
+                    String codeDeBarras = codigoDeBarras.getEditText().getText().toString().trim();
+                    if (codeDeBarras.isEmpty() || codeDeBarras.equals("")) {
                         int randomQr = (int) (Math.random() * (3000 - 1000));
                         codigoProducto = String.valueOf(randomQr);
-                    }else {
+                    } else {
                         codigoProducto = codeDeBarras;
                     }
 
