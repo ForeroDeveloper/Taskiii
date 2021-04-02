@@ -431,6 +431,7 @@ public class Inventario extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
         if (result != null && result.getContents() != null) {
 
             DialogPlus dialog = DialogPlus.newDialog(Inventario.this)
@@ -609,6 +610,5 @@ public class Inventario extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
-
 
 }

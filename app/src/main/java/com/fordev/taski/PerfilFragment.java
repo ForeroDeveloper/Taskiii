@@ -247,7 +247,7 @@ public class PerfilFragment extends Fragment {
                         if (codigo_introducido.equals(codigo)){
                             Map<String, Object> map = new HashMap<>();
                             map.put("gold", true);
-                            map.put("FechaPremiumFin", dato);
+                            map.put("fechaFinGold", dato);
                             firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info")
                                     .updateChildren(map);
                             //actualizar nuevo codigo

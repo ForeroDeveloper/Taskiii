@@ -2,14 +2,14 @@ package com.fordev.taski;
 
 public class UserInfoBasica {
     String nombreNegocio,nitNegocio,nombrePropietario,tipoDeDocumento,numeroDeDocumento,correoElectronico,primeraVez,ubicacionNegocio,direccionNegocio,telefonoNegocio,apellidoPropietario,
-            correoUsuarioLogin,fechaFinPremium,celularUsuarioLogin;
+            correoUsuarioLogin,fechaFinGold,celularUsuarioLogin;
     Boolean premium, gold;
 
 
     public UserInfoBasica() {
     }
 
-    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio, String apellidoPropietario, String correoUsuarioLogin, String fechaFinPremium, String celularUsuarioLogin, Boolean premium, Boolean gold) {
+    public UserInfoBasica(String nombreNegocio, String nitNegocio, String nombrePropietario, String tipoDeDocumento, String numeroDeDocumento, String correoElectronico, String primeraVez, String ubicacionNegocio, String direccionNegocio, String telefonoNegocio, String apellidoPropietario, String correoUsuarioLogin, String fechaFinGold, String celularUsuarioLogin, Boolean premium, Boolean gold) {
         this.nombreNegocio = nombreNegocio;
         this.nitNegocio = nitNegocio;
         this.nombrePropietario = nombrePropietario;
@@ -22,7 +22,7 @@ public class UserInfoBasica {
         this.telefonoNegocio = telefonoNegocio;
         this.apellidoPropietario = apellidoPropietario;
         this.correoUsuarioLogin = correoUsuarioLogin;
-        this.fechaFinPremium = fechaFinPremium;
+        this.fechaFinGold = fechaFinGold;
         this.celularUsuarioLogin = celularUsuarioLogin;
         this.premium = premium;
         this.gold = gold;
@@ -125,11 +125,11 @@ public class UserInfoBasica {
     }
 
     public String getFechaFinPremium() {
-        return fechaFinPremium;
+        return fechaFinGold;
     }
 
-    public void setFechaFinPremium(String fechaFinPremium) {
-        this.fechaFinPremium = fechaFinPremium;
+    public void setFechaFinPremium(String fechaFinGold) {
+        this.fechaFinGold = fechaFinGold;
     }
 
     public Boolean getPremium() {

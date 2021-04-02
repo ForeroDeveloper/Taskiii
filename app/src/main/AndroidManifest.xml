@@ -4,10 +4,14 @@
     package="com.fordev.taski">
 
     <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
 
     <application
         android:name=".Persistencia"
@@ -19,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Taski">
-        <activity android:name=".CalificarAppTaski"></activity>
+        <activity android:name=".CalificarAppTaski"/>
         <activity
             android:name=".PremiumActividad"
             android:screenOrientation="portrait" />
@@ -100,7 +104,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             tools:replace="screenOrientation" />
         <activity android:name=".SplashScreen">
             <intent-filter>

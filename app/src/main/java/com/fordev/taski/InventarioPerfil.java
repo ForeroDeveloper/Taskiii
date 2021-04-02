@@ -53,9 +53,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import me.sudar.zxingorient.Barcode;
-import me.sudar.zxingorient.ZxingOrient;
-
 public class InventarioPerfil extends AppCompatActivity {
     DatabaseReference databaseReference,databaseReference2;
     FirebaseDatabase firebaseDatabase;
@@ -176,25 +173,13 @@ public class InventarioPerfil extends AppCompatActivity {
         scannerQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                ZxingOrient integrator = new ZxingOrient(InventarioPerfil.this);
-                integrator.setIcon(R.drawable.logo_taski)   // Sets the custom icon
-                        .setToolbarColor("#AA3F51B5")       // Sets Tool bar Color
-                        .setInfoBoxColor("#AA3F51B5")       // Sets Info box color
-                        .setInfo("Scan a QR code Image.")
-                        .setBeep(true)
-                        .setVibration(true)// Sets info message in the info box
-                        .initiateScan(Barcode.DEFAULT_CODE_TYPES);
-
-   /*             IntentIntegrator intentIntegrator = new IntentIntegrator(InventarioPerfil.this);
+                IntentIntegrator intentIntegrator = new IntentIntegrator(InventarioPerfil.this);
                 intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
                 intentIntegrator.setCameraId(0);
-                intentIntegrator.setOrientationLocked(false);
+                intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setPrompt("Sube el Volumen + , y activa el Flash");
                 intentIntegrator.setBeepEnabled(true);
-                intentIntegrator.setBarcodeImageEnabled(true);
-                intentIntegrator.initiateScan();*/
+                intentIntegrator.initiateScan();
             }
         });
 
@@ -441,8 +426,8 @@ public class InventarioPerfil extends AppCompatActivity {
             });
 
             dialog.show();
-
         }
+
         super.onActivityResult(requestCode, resultCode, data);
 
     }

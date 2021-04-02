@@ -2,8 +2,13 @@ package com.fordev.taski;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -32,6 +37,11 @@ import com.google.firebase.storage.UploadTask;
 import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -242,9 +252,6 @@ public class InformacionNegocio extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
     private void subirFotoPerfil() {
@@ -277,8 +284,8 @@ public class InformacionNegocio extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         pd.dismiss();
-                        Toasty.custom(getApplicationContext(), "Error al subir la imagen!", getResources().getDrawable(R.drawable.logo_taski),
-                                getResources().getColor(R.color.white),getResources().getColor(R.color.rosado), Toasty.LENGTH_SHORT, true, true).show();
+                        Toasty.custom(getApplicationContext(), "El peso no puede superar las 2MB!", getResources().getDrawable(R.drawable.logo_taski),
+                                getResources().getColor(R.color.white),getResources().getColor(R.color.rosado), Toasty.LENGTH_LONG, true, true).show();
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -295,6 +302,7 @@ public class InformacionNegocio extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+            imageUri = data.getData();
             imageUri = data.getData();
             profile_image.setImageURI(imageUri);
             subirFotoPerfil();

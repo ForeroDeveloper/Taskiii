@@ -19,6 +19,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,9 +47,13 @@ import com.orhanobut.dialogplus.ViewHolder;
 import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class UserMenuPrincipal extends AppCompatActivity implements BillingProcessor.IBillingHandler {
@@ -95,7 +100,6 @@ public class UserMenuPrincipal extends AppCompatActivity implements BillingProce
 
         Cal.getTime();
         String dato = sdf.format(Cal.getTime());
-
         bp = new BillingProcessor(this, getResources().getString(R.string.play_console_licence), this);
         bp.initialize();
         hasSuscription();
@@ -129,23 +133,29 @@ public class UserMenuPrincipal extends AppCompatActivity implements BillingProce
             }
         });
 
-        infoBasica.child("FechaPremiumFin").addValueEventListener(new ValueEventListener() {
+        infoBasica.child("fechaFinGold").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String fechaFin = snapshot.getValue().toString();
-        /*        int dato_int = Integer.parseInt(dato);
-                int fecha_fin_int = Integer.parseInt(fechaFin);*/
+                    try {
+                        String fechaFin = snapshot.getValue().toString();
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+                        Date date = dateFormat.parse(fechaFin);
+                        Date date2 = dateFormat.parse(dato);
+                        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+                        int dato_int = Integer.parseInt(String.valueOf(sdf.format(date)));
+                        int dato_int_actual = Integer.parseInt(String.valueOf(sdf.format(date2)));
+                        if (dato_int_actual == dato_int){
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("gold", false);
+                            firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info")
+                                    .updateChildren(map);
+                        }
 
-                    if (dato.equals(fechaFin)){
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("premium", false);
-                        firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info")
-                                .updateChildren(map);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                 }
-
-
             }
 
             @Override
@@ -329,10 +339,10 @@ public class UserMenuPrincipal extends AppCompatActivity implements BillingProce
         infoBasica.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("FechaPremiumFin").exists()){
+                if (snapshot.child("fechaFinGold").exists()){
                     //nada
                 }else {
-                    infoBasica.child("FechaPremiumFin").setValue(sdf.format(Cal.getTime()));
+                    infoBasica.child("fechaFinGold").setValue(sdf.format(Cal.getTime()));
                 }
 
                 if (snapshot.child("nombreNegocio").exists()){
