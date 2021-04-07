@@ -10,18 +10,198 @@
         android:layout_height="wrap_content">
 
 
-    <LinearLayout
-        android:layout_margin="20dp"
-        android:elevation="3dp"
-        android:id="@+id/crear"
-        android:backgroundTint="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RelativeLayout
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:elevation="3dp"
+            android:id="@+id/crear"
+            android:backgroundTint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:fontFamily="@font/nunito_black"
+                    android:layout_width="wrap_content"
+                    android:textColor="#00B2EB"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Nombre de Producto"/>
+
+                <ImageView
+                    android:layout_marginEnd="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/logo_taski"/>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/separadorDeProducto"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nombreClientes"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Ej: Pantalon"
+                    app:boxBackgroundColor="#EBF9FD"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxStrokeColor="#08B36D"
+                    app:boxStrokeWidth="0dp"
+                    app:helperText="Ej: Vestido"
+                    app:helperTextEnabled="true"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNombreCliente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/din"
+                        android:inputType="textCapWords" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/separadorDePuniYCantidad"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:fontFamily="@font/nunito_black"
+                        android:layout_width="wrap_content"
+                        android:textColor="#00B2EB"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Precio Unitario"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/valorTotalVenta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="#08B36D"
+                        app:boxCornerRadiusBottomStart="30dp"
+                        app:boxCornerRadiusTopStart="30dp"
+                        app:boxCornerRadiusBottomEnd="30dp"
+                        app:boxCornerRadiusTopEnd="30dp"
+                        app:boxBackgroundColor="#EBF9FD"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:helperTextEnabled="true"
+                        app:prefixText="$ "
+                        app:helperText="Ej: $ 1.500"
+                        android:hint="$ 1.500">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtNumeroCliente"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:inputType="number"
+                            android:fontFamily="@font/din"
+                            android:layout_height="wrap_content"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:fontFamily="@font/nunito_black"
+                        android:layout_width="wrap_content"
+                        android:textColor="#00B2EB"
+                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content"
+                        android:text="Stock Cantidad"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/cantidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="#08B36D"
+                        app:boxCornerRadiusBottomStart="30dp"
+                        app:boxCornerRadiusTopStart="30dp"
+                        app:boxCornerRadiusBottomEnd="30dp"
+                        app:boxCornerRadiusTopEnd="30dp"
+                        app:boxBackgroundColor="#EBF9FD"
+                        app:boxStrokeWidth="0dp"
+                        app:helperTextEnabled="true"
+                        app:helperText="Ej: 150"
+                        app:hintEnabled="false"
+                        android:hint="500">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtcantidad"
+                            android:layout_width="match_parent"
+                            android:inputType="numberDecimal"
+                            android:gravity="center"
+                            android:fontFamily="@font/din"
+                            android:layout_height="wrap_content"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
             <TextView
                 android:fontFamily="@font/nunito_black"
@@ -31,265 +211,84 @@
                 android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Nombre de Producto"/>
-
-            <ImageView
-                android:layout_marginEnd="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/logo_taski"/>
-
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:id="@+id/separadorDeProducto"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nombreClientes"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:hint="Ej: Pantalon"
-                app:boxBackgroundColor="#EBF9FD"
-                app:boxCornerRadiusBottomEnd="30dp"
-                app:boxCornerRadiusBottomStart="30dp"
-                app:boxCornerRadiusTopEnd="30dp"
-                app:boxCornerRadiusTopStart="30dp"
-                app:boxStrokeColor="#08B36D"
-                app:boxStrokeWidth="0dp"
-                app:helperText="Ej: Vestido"
-                app:helperTextEnabled="true"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtNombreCliente"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/din"
-                    android:inputType="textCapWords" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <LinearLayout
-            android:id="@+id/separadorDePuniYCantidad"
-            android:layout_margin="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+                android:text="Codigo de Barras"/>
 
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_marginStart="20dp"
                 android:layout_width="match_parent"
+                android:layout_marginEnd="20dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:fontFamily="@font/nunito_black"
-                    android:layout_width="wrap_content"
-                    android:textColor="#00B2EB"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Precio Unitario"/>
+                android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/valorTotalVenta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/codigoDeBarras"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="#08B36D"
-                    app:boxCornerRadiusBottomStart="30dp"
-                    app:boxCornerRadiusTopStart="30dp"
-                    app:boxCornerRadiusBottomEnd="30dp"
-                    app:boxCornerRadiusTopEnd="30dp"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Ej: Se usa para escanear tu producto con la camara"
                     app:boxBackgroundColor="#EBF9FD"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxStrokeColor="#08B36D"
                     app:boxStrokeWidth="0dp"
-                    app:hintEnabled="false"
+                    app:helperText="Se usará para escaneo con cámara!"
                     app:helperTextEnabled="true"
-                    app:prefixText="$ "
-                    app:helperText="Ej: $ 1.500"
-                    android:hint="$ 1.500">
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtNumeroCliente"
-                        android:gravity="center"
+                        android:id="@+id/txtCodigoDeBarras"
                         android:layout_width="match_parent"
-                        android:inputType="number"
-                        android:fontFamily="@font/din"
                         android:layout_height="wrap_content"
-                        />
+                        android:fontFamily="@font/din"
+                        android:inputType="textCapWords" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_marginStart="20dp"
+            <RelativeLayout
+                android:id="@+id/add"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:fontFamily="@font/nunito_black"
-                    android:layout_width="wrap_content"
-                    android:textColor="#00B2EB"
-                    android:layout_marginBottom="5dp"
-                    android:layout_height="wrap_content"
-                    android:text="Stock Cantidad"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/cantidad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="#08B36D"
-                    app:boxCornerRadiusBottomStart="30dp"
-                    app:boxCornerRadiusTopStart="30dp"
-                    app:boxCornerRadiusBottomEnd="30dp"
-                    app:boxCornerRadiusTopEnd="30dp"
-                    app:boxBackgroundColor="#EBF9FD"
-                    app:boxStrokeWidth="0dp"
-                    app:helperTextEnabled="true"
-                    app:helperText="Ej: 150"
-                    app:hintEnabled="false"
-                    android:hint="500">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtcantidad"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:gravity="center"
-                        android:fontFamily="@font/din"
-                        android:layout_height="wrap_content"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <TextView
-            android:fontFamily="@font/nunito_black"
-            android:layout_width="wrap_content"
-            android:textColor="#00B2EB"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Codigo de Barras"/>
-
-        <LinearLayout
-            android:layout_marginStart="20dp"
-            android:layout_width="match_parent"
-            android:layout_marginEnd="20dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_weight="1"
-                android:id="@+id/codigoDeBarras"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:hint="Ej: Se usa para escanear tu producto con la camara"
-                app:boxBackgroundColor="#EBF9FD"
-                app:boxCornerRadiusBottomEnd="30dp"
-                app:boxCornerRadiusBottomStart="30dp"
-                app:boxCornerRadiusTopEnd="30dp"
-                app:boxCornerRadiusTopStart="30dp"
-                app:boxStrokeColor="#08B36D"
-                app:boxStrokeWidth="0dp"
-                app:helperText="Se usará para escaneo con cámara!"
-                app:helperTextEnabled="true"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtCodigoDeBarras"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:id="@+id/btn_cancelar"
+                    android:layout_width="140dp"
+                    android:text="Cancelar"
+                    android:gravity="center"
                     android:fontFamily="@font/din"
-                    android:inputType="textCapWords" />
+                    android:layout_marginTop="8dp"
+                    android:textSize="14dp"
+                    android:layout_marginStart="20dp"
+                    android:textColor="#00B2EB"
+                    android:layout_height="45dp"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/btn_guardar_producto_factura"
+                    android:layout_width="140dp"
+                    app:cornerRadius="30dp"
+                    android:backgroundTint="#00B2EB"
+                    android:fontFamily="@font/din"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="60dp"
+                    android:text="agreagar"
+                    android:textSize="14dp"/>
+
+            </RelativeLayout>
+
+
 
 
         </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/add"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:visibility="visible"
-                android:id="@+id/btn_cancelar"
-                android:layout_width="140dp"
-                android:text="Cancelar"
-                android:gravity="center"
-                android:fontFamily="@font/din"
-                android:layout_marginTop="8dp"
-                android:textSize="14dp"
-                android:layout_marginStart="20dp"
-                android:textColor="#00B2EB"
-                android:layout_height="45dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_alignParentEnd="true"
-                android:id="@+id/btn_guardar_producto_factura"
-                android:layout_width="140dp"
-                app:cornerRadius="30dp"
-                android:backgroundTint="#00B2EB"
-                android:fontFamily="@font/din"
-                android:layout_marginEnd="20dp"
-                android:layout_height="60dp"
-                android:text="agreagar"
-                android:textSize="14dp"/>
-
-        </RelativeLayout>
-
-
-
-
-    </LinearLayout>
 
 
     </ScrollView>

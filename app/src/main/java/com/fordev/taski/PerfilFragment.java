@@ -406,7 +406,7 @@ public class PerfilFragment extends Fragment {
         info_pedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), ListaDePedidos.class));
+                startActivity(new Intent(getContext(), ComprasNegocio.class));
             }
         });
 

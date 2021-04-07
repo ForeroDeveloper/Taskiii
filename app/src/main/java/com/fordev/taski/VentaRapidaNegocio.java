@@ -1,6 +1,7 @@
 package com.fordev.taski;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
@@ -206,6 +208,10 @@ public class VentaRapidaNegocio extends AppCompatActivity {
         btnGuardarFactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
 
                 if (!premium) {
                     if (total_factura < 15000) {
@@ -252,7 +258,6 @@ public class VentaRapidaNegocio extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void ventaRapida() {
@@ -266,7 +271,6 @@ public class VentaRapidaNegocio extends AppCompatActivity {
                 .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura_rapida))
                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setExpanded(true, 1300)
                 .setGravity(Gravity.BOTTOM)
                 .setContentBackgroundResource(android.R.color.transparent)
                 .create();

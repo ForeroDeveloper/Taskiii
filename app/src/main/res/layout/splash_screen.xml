@@ -10,8 +10,8 @@
     <ImageView
         android:id="@+id/bg_image"
         android:scaleType="centerInside"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/logo_taski"
         android:layout_centerHorizontal="true"

@@ -1,8 +1,10 @@
 package com.fordev.taski;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -61,7 +63,6 @@ public class ListaClientes extends AppCompatActivity {
                         .setContentHolder(new ViewHolder(R.layout.dialog_agregar_cliente))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1100)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
 
@@ -88,6 +89,10 @@ public class ListaClientes extends AppCompatActivity {
 
                             databaseReference.child(modeloCliente.getNombreCliente()).setValue(modeloCliente);
                             databaseReference.keepSynced(true);
+                            if (v!=null){
+                                InputMethodManager imm =  (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                            }
                             dialogo.dismiss();
 
                         }

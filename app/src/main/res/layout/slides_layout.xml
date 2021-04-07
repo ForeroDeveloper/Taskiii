@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/slider_image"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +21,7 @@
         android:gravity="start"
         android:text="Gestionar tu negocio\nAhora es muy fácil !"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slider_image" />
 
@@ -29,9 +29,9 @@
         android:id="@+id/slider_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/mazzard_light"
+        android:gravity="start"
         android:text="¡Adiós papeles! , con Taski, ahorras todas tus notas en cuadernos, y no solo eso, hacemos tus calculos contables automatizadamente!"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"

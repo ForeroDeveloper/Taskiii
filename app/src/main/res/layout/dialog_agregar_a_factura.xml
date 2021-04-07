@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/cabecera_guardar_factura_dos"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
-        android:layout_margin="20dp"
-        android:elevation="3dp"
-        android:id="@+id/crear"
-        android:backgroundTint="@color/white"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/crear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical">
+
+            <TextView
             android:fontFamily="@font/nunito_black"
             android:layout_width="wrap_content"
             android:textColor="#00B2EB"
@@ -222,7 +223,6 @@
             android:id="@+id/add"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -249,16 +249,13 @@
                 android:layout_marginEnd="20dp"
                 android:layout_height="60dp"
                 android:text="agreagar"
-                android:textSize="14dp"/>
+                android:textSize="14dp" />
 
         </RelativeLayout>
 
 
+        </LinearLayout>
 
-
-    </LinearLayout>
-
-
-
+    </ScrollView>
 
 </RelativeLayout>

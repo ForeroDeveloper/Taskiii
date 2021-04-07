@@ -9,400 +9,373 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_margin="20dp"
-        android:elevation="3dp"
-        android:id="@+id/crear"
-        android:backgroundTint="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:fontFamily="@font/nunito_black"
-            android:layout_width="wrap_content"
-            android:textColor="#00B2EB"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:textSize="18sp"
-            android:text="@string/producto_que_vas_a_editar"/>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            app:cardCornerRadius="10dp"
-            android:background="@color/white"
-            android:layout_marginBottom="5dp"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:padding="8dp">
-
-
-                    <RelativeLayout
-                        android:id="@+id/icon_estado_de_pago"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/background_color_circle_selector"
-                        android:backgroundTint="#ECF5EE">
-
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_product" />
-
-                    </RelativeLayout>
-
-
-                    <TextView
-                        android:id="@+id/nombreClientes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_toEndOf="@+id/icon_estado_de_pago"
-                        android:fontFamily="@font/din"
-                        android:text="Producto Nombre"
-                        android:textColor="@color/negro" />
-
-                    <TextView
-                        android:id="@+id/numeroClientes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/nombreClientes"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/icon_estado_de_pago"
-                        android:fontFamily="@font/brandon_grotesque_light"
-                        android:text="Precio Item:"
-                        android:textColor="@color/negro"
-                        android:textSize="12dp" />
-
-                    <RelativeLayout
-                        android:layout_toEndOf="@+id/icon_estado_de_pago"
-                        android:layout_width="wrap_content"
-                        android:layout_below="@+id/numeroClientes"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/txtStock"
-                            android:layout_marginTop="2dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-
-                            android:fontFamily="@font/brandon_grotesque_light"
-                            android:text="Stock: 182"
-                            android:textColor="@color/negro"
-                            android:textSize="11dp" />
-
-                        <ImageView
-                            android:id="@+id/icon_de_incrementos"
-                            android:layout_toEndOf="@+id/txtStock"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_incremento"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/din"
-                            android:text="Bajo stock"
-                            android:textColor="#EC4F3C"
-                            android:textSize="10dp" />
-
-
-                    </RelativeLayout>
-
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:fontFamily="@font/nunito_black"
-                android:layout_width="wrap_content"
-                android:textColor="#00B2EB"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Nombre de Producto"/>
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/separadorDeProducto"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nombreProductoEditar"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:hint="Editar Nombre producto"
-                app:boxBackgroundColor="#EBF9FD"
-                app:boxCornerRadiusBottomEnd="30dp"
-                app:boxCornerRadiusBottomStart="30dp"
-                app:boxCornerRadiusTopEnd="30dp"
-                app:boxCornerRadiusTopStart="30dp"
-                app:boxStrokeColor="#08B36D"
-                app:boxStrokeWidth="0dp"
-                app:helperText="Editar Nombre producto"
-                app:helperTextEnabled="true"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtNombreCliente"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/din"
-                    android:inputType="textCapWords" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <LinearLayout
-            android:id="@+id/separadorDePuniYCantidad"
+            android:id="@+id/crear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:fontFamily="@font/nunito_black"
-                    android:layout_width="wrap_content"
-                    android:textColor="#00B2EB"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Precio Unitario"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/valorTotalVenta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="#08B36D"
-                    app:boxCornerRadiusBottomStart="30dp"
-                    app:boxCornerRadiusTopStart="30dp"
-                    app:boxCornerRadiusBottomEnd="30dp"
-                    app:boxCornerRadiusTopEnd="30dp"
-                    app:boxBackgroundColor="#EBF9FD"
-                    app:boxStrokeWidth="0dp"
-                    app:hintEnabled="false"
-                    app:helperTextEnabled="true"
-                    app:prefixText="$ "
-                    app:helperText="Precio EDIT"
-                    android:hint="$ 1.500">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtNumeroCliente"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:inputType="number"
-                        android:fontFamily="@font/din"
-                        android:layout_height="wrap_content"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_marginStart="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:fontFamily="@font/nunito_black"
-                    android:layout_width="wrap_content"
-                    android:textColor="#00B2EB"
-                    android:layout_marginBottom="5dp"
-                    android:layout_height="wrap_content"
-                    android:text="Stock Cantidad"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/cantidad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="#08B36D"
-                    app:boxCornerRadiusBottomStart="30dp"
-                    app:boxCornerRadiusTopStart="30dp"
-                    app:boxCornerRadiusBottomEnd="30dp"
-                    app:boxCornerRadiusTopEnd="30dp"
-                    app:boxBackgroundColor="#EBF9FD"
-                    app:boxStrokeWidth="0dp"
-                    app:helperTextEnabled="true"
-                    app:helperText="Stock EDIT"
-                    app:hintEnabled="false"
-                    android:hint="500">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtcantidad"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:gravity="center"
-                        android:fontFamily="@font/din"
-                        android:layout_height="wrap_content"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:elevation="3dp"
             android:orientation="vertical">
 
             <TextView
-                android:fontFamily="@font/nunito_black"
                 android:layout_width="wrap_content"
-                android:textColor="#00B2EB"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Codigo de Barras"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/nunito_black"
+                android:text="@string/producto_que_vas_a_editar"
+                android:textColor="#00B2EB"
+                android:textSize="18sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/codigoDeBarras"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:hint="Ej: Se usa para escanear tu producto con la camara"
-                app:boxBackgroundColor="#EBF9FD"
-                app:boxCornerRadiusBottomEnd="30dp"
-                app:boxCornerRadiusBottomStart="30dp"
-                app:boxCornerRadiusTopEnd="30dp"
-                app:boxCornerRadiusTopStart="30dp"
-                app:boxStrokeColor="#08B36D"
-                app:boxStrokeWidth="0dp"
-                app:helperText="Edita tu codigo de Barras o QR!"
-                app:helperTextEnabled="true"
-                app:hintEnabled="false">
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:cardCornerRadius="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtCodigoDeBarras"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:padding="8dp">
+
+
+                        <RelativeLayout
+                            android:id="@+id/icon_estado_de_pago"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/background_color_circle_selector"
+                            android:backgroundTint="#ECF5EE">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_centerInParent="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_product" />
+
+                        </RelativeLayout>
+
+
+                        <TextView
+                            android:id="@+id/nombreClientes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_toEndOf="@+id/icon_estado_de_pago"
+                            android:fontFamily="@font/din"
+                            android:text="Producto Nombre"
+                            android:textColor="@color/negro" />
+
+                        <TextView
+                            android:id="@+id/numeroClientes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/nombreClientes"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/icon_estado_de_pago"
+                            android:fontFamily="@font/brandon_grotesque_light"
+                            android:text="Precio Item:"
+                            android:textColor="@color/negro"
+                            android:textSize="12dp" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/numeroClientes"
+                            android:layout_toEndOf="@+id/icon_estado_de_pago">
+
+                            <TextView
+                                android:id="@+id/txtStock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="2dp"
+
+                                android:fontFamily="@font/brandon_grotesque_light"
+                                android:text="Stock: 182"
+                                android:textColor="@color/negro"
+                                android:textSize="11dp" />
+
+                            <ImageView
+                                android:id="@+id/icon_de_incrementos"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerInParent="true"
+                                android:layout_marginStart="5dp"
+                                android:layout_toEndOf="@+id/txtStock"
+                                android:fontFamily="@font/din"
+                                android:padding="4dp"
+                                android:src="@drawable/ic_incremento"
+                                android:text="Bajo stock"
+                                android:textColor="#EC4F3C"
+                                android:textSize="10dp" />
+
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/nunito_black"
+                    android:text="Nombre de Producto"
+                    android:textColor="#00B2EB" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/separadorDeProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nombreProductoEditar"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Editar Nombre producto"
+                    app:boxBackgroundColor="#EBF9FD"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxStrokeColor="#08B36D"
+                    app:boxStrokeWidth="0dp"
+                    app:helperText="Editar Nombre producto"
+                    app:helperTextEnabled="true"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNombreCliente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/din"
+                        android:inputType="textCapWords" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/separadorDePuniYCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nunito_black"
+                        android:text="Precio Unitario"
+                        android:textColor="#00B2EB" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/valorTotalVenta"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="$ 1.500"
+                        app:boxBackgroundColor="#EBF9FD"
+                        app:boxCornerRadiusBottomEnd="30dp"
+                        app:boxCornerRadiusBottomStart="30dp"
+                        app:boxCornerRadiusTopEnd="30dp"
+                        app:boxCornerRadiusTopStart="30dp"
+                        app:boxStrokeColor="#08B36D"
+                        app:boxStrokeWidth="0dp"
+                        app:helperText="Precio EDIT"
+                        app:helperTextEnabled="true"
+                        app:hintEnabled="false"
+                        app:prefixText="$ ">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtNumeroCliente"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/din"
+                            android:gravity="center"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/nunito_black"
+                        android:text="Stock Cantidad"
+                        android:textColor="#00B2EB" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/cantidad"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="500"
+                        app:boxBackgroundColor="#EBF9FD"
+                        app:boxCornerRadiusBottomEnd="30dp"
+                        app:boxCornerRadiusBottomStart="30dp"
+                        app:boxCornerRadiusTopEnd="30dp"
+                        app:boxCornerRadiusTopStart="30dp"
+                        app:boxStrokeColor="#08B36D"
+                        app:boxStrokeWidth="0dp"
+                        app:helperText="Stock EDIT"
+                        app:helperTextEnabled="true"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtcantidad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/din"
+                            android:gravity="center"
+                            android:inputType="numberDecimal" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/nunito_black"
+                    android:text="Codigo de Barras"
+                    android:textColor="#00B2EB" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/codigoDeBarras"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Ej: Se usa para escanear tu producto con la camara"
+                    app:boxBackgroundColor="#EBF9FD"
+                    app:boxCornerRadiusBottomEnd="30dp"
+                    app:boxCornerRadiusBottomStart="30dp"
+                    app:boxCornerRadiusTopEnd="30dp"
+                    app:boxCornerRadiusTopStart="30dp"
+                    app:boxStrokeColor="#08B36D"
+                    app:boxStrokeWidth="0dp"
+                    app:helperText="Edita tu codigo de Barras o QR!"
+                    app:helperTextEnabled="true"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtCodigoDeBarras"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/din"
+                        android:inputType="textCapWords" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/btn_cancelar"
+                    android:layout_width="140dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/din"
-                    android:inputType="textCapWords" />
+                    android:gravity="center"
+                    android:text="Cancelar"
+                    android:textColor="#00B2EB"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_guardar_edicion"
+                    android:layout_width="140dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="#00B2EB"
+                    android:fontFamily="@font/din"
+                    android:text="editar"
+                    android:textSize="14sp"
+                    app:cornerRadius="30dp" />
 
+            </RelativeLayout>
 
 
         </LinearLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/add"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:visibility="visible"
-                android:id="@+id/btn_cancelar"
-                android:layout_width="140dp"
-                android:text="Cancelar"
-                android:gravity="center"
-                android:fontFamily="@font/din"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                android:layout_marginStart="20dp"
-                android:textColor="#00B2EB"
-                android:layout_height="45dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_alignParentEnd="true"
-                android:id="@+id/btn_guardar_edicion"
-                android:layout_width="140dp"
-                app:cornerRadius="30dp"
-                android:backgroundTint="#00B2EB"
-                android:fontFamily="@font/din"
-                android:layout_marginEnd="20dp"
-                android:layout_height="60dp"
-                android:text="editar"
-                android:textSize="14sp"/>
-
-        </RelativeLayout>
-
-
-
-
-    </LinearLayout>
 
     </ScrollView>
 

@@ -48,7 +48,6 @@ public class AdaptadorListaProveedores extends FirebaseRecyclerAdapter<ModeloPro
                         .setContentHolder(new ViewHolder(R.layout.dialog_agregar_proveedor))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1450)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
 

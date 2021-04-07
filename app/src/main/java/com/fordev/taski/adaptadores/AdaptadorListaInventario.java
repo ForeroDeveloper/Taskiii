@@ -1,9 +1,11 @@
 package com.fordev.taski.adaptadores;
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,7 +95,6 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                         .setContentHolder(new ViewHolder(R.layout.dialog_agregar_a_factura))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1000)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
 
@@ -120,8 +121,8 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                 }
 
                 txtNombreProductoSeleccionado.setText(model.getNombreProdcuto());
-                txtPrecioProductoSeleccionado.setText("Precio item: " + "$ " + String.valueOf(format.format(model.getPrecioProducto())));
-                txtStockProductoSeleccionado.setText("Stock: " + String.valueOf(format.format(model.getCantidadProducto())));
+                txtPrecioProductoSeleccionado.setText("Precio item: " + "$ " + String.valueOf(nformat.format(model.getPrecioProducto())));
+                txtStockProductoSeleccionado.setText("Stock: " + String.valueOf(nformat.format(model.getCantidadProducto())));
 
                 cantidad_stock_txt.addTextChangedListener(new TextWatcher() {
                     double resta = 0;
@@ -134,14 +135,14 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         if (cantidad_stock.getEditText().getText().toString().isEmpty()){
                             cantidad_stock.setHint("Ingrese un valor");
-                            txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(format.format(model.getCantidadProducto())));
+                            txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(nformat.format(model.getCantidadProducto())));
                         }else{
                             double cantidadStockInventario = model.getCantidadProducto();
                             //CANTIDAD INGRESADA POR EL USUARIO
                             double canitdadIngresad = Double.parseDouble(cantidad_stock_txt.getText().toString());
 
                             resta = cantidadStockInventario - canitdadIngresad;
-                            txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(format.format(resta)));
+                            txtStockProductoSeleccionado.setText("Stock Disponible: "+ String.valueOf(nformat.format(resta)));
                             cantidad_a_restar_stock = resta;
                         }
 
@@ -194,6 +195,10 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                                             }
                                         });
 
+                                        if (v!=null){
+                                            InputMethodManager imm =  (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                                        }
 
                                 //update stock dependiento la posicion
                                 Map<String, Object> map = new HashMap<>();
@@ -241,7 +246,6 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                         .setContentHolder(new ViewHolder(R.layout.dialog_editar_inventario))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1650)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
                 View views = dialogEdit.getHolderView();
@@ -351,6 +355,10 @@ public class AdaptadorListaInventario extends FirebaseRecyclerAdapter<ModeloInve
                             }
                         });
 
+                        }
+                        if (v!=null){
+                            InputMethodManager imm =  (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                         }
                         dialogEdit.dismiss();
 

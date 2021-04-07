@@ -14,6 +14,7 @@ import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
@@ -373,6 +374,10 @@ public class VentasNegocio extends AppCompatActivity {
         btnGuardarFactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
 
                 if (!premium) {
                     if (total_factura < 15000) {
@@ -525,7 +530,6 @@ public class VentasNegocio extends AppCompatActivity {
                 .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura))
                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setExpanded(true, 1470)
                 .setGravity(Gravity.BOTTOM)
                 .setContentBackgroundResource(android.R.color.transparent)
                 .create();

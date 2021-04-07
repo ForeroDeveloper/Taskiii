@@ -1,10 +1,12 @@
 package com.fordev.taski.adaptadores;
+import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -95,7 +97,6 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                         .setContentHolder(new ViewHolder(R.layout.dialog_editar_inventario))
                         .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                         .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setExpanded(true, 1690)
                         .setContentBackgroundResource(android.R.color.transparent)
                         .create();
                 View views = dialogEdit.getHolderView();
@@ -113,9 +114,7 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                 ImageView icon_de_incrementos = views.findViewById(R.id.icon_de_incrementos);
 
                 //Seteos por DEfecto de la base de Datos
-                if (!model.getCodigoDeBarras().isEmpty()) {
-                    codigoDeBarras.getEditText().setText(model.getCodigoDeBarras());
-                }
+                codigoDeBarras.getEditText().setText(model.getCodigoDeBarras());
                 nombreAEditar.getEditText().setText(model.getNombreProdcuto());
                 precioAEditar.getEditText().setText(String.valueOf(format.format(model.getPrecioProducto())));
                 if (model.getCantidadProducto() < 0) {
@@ -205,6 +204,10 @@ public class AdaptadorListaInventarioPerfil extends FirebaseRecyclerAdapter<Mode
                             }
                         });
 
+                        }
+                        if (v!=null){
+                            InputMethodManager imm =  (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                         }
                         dialogEdit.dismiss();
 

@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/nombreProductoPedido"
-                android:layout_width="110dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
@@ -81,8 +81,8 @@
                 android:layout_height="15dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="6dp"
+                app:cardElevation="0dp"
                 android:layout_toEndOf="@+id/nombreProductoPedido"
-                android:elevation="0dp"
                 app:cardBackgroundColor="#FFECDD"
                 app:cardCornerRadius="5dp">
 
@@ -108,7 +108,7 @@
             <ImageView
                 android:id="@+id/ic_llamar"
                 android:layout_toStartOf="@+id/ic_confirmar_llegada"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="15dp"
                 android:padding="1dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"

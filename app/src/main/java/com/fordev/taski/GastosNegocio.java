@@ -107,7 +107,7 @@ public class GastosNegocio extends AppCompatActivity {
         atras = findViewById(R.id.atras);
 
         btnLimpiar.setVisibility(View.INVISIBLE);
-        edtProducto.requestFocus();
+//        edtProducto.requestFocus();
         //Inicializar Base de Datos
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -326,7 +326,6 @@ public class GastosNegocio extends AppCompatActivity {
                                 .setContentHolder(new ViewHolder(R.layout.dialog_gold_v2))
                                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                                .setExpanded(true, 1510)
                                 .setGravity(Gravity.BOTTOM)
                                 .setContentBackgroundResource(android.R.color.transparent)
                                 .create();
@@ -395,7 +394,8 @@ public class GastosNegocio extends AppCompatActivity {
 
         DialogPlus dialogPlus = DialogPlus.newDialog(btnGuardarFactura.getContext())
                 .setContentHolder(new ViewHolder(R.layout.dialog_confirm_factura_gasto))
-                .setExpanded(true, 1470)
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setContentBackgroundResource(android.R.color.transparent)
                 .create();
         View view = dialogPlus.getHolderView();

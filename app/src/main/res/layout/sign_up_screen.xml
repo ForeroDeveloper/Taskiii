@@ -60,6 +60,7 @@
                 android:textSize="28sp"
                 android:textColor="@color/primario"/>
             <TextView
+                android:id="@+id/select"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:text="Selecciona tu cuenta de Google\nque uses frecuentemente!"
@@ -70,28 +71,18 @@
                 android:fontFamily="@font/din"
                 android:textSize="14sp"/>
 
-            <ProgressBar
-                android:layout_marginTop="40dp"
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:indeterminate="true"
-                android:layout_gravity="center"
-                android:indeterminateTintMode="src_atop"
-                android:indeterminateTint="@color/primario"/>
 
         </LinearLayout>
 
 
-
     </ScrollView>
+
 
     <RelativeLayout
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/login_google"
         android:layout_weight="1"
         android:id="@+id/google"
@@ -111,7 +102,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingresar con Google"
+            android:text="Seleccionar cuenta de Google"
             android:fontFamily="@font/din"
             android:textSize="16sp"
             android:textColor="@color/white"/>

@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -237,7 +238,6 @@ public class InventarioPerfil extends AppCompatActivity {
                 .setContentHolder(new ViewHolder(R.layout.dialog_agregar_inventario))
                 .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setExpanded(true, 1350)
                 .setContentBackgroundResource(android.R.color.transparent)
                 .create();
 
@@ -286,6 +286,10 @@ public class InventarioPerfil extends AppCompatActivity {
                     modeloInventario.setCodigoDeBarras(codigoProducto);
                     databaseReference.child(id).setValue(modeloInventario);
                     databaseReference.keepSynced(true);
+                    if (v!=null){
+                        InputMethodManager imm =  (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
                     dialogo.dismiss();
                 }
             }

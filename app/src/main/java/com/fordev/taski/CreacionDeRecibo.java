@@ -1,8 +1,10 @@
 package com.fordev.taski;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -274,13 +276,22 @@ public class CreacionDeRecibo extends AppCompatActivity {
 
 
         enviarRecibo.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                Toasty.info(CreacionDeRecibo.this,"Cargando...",Toast.LENGTH_LONG, true).show();
-                enviarRecibo.setVisibility(View.GONE);
-                getBitmapFromView(contenidoLayout);
-                enviarRecibo.setVisibility(View.VISIBLE);
-                marcaDeAgua.setVisibility(View.INVISIBLE);
+                int permisoRead = ContextCompat.checkSelfPermission(CreacionDeRecibo.this,Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permisoWrite = ContextCompat.checkSelfPermission(CreacionDeRecibo.this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                if (permisoRead == PackageManager.PERMISSION_GRANTED && permisoWrite == PackageManager.PERMISSION_GRANTED){
+                    Toasty.info(CreacionDeRecibo.this,"Cargando...",Toast.LENGTH_LONG, true).show();
+                    enviarRecibo.setVisibility(View.GONE);
+                    getBitmapFromView(contenidoLayout);
+                    enviarRecibo.setVisibility(View.VISIBLE);
+                    marcaDeAgua.setVisibility(View.INVISIBLE);
+                }else {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
+                }
+
             }
         });
 
