@@ -473,7 +473,7 @@ public class VentasNegocio extends AppCompatActivity {
                 btn_aceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!valor_descuento.getText().toString().isEmpty()){
+                        if (!valor_descuento.getText().toString().isEmpty() && !valor_descuento.getText().toString().equals("0")){
                             int valorIngresado = Integer.parseInt(valor_descuento.getText().toString());
                             databaseReference.child("facturas").child("facturasCreadas").child(key).child("descuento").setValue(valorIngresado);
                             descuentoIngresado = valorIngresado;

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cabecera_guardar_factura_dos">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/crear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/white"
+            android:elevation="3dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/din"
+                android:text="Datos de la compra"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtNombreProveedor"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre Proveedor"
+                app:boxStrokeColor="@color/primario"
+                app:startIconDrawable="@drawable/ic_person">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtNombreProducto"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Producto"
+                app:boxStrokeColor="@color/primario"
+                app:startIconDrawable="@drawable/ic_etiqueta">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edtCodigoDeBarras"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:hint="Código de barras"
+                    app:boxStrokeColor="@color/primario"
+                    app:startIconDrawable="@drawable/ic_cod_barras">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/scan"
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primario"
+                    android:fontFamily="@font/din"
+                    android:text="Scan"
+                    android:textSize="14dp"
+                    app:cornerRadius="5dp" />
+
+            </LinearLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtCantidad"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Cantidad"
+                app:boxStrokeColor="@color/primario"
+                app:startIconDrawable="@drawable/ic_cantidad">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_cantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtValorCompra"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Valor compra"
+                app:boxStrokeColor="@color/primario"
+                app:startIconDrawable="@drawable/ic_metodo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_valor_compra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtUtilidad"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Utilidad (en %)"
+                app:boxStrokeColor="@color/primario"
+                app:startIconDrawable="@drawable/ic_porcentaje">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtUtilidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtValorVenta"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Valor venta (automático)"
+                app:boxStrokeColor="@color/primario"
+                app:startIconDrawable="@drawable/ic_precio">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtCostoTotal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Costo Total (automático)"
+                app:boxStrokeColor="@color/primario"
+                app:startIconDrawable="@drawable/ic_factura">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/estado"
+                android:elevation="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardBackgroundColor="#FAFBFD"
+                android:layout_height="55dp"
+                app:cardCornerRadius="30dp">
+
+                <RadioGroup
+                    android:weightSum="2"
+                    android:id="@+id/daily_weekly_button_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:id="@+id/radio0"
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:checked="true"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="Pagado"
+                        android:textColor="@color/radio_flat_text_selector" />
+
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:id="@+id/radio1"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:background="@drawable/radio_flat_selector_dos"
+                        android:button="@android:color/transparent"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="3dp"
+                        android:text="Por Pagar"
+                        android:textColor="@color/radio_flat_text_selector" />
+
+                </RadioGroup>
+
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <RelativeLayout
+                android:id="@+id/add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/btn_cancelar"
+                    android:layout_width="140dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/din"
+                    android:gravity="center"
+                    android:text="Cancelar"
+                    android:textColor="@color/primario_oscuro_secundario"
+                    android:textSize="14dp"
+                    android:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_guardar_compra"
+                    android:layout_width="140dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="@color/primario_oscuro_secundario"
+                    android:fontFamily="@font/din"
+                    android:text="agreagar"
+                    android:textSize="14dp"
+                    app:cornerRadius="30dp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,7 +1,32 @@
 package com.fordev.taski;
 
 public class Constants {
-    String nombreProveedor,nombreProducto,cantidad,precioCosto,precioVenta,utilidad,totalcosto;
+
+    public String nombreProveedor,nombreProducto,cantidad,precioCosto,precioVenta,utilidad,totalcosto, pagado,fechaRegistro;
+
+
+    public Constants() {
+    }
+
+    public Constants(String nombreProveedor, String nombreProducto, String cantidad, String precioCosto, String precioVenta, String utilidad, String totalcosto, String pagado, String fechaRegistro) {
+        this.nombreProveedor = nombreProveedor;
+        this.nombreProducto = nombreProducto;
+        this.cantidad = cantidad;
+        this.precioCosto = precioCosto;
+        this.precioVenta = precioVenta;
+        this.utilidad = utilidad;
+        this.totalcosto = totalcosto;
+        this.pagado = pagado;
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public String getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(String pagado) {
+        this.pagado = pagado;
+    }
 
     public String getTotalcosto() {
         return totalcosto;
@@ -57,5 +82,13 @@ public class Constants {
 
     public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(String fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 }

@@ -288,8 +288,8 @@ public class MesFragment extends Fragment {
                         .build();
         adaptadorListaFacturas=new AdaptadorListaFacturas(options);
         listaDeFacturas.setAdapter(adaptadorListaFacturas);
-
         adaptadorListaFacturas.startListening();
+
 
         adaptadorListaFacturas.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override

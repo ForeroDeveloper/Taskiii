@@ -1,20 +1,34 @@
 package com.fordev.taski;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fordev.taski.adaptadores.AdaptadorListaComprasNegocio;
+import com.fordev.taski.adaptadores.AdaptadorListaFacturas;
+import com.fordev.taski.modelos.ModeloComprasNegocio;
+import com.fordev.taski.modelos.ModeloFacturaCreada;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,126 +52,196 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 public class ComprasNegocio extends AppCompatActivity {
 
-    private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-    //List all permission required
-    public static String[] PERMISSIONS = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-    public static int PERMISSION_ALL = 12;
-
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     List<Constants> paymentUsersList;
     public static File pFile;
     private File payfile;
     private PDFView pdfView;
+    MaterialButton faq_nueva_compra;
+    int total = 0;
+    NumberFormat nformat = new DecimalFormat("##,###,###.##");
+    String nombrePdf;
+    RecyclerView listaCompras;
+    AdaptadorListaComprasNegocio adaptadorListaCompras;
+    ImageView ic_sumar_fecha, ic_restar_fecha;
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("MM");
+    TextView fechaActual;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.compras_negocio);
         pdfView = findViewById(R.id.payment_pdf_viewer);
-
-        paymentUsersList = new ArrayList<>();
-
+        faq_nueva_compra = findViewById(R.id.faq_nueva_compra);
+        listaCompras = findViewById(R.id.lista_de_compras);
+        ic_sumar_fecha = findViewById(R.id.ic_sumar_fecha);
+        ic_restar_fecha = findViewById(R.id.ic_restar_fehca);
+        fechaActual = findViewById(R.id.txtFechaSelect);
         Button reportButton = findViewById(R.id.button_disable_report);
+
+        calendar.get(Calendar.MONTH);
+        fechaActual.setText(sdf.format(calendar.getTime()));
+
+        databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Compras").
+                child("lista");
+
+        int permisoRead = ContextCompat.checkSelfPermission(ComprasNegocio.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permisoWrite = ContextCompat.checkSelfPermission(ComprasNegocio.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permisoRead != PackageManager.PERMISSION_GRANTED && permisoWrite != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
+        }
+
         reportButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                int permisoRead = ContextCompat.checkSelfPermission(ComprasNegocio.this,Manifest.permission.READ_EXTERNAL_STORAGE);
-                int permisoWrite = ContextCompat.checkSelfPermission(ComprasNegocio.this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-                if (permisoRead == PackageManager.PERMISSION_GRANTED && permisoWrite == PackageManager.PERMISSION_GRANTED){
-                    Toasty.info(ComprasNegocio.this,"Cargando...",Toast.LENGTH_LONG, true).show();
+                int permisoRead = ContextCompat.checkSelfPermission(ComprasNegocio.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permisoWrite = ContextCompat.checkSelfPermission(ComprasNegocio.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                if (permisoRead == PackageManager.PERMISSION_GRANTED && permisoWrite == PackageManager.PERMISSION_GRANTED) {
+
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Constants pays = new Constants();
+
+                                String fecha = snapshot.child("month").getValue().toString();
+
+                                pays.setNombreProveedor(snapshot.child("nombreProveedor").getValue().toString());
+                                pays.setNombreProducto(snapshot.child("nombreProducto").getValue().toString());
+                                pays.setCantidad(snapshot.child("cantidadProducto").getValue().toString());
+                                pays.setPrecioCosto(snapshot.child("precioCosto").getValue().toString());
+                                pays.setPrecioVenta(snapshot.child("precioVenta").getValue().toString());
+                                pays.setUtilidad(snapshot.child("utilidad").getValue().toString());
+                                pays.setTotalcosto(snapshot.child("costoTotal").getValue().toString());
+                                pays.setFechaRegistro(snapshot.child("fechaRegistro").getValue().toString());
+                                if (snapshot.child("pagado").getValue().toString().equals("true")){
+                                    pays.setPagado("Pagado");
+                                }else {
+                                    pays.setPagado("Por Pagar");
+                                }
+
+                                if (fecha.equals(fechaActual.getText().toString())){
+                                    total += Integer.parseInt(snapshot.child("costoTotal").getValue().toString());
+                                    paymentUsersList.add(pays);
+                                }
 
 
+                            }
+                            //create a pdf file and catch exception beacause file may not be created
+                            try {
+                                createPaymentReport(paymentUsersList);
+                            } catch (DocumentException | FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                     payfile = new File(Environment.getExternalStorageDirectory(), "Report/");
 
+                    paymentUsersList = new ArrayList<>();
                     //check if they exist, if not create them(directory)
-                    if ( !payfile.exists()) {
+                    if (!payfile.exists()) {
                         payfile.mkdir();
                     }
+
+
+                    Date currentTime;
+                    nombrePdf = "PaymentUsers" + (currentTime = Calendar.getInstance().getTime()) + ".pdf";
                     //create files in charity care folder
+                    pFile = new File(payfile, nombrePdf);
 
-                    pFile = new File(payfile, "PaymentUsers.pdf");
 
-                    fetchPaymentUsers();
+                    // Así va correctamente la dirección
+                    String dir = Environment.getExternalStorageDirectory() + "/Report/" + nombrePdf;
+                    File arch = new File(dir);
+                    Uri photoURI = FileProvider.getUriForFile(ComprasNegocio.this, BuildConfig.APPLICATION_ID + ".provider", arch);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(photoURI, "application/pdf");
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        try {
+                            startActivity(intent);
+                        }catch (ActivityNotFoundException e){
+                            Toast.makeText(getApplicationContext(), "No existe una aplicación para abrir el PDF", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(Uri.fromFile(arch), "application/pdf");
+                        intent = Intent.createChooser(intent, "Open File");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        try {
+                            startActivity(intent);
+                        }catch (ActivityNotFoundException e){
+                            Toast.makeText(getApplicationContext(), "No existe una aplicación para abrir el PDF", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
                     DisplayReport();
 
-                }else {
+
+                } else {
                     requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
+
                 }
 
-//                previewDisabledUsersReport();
+
             }
         });
 
-        databaseReference = firebaseDatabase.getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("facturas").
-                child("facturasCreadas");
-        databaseReference.keepSynced(true);
 
+        faq_nueva_compra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ComprasNegocio.this, RegistrarCompra.class));
+            }
+        });
 
+        ic_sumar_fecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectorDeFecha(1);
+                cargarDatosSegunFecha(calendar);
+            }
+        });
 
-
-
-
-
-        //fetch payment and disabled users details;
+        ic_restar_fecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectorDeFecha(-1);
+                cargarDatosSegunFecha(calendar);
+            }
+        });
 
 
     }
 
-    private void fetchPaymentUsers() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-//creating an object and setting to displlay
-                    Constants pays = new Constants();
-                    pays.setNombreProveedor(snapshot.child("metodoDePago").getValue().toString());
-                    pays.setNombreProducto(snapshot.child("cliente").getValue().toString());
-                    pays.setCantidad(snapshot.child("day").getValue().toString());
-                    pays.setPrecioCosto(snapshot.child("abonado").getValue().toString());
-                    pays.setPrecioVenta(snapshot.child("abonado").getValue().toString());
-                    pays.setUtilidad(snapshot.child("day").getValue().toString());
-                    pays.setTotalcosto(snapshot.child("abonado").getValue().toString());
-
-                    //this just log details fetched from db(you can use Timber for logging
-                    Log.d("Payment", "Name: " + pays.getNombreProveedor());
-                    Log.d("Payment", "othername: " + pays.getNombreProducto());
-                    Log.d("Payment", "phone: " + pays.getCantidad());
-
-                    /* The error before was cause by giving incorrect data type
-                    You were adding an object of type PaymentUsers yet the arraylist expects obejct of type DisabledUsers
-                     */
-                    paymentUsersList.add(pays);
-
-
-                }
-                //create a pdf file and catch exception beacause file may not be created
-                try {
-                    createPaymentReport(paymentUsersList);
-                } catch (DocumentException | FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    private void selectorDeFecha(int i) {
+        calendar.add(Calendar.MONTH, i);
+        fechaActual.setText(sdf.format(calendar.getTime()));
     }
 
     private void createPaymentReport(  List<Constants> paymentUsersList) throws DocumentException, FileNotFoundException{
@@ -166,11 +250,10 @@ public class ComprasNegocio extends AppCompatActivity {
         BaseColor grayColor = WebColors.getRGBColor("#425066");
 
 
-
         Font white = new Font(Font.FontFamily.HELVETICA, 15.0f, Font.BOLD, colorWhite);
         FileOutputStream output = new FileOutputStream(pFile);
         Document document = new Document(PageSize.A2);
-        PdfPTable table = new PdfPTable(new float[]{6, 20, 20, 10,15,15,10,15});
+        PdfPTable table = new PdfPTable(new float[]{6, 10,20, 20, 10,15,15,10,15,10});
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         table.getDefaultCell().setFixedHeight(50);
         table.setTotalWidth(PageSize.A2.getWidth());
@@ -182,6 +265,12 @@ public class ComprasNegocio extends AppCompatActivity {
         noCell.setFixedHeight(50);
         noCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         noCell.setVerticalAlignment(Element.ALIGN_CENTER);
+
+        Chunk fechaRegistro = new Chunk("Fecha Registro", white);
+        PdfPCell fecha = new PdfPCell(new Phrase(fechaRegistro));
+        fecha.setFixedHeight(50);
+        fecha.setHorizontalAlignment(Element.ALIGN_CENTER);
+        fecha.setVerticalAlignment(Element.ALIGN_CENTER);
 
         Chunk nameText = new Chunk("Proveedor", white);
         PdfPCell nameCell = new PdfPCell(new Phrase(nameText));
@@ -225,6 +314,12 @@ public class ComprasNegocio extends AppCompatActivity {
         total_costo.setHorizontalAlignment(Element.ALIGN_CENTER);
         total_costo.setVerticalAlignment(Element.ALIGN_CENTER);
 
+        Chunk pagadoEstado = new Chunk("Estado", white);
+        PdfPCell estadoPagado = new PdfPCell(new Phrase(pagadoEstado));
+        estadoPagado.setFixedHeight(50);
+        estadoPagado.setHorizontalAlignment(Element.ALIGN_CENTER);
+        estadoPagado.setVerticalAlignment(Element.ALIGN_CENTER);
+
 
         Chunk footerText = new Chunk("Creado con taski - Copyright @ 2021");
         PdfPCell footCell = new PdfPCell(new Phrase(footerText));
@@ -235,6 +330,7 @@ public class ComprasNegocio extends AppCompatActivity {
 
 
         table.addCell(noCell);
+        table.addCell(fecha);
         table.addCell(nameCell);
         table.addCell(phoneCell);
         table.addCell(amountCell);
@@ -242,6 +338,7 @@ public class ComprasNegocio extends AppCompatActivity {
         table.addCell(costoproducto);
         table.addCell(utilidad_producto);
         table.addCell(total_costo);
+        table.addCell(estadoPagado);
         table.setHeaderRows(1);
 
         PdfPCell[] cells = table.getRow(0).getCells();
@@ -261,16 +358,20 @@ public class ComprasNegocio extends AppCompatActivity {
             String pventa = pay.getPrecioVenta();
             String utilidades = pay.getUtilidad();
             String total_c = pay.getTotalcosto();
+            String pago = pay.getPagado();
+            String fecha_registro = pay.getFechaRegistro();
 
 
             table.addCell(id + ". ");
+            table.addCell(fecha_registro);
             table.addCell(name);
             table.addCell(sname);
             table.addCell(phone);
             table.addCell(cost);
             table.addCell(pventa);
-            table.addCell(utilidades);
+            table.addCell(utilidades + " %");
             table.addCell(total_c);
+            table.addCell(pago);
 
         }
 
@@ -282,7 +383,7 @@ public class ComprasNegocio extends AppCompatActivity {
         PdfWriter.getInstance(document, output);
         document.open();
         Font g = new Font(Font.FontFamily.HELVETICA, 25.0f, Font.NORMAL, grayColor);
-        document.add(new Paragraph(" Reporte Financiero\n\n", g));
+        document.add(new Paragraph(" Reporte Financiero\n" + " Total Invertido : " + "$ " + String.valueOf(nformat.format(total)) + "\n\n", g));
         document.add(table);
         document.add(footTable);
 
@@ -290,25 +391,6 @@ public class ComprasNegocio extends AppCompatActivity {
     }
 
 
-   /* public boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public void previewDisabledUsersReport()
-    {
-        if (hasPermissions(this, PERMISSIONS)) {
-            DisplayReport();
-        } else {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
-    }*/
 
     private void DisplayReport()
     {
@@ -321,5 +403,48 @@ public class ComprasNegocio extends AppCompatActivity {
                 .load();
     }
 
+   private void cargarDatosSegunFecha(Calendar fecha){
+       LinearLayoutManager mLayaoutManager = new LinearLayoutManager(getApplicationContext());
+       mLayaoutManager.setReverseLayout(true);
+       mLayaoutManager.setStackFromEnd(true);
 
+       listaCompras.setLayoutManager(mLayaoutManager);
+       FirebaseRecyclerOptions<ModeloComprasNegocio> options =
+               new FirebaseRecyclerOptions.Builder<ModeloComprasNegocio>()
+                       .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Compras").
+                               child("lista").orderByChild("month").equalTo(sdf.format(fecha.getTime())), ModeloComprasNegocio.class)
+                       .build();
+       adaptadorListaCompras=new AdaptadorListaComprasNegocio(options);
+       listaCompras.setAdapter(adaptadorListaCompras);
+       adaptadorListaCompras.startListening();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cargarDatosSegunFecha(calendar);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adaptadorListaCompras.stopListening();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        total = 0;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (payfile.isDirectory()) {
+            String[] children = payfile.list();
+            for (int i = 0; i < children.length; i++) {
+                new File(payfile, children[i]).delete();
+            }
+        }
+    }
 }

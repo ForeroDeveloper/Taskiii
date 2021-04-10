@@ -130,14 +130,14 @@ public class SemanaFragment extends Fragment {
         fechados.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         fechados.add(Calendar.DATE, 1);
         fechatres.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        fechatres.add(Calendar.DATE, 2);
+        fechatres.add(Calendar.DATE, 3);
         fechacuatro.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        fechacuatro.add(Calendar.DATE, 3);
+        fechacuatro.add(Calendar.DATE, 4);
         fechacinco.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        fechacinco.add(Calendar.DATE, 4);
+        fechacinco.add(Calendar.DATE, 5);
 
         fechaActual.setText(sdf.format(fechaInicio.getTime()));
-        fechaFin.add(Calendar.DATE, 7);
+        fechaFin.add(Calendar.DATE, 1);
         txtFechaSelectFin.setText(sdf.format(fechaFin.getTime()));
 
         Date dt = new Date();
